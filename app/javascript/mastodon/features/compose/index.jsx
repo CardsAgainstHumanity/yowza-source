@@ -34,8 +34,8 @@ const messages = defineMessages({
   public: { id: 'navigation_bar.public_timeline', defaultMessage: 'Federated timeline' },
   community: { id: 'navigation_bar.community_timeline', defaultMessage: 'Local timeline' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
-  logout: { id: 'navigation_bar.logout', defaultMessage: 'Logout' },
-  compose: { id: 'navigation_bar.compose', defaultMessage: 'Compose new post' },
+  logout: { id: 'navigation_bar.logout', defaultMessage: 'Log out' },
+  compose: { id: 'navigation_bar.compose', defaultMessage: 'Compose new yowza' },
   logoutMessage: { id: 'confirmations.logout.message', defaultMessage: 'Are you sure you want to log out?' },
   logoutConfirm: { id: 'confirmations.logout.confirm', defaultMessage: 'Log out' },
 });

@@ -140,7 +140,7 @@ class Following extends ImmutablePureComponent {
     } else if (remote && accountIds.isEmpty()) {
       emptyMessage = <RemoteHint url={remoteUrl} />;
     } else {
-      emptyMessage = <FormattedMessage id='account.follows.empty' defaultMessage="This user doesn't follow anyone yet." />;
+      emptyMessage = <FormattedMessage id='account.follows.empty' defaultMessage="This yowzer doesn't follow anyone yet." />;
     }
 
     const remoteMessage = remote ? <RemoteHint url={remoteUrl} /> : null;

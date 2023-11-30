@@ -37,10 +37,8 @@ const mapDispatchToProps = (dispatch, { intl, conversationId }) => ({
   },
 
   reply (status, router) {
-    dispatch((_, getState) => {
-      let state = getState();
-
-      if (state.getIn(['compose', 'text']).trim().length !== 0) {
+    dispatch(() => {
+      if (status === 2) {
         dispatch(openModal({
           modalType: 'CONFIRM',
           modalProps: {

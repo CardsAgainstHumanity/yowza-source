@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
 class InitialStateSerializer < ActiveModel::Serializer
   include RoutingHelper
 
@@ -30,9 +31,17 @@ class InitialStateSerializer < ActiveModel::Serializer
       timeline_preview: Setting.timeline_preview,
       activity_api_enabled: Setting.activity_api_enabled,
       single_user_mode: Rails.configuration.x.single_user_mode,
+      top_referrers: Invite.top_referrers,
       trends_as_landing_page: Setting.trends_as_landing_page,
       status_page_url: Setting.status_page_url,
       sso_redirect: sso_redirect,
+      referrals_enabled: FeatureRelease.referrals_enabled?,
+      eyb: FeatureRelease.yowza_black_enabled?,
+      eyi: FeatureRelease.yowza_images_enabled?,
+      eys: FeatureRelease.yowza_store_enabled?,
+      ec: FeatureRelease.challenges_enabled?,
+      in_mobile_webview: object.in_mobile_webview,
+      stripe_public_key: ENV.fetch('STRIPE_PUBLISHABLE_KEY', nil),
     }
 
     if object.current_account
@@ -49,6 +58,12 @@ class InitialStateSerializer < ActiveModel::Serializer
       store[:use_blurhash]      = object.current_account.user.setting_use_blurhash
       store[:use_pending_items] = object.current_account.user.setting_use_pending_items
       store[:show_trends]       = Setting.trends && object.current_account.user.setting_trends
+      store[:referral_code]     = object.current_account.user.invites.first.try(:code) unless object.current_account.user.role.internal?
+      store[:cybs]              = object.current_account.yowza_black_status
+      store[:nybs]              = object.current_account.next_yowza_black_status
+      store[:shzm]              = object.current_account.shazam?
+      store[:referral_rank]     = object.current_account.user.referral_stats[:ranking]
+      store[:number_of_uses]    = object.current_account.user.referral_stats[:uses]
     else
       store[:auto_play_gif] = Setting.auto_play_gif
       store[:display_media] = Setting.display_media
@@ -114,3 +129,4 @@ class InitialStateSerializer < ActiveModel::Serializer
     "/auth/auth/#{Devise.omniauth_providers[0]}" if ENV['OMNIAUTH_ONLY'] == 'true' && Devise.omniauth_providers.length == 1
   end
 end
+# rubocop:enable Metrics/AbcSize

@@ -1,0 +1,20 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear yowzer,
+                            %br
+                            %p Hi! You referred so many new users to Yowza today that you won a free copy of Cards Against Humanity’s brand-new party game, #{link_to 'Head Trip', 'https://www.cardsagainsthumanity.com/products/head-trip'}. #{link_to 'Click here', 'https://www.cardsagainsthumanity.com/products/head-trip'} to give us your address and receive your free game: #{link_to 'URL of form, which will require you to input your username, yowza email, and yowza phone number as verification', 'https://www.cardsagainsthumanity.com/products/head-trip'}.
+                            %br
+                            %p You have until the end of Monday to give us your address.
+                            = render 'shared/yowza_signature'

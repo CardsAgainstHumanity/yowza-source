@@ -1,4 +1,4 @@
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import { connect } from 'react-redux';
 
@@ -14,10 +14,6 @@ import {
   mentionCompose,
   directCompose,
 } from '../actions/compose';
-import {
-  blockDomain,
-  unblockDomain,
-} from '../actions/domain_blocks';
 import {
   initAddFilter,
 } from '../actions/filters';
@@ -54,12 +50,11 @@ const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
   deleteMessage: { id: 'confirmations.delete.message', defaultMessage: 'Are you sure you want to delete this status?' },
   redraftConfirm: { id: 'confirmations.redraft.confirm', defaultMessage: 'Delete & redraft' },
-  redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this status and re-draft it? Favorites and boosts will be lost, and replies to the original post will be orphaned.' },
+  redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this status and re-draft it? Favorites and boosts will be lost, and replies to the original yowza will be orphaned.' },
   replyConfirm: { id: 'confirmations.reply.confirm', defaultMessage: 'Reply' },
   replyMessage: { id: 'confirmations.reply.message', defaultMessage: 'Replying now will overwrite the message you are currently composing. Are you sure you want to proceed?' },
   editConfirm: { id: 'confirmations.edit.confirm', defaultMessage: 'Edit' },
   editMessage: { id: 'confirmations.edit.message', defaultMessage: 'Editing now will overwrite the message you are currently composing. Are you sure you want to proceed?' },
-  blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Block entire domain' },
 });
 
 const makeMapStateToProps = () => {
@@ -78,20 +73,8 @@ const makeMapStateToProps = () => {
 const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
 
   onReply (status, router) {
-    dispatch((_, getState) => {
-      let state = getState();
-
-      if (state.getIn(['compose', 'text']).trim().length !== 0) {
-        dispatch(openModal({
-          modalType: 'CONFIRM',
-          modalProps: {
-            message: intl.formatMessage(messages.replyMessage),
-            confirm: intl.formatMessage(messages.replyConfirm),
-            onConfirm: () => dispatch(replyCompose(status, router)) },
-        }));
-      } else {
-        dispatch(replyCompose(status, router));
-      }
+    dispatch(() => {
+      dispatch(replyCompose(status, router));
     });
   },
 
@@ -251,21 +234,6 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
 
   onToggleCollapsed (status, isCollapsed) {
     dispatch(toggleStatusCollapse(status.get('id'), isCollapsed));
-  },
-
-  onBlockDomain (domain) {
-    dispatch(openModal({
-      modalType: 'CONFIRM',
-      modalProps: {
-        message: <FormattedMessage id='confirmations.domain_block.message' defaultMessage='Are you really, really sure you want to block the entire {domain}? In most cases a few targeted blocks or mutes are sufficient and preferable. You will not see content from that domain in any public timelines or your notifications. Your followers from that domain will be removed.' values={{ domain: <strong>{domain}</strong> }} />,
-        confirm: intl.formatMessage(messages.blockDomainConfirm),
-        onConfirm: () => dispatch(blockDomain(domain)),
-      },
-    }));
-  },
-
-  onUnblockDomain (domain) {
-    dispatch(unblockDomain(domain));
   },
 
   deployPictureInPicture (status, type, mediaProps) {

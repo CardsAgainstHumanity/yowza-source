@@ -5,8 +5,9 @@ class LinkCrawlWorker
 
   sidekiq_options queue: 'pull', retry: 0
 
-  def perform(status_id)
-    FetchLinkCardService.new.call(Status.find(status_id))
+  def perform(_status_id)
+    # commenting out to prevent attachment of URL preview cards to status records
+    # FetchLinkCardService.new.call(Status.find(status_id))
   rescue ActiveRecord::RecordNotFound
     true
   end

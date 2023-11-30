@@ -3,6 +3,7 @@
 class UpdateStatusService < BaseService
   include Redisable
   include LanguagesHelper
+  include YowzafyHelper
 
   class NoChangesSubmittedError < StandardError; end
 
@@ -108,10 +109,12 @@ class UpdateStatusService < BaseService
   end
 
   def update_immediate_attributes!
-    @status.text         = @options[:text].presence || @options.delete(:spoiler_text) || '' if @options.key?(:text)
+    @status.text         = @account.user&.role&.name == 'Owner' ? @text : yowzafy(@options[:text], allowed_words: @status.account.allowed_words)
     @status.spoiler_text = @options[:spoiler_text] || '' if @options.key?(:spoiler_text)
     @status.sensitive    = @options[:sensitive] || @options[:spoiler_text].present? if @options.key?(:sensitive) || @options.key?(:spoiler_text)
     @status.language     = valid_locale_cascade(@options[:language], @status.language, @status.account.user&.preferred_posting_language, I18n.default_locale)
+
+    @status.image = "yowza#{rand(1..120)}.jpg" if @status.image.blank? && @options[:include_file]
 
     # We raise here to rollback the entire transaction
     raise NoChangesSubmittedError unless significant_changes?

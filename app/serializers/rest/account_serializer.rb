@@ -6,7 +6,8 @@ class REST::AccountSerializer < ActiveModel::Serializer
 
   attributes :id, :username, :acct, :display_name, :locked, :bot, :discoverable, :group, :created_at,
              :note, :url, :uri, :avatar, :avatar_static, :header, :header_static,
-             :followers_count, :following_count, :statuses_count, :last_status_at
+             :followers_count, :following_count, :statuses_count, :referrals_count, :last_status_at,
+             :total_checks, :badge_class
 
   has_one :moved_to_account, key: :moved, serializer: REST::AccountSerializer, if: :moved_and_not_nested?
 
@@ -90,12 +91,20 @@ class REST::AccountSerializer < ActiveModel::Serializer
     object.created_at.midnight.as_json
   end
 
+  def referrals_count
+    object.user&.invites&.first&.uses || 0
+  end
+
   def last_status_at
     object.last_status_at&.to_date&.iso8601
   end
 
   def display_name
     object.suspended? ? '' : object.display_name
+  end
+
+  def total_checks
+    object.suspended? ? 0 : object.total_checks
   end
 
   def locked
@@ -150,5 +159,9 @@ class REST::AccountSerializer < ActiveModel::Serializer
 
   def moved_and_not_nested?
     object.moved?
+  end
+
+  def followers_count
+    object.followers_count + (object.cosmetic_followers_count * Account::FOLLOWER_PURCHASE_MULTIPLIER)
   end
 end

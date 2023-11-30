@@ -13,7 +13,6 @@ import { createSelector } from 'reselect';
 import { debounce } from 'lodash';
 
 import { compareId } from 'mastodon/compare_id';
-import { Icon }  from 'mastodon/components/icon';
 import { NotSignedInIndicator } from 'mastodon/components/not_signed_in_indicator';
 
 import { addColumn, removeColumn, moveColumn } from '../../actions/columns';
@@ -31,7 +30,6 @@ import ColumnHeader from '../../components/column_header';
 import { LoadGap } from '../../components/load_gap';
 import ScrollableList from '../../components/scrollable_list';
 
-import NotificationsPermissionBanner from './components/notifications_permission_banner';
 import ColumnSettingsContainer from './containers/column_settings_container';
 import FilterBarContainer from './containers/filter_bar_container';
 import NotificationContainer from './containers/notification_container';
@@ -71,7 +69,6 @@ const mapStateToProps = state => ({
   numPending: state.getIn(['notifications', 'pendingItems'], ImmutableList()).size,
   lastReadId: state.getIn(['settings', 'notifications', 'showUnread']) ? state.getIn(['notifications', 'readMarkerId']) : '0',
   canMarkAsRead: state.getIn(['settings', 'notifications', 'showUnread']) && state.getIn(['notifications', 'readMarkerId']) !== '0' && getNotifications(state).some(item => item !== null && compareId(item.get('id'), state.getIn(['notifications', 'readMarkerId'])) > 0),
-  needsNotificationPermission: state.getIn(['settings', 'notifications', 'alerts']).includes(true) && state.getIn(['notifications', 'browserSupport']) && state.getIn(['notifications', 'browserPermission']) === 'default' && !state.getIn(['settings', 'notifications', 'dismissPermissionBanner']),
 });
 
 class Notifications extends PureComponent {
@@ -186,7 +183,7 @@ class Notifications extends PureComponent {
   };
 
   render () {
-    const { intl, notifications, isLoading, isUnread, columnId, multiColumn, hasMore, numPending, showFilterBar, lastReadId, canMarkAsRead, needsNotificationPermission } = this.props;
+    const { intl, notifications, isLoading, isUnread, columnId, multiColumn, hasMore, numPending, showFilterBar, lastReadId, canMarkAsRead } = this.props;
     const pinned = !!columnId;
     const emptyMessage = <FormattedMessage id='empty_column.notifications' defaultMessage="You don't have any notifications yet. When other people interact with you, you will see it here." />;
     const { signedIn } = this.context.identity;
@@ -234,7 +231,6 @@ class Notifications extends PureComponent {
           showLoading={isLoading && notifications.size === 0}
           hasMore={hasMore}
           numPending={numPending}
-          prepend={needsNotificationPermission && <NotificationsPermissionBanner />}
           alwaysPrepend
           emptyMessage={emptyMessage}
           onLoadMore={this.handleLoadOlder}
@@ -258,9 +254,9 @@ class Notifications extends PureComponent {
           aria-label={intl.formatMessage(messages.markAsRead)}
           title={intl.formatMessage(messages.markAsRead)}
           onClick={this.handleMarkAsRead}
-          className='column-header__button'
+          className='column-header__button button--notif'
         >
-          <Icon id='check' />
+          Mark as Read
         </button>
       );
     }

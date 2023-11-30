@@ -6,6 +6,9 @@ namespace :api, format: false do
 
   # JSON / REST API
   namespace :v1 do
+    post 'payments/create_session', to: 'payments#create_session'
+    post 'payments/webhook', to: 'payments#webhook'
+
     resources :statuses, only: [:create, :show, :update, :destroy] do
       scope module: :statuses do
         resources :reblogged_by, controller: :reblogged_by_accounts, only: :index
@@ -45,6 +48,11 @@ namespace :api, format: false do
 
     get '/streaming', to: 'streaming#index'
     get '/streaming/(*any)', to: 'streaming#index'
+
+    get '/challenges', to: 'challenges#index'
+    get '/leaderboard', to: 'leaderboard#index'
+    get '/leaderboard/paid_referrals_remaining', to: 'leaderboard#paid_referrals_remaining'
+    get '/store', to: 'yowza_store#index'
 
     resources :custom_emojis, only: [:index]
     resources :suggestions, only: [:index, :destroy]
@@ -92,7 +100,7 @@ namespace :api, format: false do
     resources :bookmarks, only: [:index]
     resources :reports, only: [:create]
     resources :trends, only: [:index], controller: 'trends/tags'
-    resources :filters, only: [:index, :create, :show, :update, :destroy]
+    # resources :filters, only: [:index, :create, :show, :update, :destroy]
     resources :endorsements, only: [:index]
     resources :markers, only: [:index, :create]
 
@@ -100,12 +108,6 @@ namespace :api, format: false do
       resource :avatar, only: :destroy
       resource :header, only: :destroy
     end
-
-    namespace :apps do
-      get :verify_credentials, to: 'credentials#show'
-    end
-
-    resources :apps, only: [:create]
 
     namespace :trends do
       resources :tags, only: [:index]
@@ -289,15 +291,15 @@ namespace :api, format: false do
     resources :media, only: [:create]
     resources :suggestions, only: [:index]
     resource :instance, only: [:show]
-    resources :filters, only: [:index, :create, :show, :update, :destroy] do
-      resources :keywords, only: [:index, :create], controller: 'filters/keywords'
-      resources :statuses, only: [:index, :create], controller: 'filters/statuses'
-    end
+    # resources :filters, only: [:index, :create, :show, :update, :destroy] do
+    # resources :keywords, only: [:index, :create], controller: 'filters/keywords'
+    # resources :statuses, only: [:index, :create], controller: 'filters/statuses'
+    # end
 
-    namespace :filters do
-      resources :keywords, only: [:show, :update, :destroy]
-      resources :statuses, only: [:show, :destroy]
-    end
+    # namespace :filters do
+    # resources :keywords, only: [:show, :update, :destroy]
+    # resources :statuses, only: [:show, :destroy]
+    # end
 
     namespace :admin do
       resources :accounts, only: [:index]

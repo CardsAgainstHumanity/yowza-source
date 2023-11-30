@@ -1,0 +1,19 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear new yowzer,
+                            %br
+                            %p Thanks for signing up with a referral code. We hope your fellow yowzer becomes one of today’s top referrers and wins a shitload of money.
+                            %p!= "As a thank-you for helping us make Yowza the world’s #1 social media platform, here’s a unique 25%-off coupon for your entire order at the #{link_to 'Cards Against Humanity Store', 'https://www.cardsagainsthumanity.com/shop/all'}, including our brand new game HEAD TRIP: <strong>#{@promo_code.code}</strong>. It’s good until the end of the day on Monday."
+                            = render 'shared/yowza_signature'

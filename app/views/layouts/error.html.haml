@@ -8,10 +8,12 @@
     = stylesheet_pack_tag 'common', media: 'all', crossorigin: 'anonymous'
     = stylesheet_pack_tag Setting.default_settings['theme'], media: 'all', crossorigin: 'anonymous'
     = javascript_pack_tag 'common', crossorigin: 'anonymous'
-    = javascript_pack_tag 'error', crossorigin: 'anonymous'
+    %link{ rel: 'stylesheet', href: '/error.css'}
   %body.error
     .dialog
-      .dialog__illustration
-        %img{ alt: Setting.default_settings['site_title'], src: '/oops.png' }/
       .dialog__message
-        %h1= yield :content
+        %h1= yield :page_title
+        %p= yield :content
+        - if content_for? :action_label
+          %div
+            %a{ href: (yield :action_url), class: 'button'}= yield :action_label

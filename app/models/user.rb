@@ -41,6 +41,10 @@
 #  role_id                   :bigint(8)
 #  settings                  :text
 #  time_zone                 :string
+#  phone                     :string
+#  phone_confirmed_at        :boolean          default(FALSE), not null
+#  paid_for_referral         :boolean          default(FALSE), not null
+#  paid_as_referee           :boolean          default(FALSE), not null
 #
 
 class User < ApplicationRecord
@@ -55,6 +59,7 @@ class User < ApplicationRecord
 
   include Redisable
   include LanguagesHelper
+  include PhoneNormalizationHelper
   include HasUserSettings
 
   # The home and list feeds will be stored in Redis for this amount
@@ -96,14 +101,17 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :invite_request, reject_if: ->(attributes) { attributes['text'].blank? && !Setting.require_invite_text }
   validates :invite_request, presence: true, on: :create, if: :invite_text_required?
 
+  has_one :promo_code
+
   validates :locale, inclusion: I18n.available_locales.map(&:to_s), if: :locale?
   validates_with BlacklistedEmailValidator, if: -> { ENV['EMAIL_DOMAIN_LISTS_APPLY_AFTER_CONFIRMATION'] == 'true' || !confirmed? }
   validates_with EmailMxValidator, if: :validate_email_dns?
   validates :agreement, acceptance: { allow_nil: false, accept: [true, 'true', '1'] }, on: :create
   validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name } }, allow_blank: true
+  validates :phone, presence: ENV.fetch('TWILIO_ENABLED') == 'true', phone: ENV.fetch('TWILIO_ENABLED') == 'true', uniqueness: ENV.fetch('TWILIO_ENABLED') == 'true', unless: -> { test_number_before_black_friday? }
 
   # Honeypot/anti-spam fields
-  attr_accessor :registration_form_time, :website, :confirm_password
+  attr_accessor :registration_form_time, :website, :confirm_password, :otp
 
   validates_with RegistrationFormTimeValidator, on: :create
   validates :website, absence: true, on: :create
@@ -124,9 +132,12 @@ class User < ApplicationRecord
 
   before_validation :sanitize_languages
   before_validation :sanitize_role
+  before_validation :renormalize_phone
   before_create :set_approved
   after_commit :send_pending_devise_notifications
   after_create_commit :trigger_webhooks
+  after_create_commit :set_up_referral_code
+  after_create_commit :queue_otp_worker
 
   # This avoids a deprecation warning from Rails 5.1
   # It seems possible that a future release of devise-two-factor will
@@ -250,8 +261,20 @@ class User < ApplicationRecord
   end
 
   def functional_or_moved?
-    confirmed? && approved? && !disabled? && !account.suspended? && !account.memorial?
+    confirmed? && approved? && !disabled? && !account.suspended? && !account.memorial? && phone_confirmed?
   end
+
+  def phone_confirmed?
+    if twilio_enabled?
+      phone_confirmed_at.present?
+    else
+      true
+    end
+  end
+
+  # Required by the form builder
+  def self.otp; end
+  def self.phone; end
 
   def unconfirmed?
     !confirmed?
@@ -325,8 +348,13 @@ class User < ApplicationRecord
   end
 
   def invite_code=(code)
-    self.invite  = Invite.find_by(code: code) if code.present?
+    self.invite  = Invite.find_by(code: code.downcase) if code.present?
     @invite_code = code
+  end
+
+  def renormalize_phone
+    # Linters gonna lint
+    self.phone = normalize_phone(phone)
   end
 
   def password_required?
@@ -345,7 +373,8 @@ class User < ApplicationRecord
   def send_reset_password_instructions
     return false if encrypted_password.blank?
 
-    super
+    PasswordResetMailerWorker.perform_async(id)
+    # super
   end
 
   def reset_password(new_password, new_password_confirmation)
@@ -377,6 +406,98 @@ class User < ApplicationRecord
     send_reset_password_instructions
   end
 
+  def twilio_client
+    account_sid = ENV.fetch('TWILIO_ACCOUNT_SID')
+    auth_token = ENV.fetch('TWILIO_AUTH_TOKEN')
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+  end
+
+  def send_otp
+    return true if test_number_before_black_friday?
+
+    if twilio_enabled?
+      twilio_client.verify
+                   .v2
+                   .services(ENV.fetch('TWILIO_SERVICE'))
+                   .verifications
+                   .create(to: phone, channel: 'sms')
+    else
+      true
+    end
+  end
+
+  def verify_otp(otp)
+    return true if test_number_before_black_friday?
+
+    if twilio_enabled?
+      begin
+        verification_check = twilio_client.verify
+                                          .v2
+                                          .services(ENV.fetch('TWILIO_SERVICE'))
+                                          .verification_checks
+                                          .create(to: phone, code: otp)
+
+        result = verification_check.status == 'approved'
+
+        if result
+          SignUpWelcomeMailerWorker.perform_async(id)
+        else
+          errors.add(:base, 'That is not the correct code, please try again.')
+        end
+
+        result
+      rescue Twilio::REST::RestError => e
+        message = if e.code == 60_202
+                    'You have attempted this too many times, please try again in 10 minutes.'
+                  elsif e.code == 60_200
+                    'This does not appear to be a real code, please use the one we texted you.'
+                  else
+                    'We can not verify this code right now, please try again later'
+                  end
+        errors.add(:base, message)
+
+        false
+      end
+    else
+      true
+    end
+  end
+
+  def test_number_before_black_friday?
+    /\A(\+1000)/.match?(phone) && Time.current < Date.new(2023, 11, 24)
+  end
+
+  def formatted_phone
+    parsed_phone = Phonelib.parse(phone)
+    parsed_phone.country == 'US' ? parsed_phone.national(false) : parsed_phone.international(false)
+  end
+
+  def twilio_enabled?
+    ENV.fetch('TWILIO_ENABLED') == 'true'
+  end
+
+  def fauxbot?
+    role&.fauxbot?
+  end
+
+  def referral_stats
+    Rails.cache.fetch("referral_ranking/#{id}", expires_in: 5.minutes) do
+      number_of_ties = Invite.where(referrals: invites.first.referrals).count
+      {
+        ranking: Invite.where('referrals > ?', invites.first.referrals).count + rand(1..number_of_ties),
+        uses: invites.first.referrals,
+      }
+    end
+  end
+
+  def set_reset_password_token
+    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+    self.reset_password_token   = enc
+    self.reset_password_sent_at = Time.now.utc
+    save(validate: false)
+    raw
+  end
+
   protected
 
   def send_devise_notification(notification, *args, **kwargs)
@@ -397,6 +518,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def queue_otp_worker
+    SendOtpWorker.perform_async(id)
+  end
 
   def send_pending_devise_notifications
     pending_devise_notifications.each do |notification, args, kwargs|
@@ -460,7 +585,6 @@ class User < ApplicationRecord
     BootstrapTimelineWorker.perform_async(account_id)
     ActivityTracker.increment('activity:accounts:local')
     ActivityTracker.record('activity:logins', id)
-    UserMailer.welcome(self).deliver_later
     TriggerWebhookWorker.perform_async('account.approved', 'Account', account_id)
   end
 
@@ -501,5 +625,9 @@ class User < ApplicationRecord
 
   def trigger_webhooks
     TriggerWebhookWorker.perform_async('account.created', 'Account', account_id)
+  end
+
+  def set_up_referral_code
+    invites.create(comment: 'Auto generated referral code invite', autofollow: true)
   end
 end

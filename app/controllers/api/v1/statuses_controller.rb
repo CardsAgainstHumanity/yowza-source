@@ -8,6 +8,7 @@ class Api::V1::StatusesController < Api::BaseController
   before_action :require_user!, except:  [:show, :context]
   before_action :set_status, only:       [:show, :context]
   before_action :set_thread, only:       [:create]
+  skip_before_action :require_authenticated_user!, only: [:show, :context]
 
   override_rate_limit_headers :create, family: :statuses
   override_rate_limit_headers :update, family: :statuses
@@ -58,11 +59,11 @@ class Api::V1::StatusesController < Api::BaseController
       current_user.account,
       text: status_params[:status],
       thread: @thread,
-      media_ids: status_params[:media_ids],
+      include_file: status_params[:include_file],
       sensitive: status_params[:sensitive],
-      spoiler_text: status_params[:spoiler_text],
+      # spoiler_text: status_params[:spoiler_text],
       visibility: status_params[:visibility],
-      language: status_params[:language],
+      # language: status_params[:language],
       scheduled_at: status_params[:scheduled_at],
       application: doorkeeper_token.application,
       poll: status_params[:poll],
@@ -88,11 +89,11 @@ class Api::V1::StatusesController < Api::BaseController
       @status,
       current_account.id,
       text: status_params[:status],
-      media_ids: status_params[:media_ids],
+      include_file: status_params[:include_file],
       media_attributes: status_params[:media_attributes],
       sensitive: status_params[:sensitive],
-      language: status_params[:language],
-      spoiler_text: status_params[:spoiler_text],
+      # language: status_params[:language],
+      # spoiler_text: status_params[:spoiler_text],
       poll: status_params[:poll]
     )
 
@@ -134,10 +135,11 @@ class Api::V1::StatusesController < Api::BaseController
       :status,
       :in_reply_to_id,
       :sensitive,
-      :spoiler_text,
+      # :spoiler_text,
       :visibility,
-      :language,
+      # :language,
       :scheduled_at,
+      :include_file,
       allowed_mentions: [],
       media_ids: [],
       media_attributes: [

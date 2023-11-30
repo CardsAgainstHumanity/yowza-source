@@ -13,7 +13,7 @@ class Api::V1::AccountsController < Api::BaseController
   before_action :check_account_confirmation, except: [:create]
   before_action :check_enabled_registrations, only: [:create]
 
-  skip_before_action :require_authenticated_user!, only: :create
+  skip_before_action :require_authenticated_user!, only: [:create, :show]
 
   override_rate_limit_headers :follow, family: :follows
 

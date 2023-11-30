@@ -6,6 +6,7 @@ import type { Account } from '../../types/resources';
 import { autoPlayGif } from '../initial_state';
 
 import { Skeleton } from './skeleton';
+import VerifiedYowzaBadge from './verified_yowza_badge';
 
 interface Props {
   account?: Account;
@@ -79,7 +80,7 @@ export class DisplayName extends React.PureComponent<Props> {
       let acct = account.get('acct');
 
       if (!acct.includes('@') && localDomain) {
-        acct = `${acct}@${localDomain}`;
+        acct = `${acct}`;
       }
 
       displayName = (
@@ -114,7 +115,12 @@ export class DisplayName extends React.PureComponent<Props> {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {displayName} {suffix}
+        {displayName}{' '}
+        <VerifiedYowzaBadge
+          badgeClass={account?.get('badge_class')}
+          badgeCount={account?.get('total_checks')}
+        />{' '}
+        {suffix}
       </span>
     );
   }

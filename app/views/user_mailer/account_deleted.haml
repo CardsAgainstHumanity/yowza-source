@@ -1,0 +1,18 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear former yowzer,
+                            %br
+                            %p Your account, @#{@resource.account.username}, has been deleted. Please allow up to 24 hours for your profile to officially disappear from Yowza.
+                            = render 'shared/yowza_signature'

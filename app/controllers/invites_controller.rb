@@ -16,27 +16,6 @@ class InvitesController < ApplicationController
     @invite  = Invite.new
   end
 
-  def create
-    authorize :invite, :create?
-
-    @invite      = Invite.new(resource_params)
-    @invite.user = current_user
-
-    if @invite.save
-      redirect_to invites_path
-    else
-      @invites = invites
-      render :index
-    end
-  end
-
-  def destroy
-    @invite = invites.find(params[:id])
-    authorize @invite, :destroy?
-    @invite.expire!
-    redirect_to invites_path
-  end
-
   private
 
   def invites

@@ -21,7 +21,11 @@ module AccountCounters
 
   # @param [Symbol] key
   def increment_count!(key)
-    update_count!(key, 1)
+    result = update_count!(key, 1)
+
+    account_stat.evaluate_referrals_count if [:statuses_count, :following_count].include?(key)
+
+    result
   end
 
   # @param [Symbol] key

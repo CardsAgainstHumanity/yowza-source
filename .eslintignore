@@ -1,3 +1,5 @@
+/app/javascript/mastodon/features/ui/components/link_footer.jsx
+/app/javascript/mastodon/features/account/components/header.jsx
 /build/**
 /coverage/**
 /db/**

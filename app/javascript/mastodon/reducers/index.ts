@@ -10,16 +10,17 @@ import alerts from './alerts';
 import announcements from './announcements';
 import blocks from './blocks';
 import boosts from './boosts';
+import challenges from './challenges';
 import compose from './compose';
 import contexts from './contexts';
 import conversations from './conversations';
 import custom_emojis from './custom_emojis';
-import domain_lists from './domain_lists';
 import dropdown_menu from './dropdown_menu';
 import filters from './filters';
 import followed_tags from './followed_tags';
 import height_cache from './height_cache';
 import history from './history';
+import leaderboard from './leaderboard';
 import listAdder from './list_adder';
 import listEditor from './list_editor';
 import lists from './lists';
@@ -29,6 +30,7 @@ import meta from './meta';
 import { modalReducer } from './modal';
 import mutes from './mutes';
 import notifications from './notifications';
+import payment from './payment';
 import picture_in_picture from './picture_in_picture';
 import polls from './polls';
 import push_notifications from './push_notifications';
@@ -43,6 +45,7 @@ import tags from './tags';
 import timelines from './timelines';
 import trends from './trends';
 import user_lists from './user_lists';
+import yowzaStore from './yowza_store';
 
 const reducers = {
   announcements,
@@ -53,7 +56,6 @@ const reducers = {
   loadingBar: loadingBarReducer,
   modal: modalReducer,
   user_lists,
-  domain_lists,
   status_lists,
   accounts,
   accounts_counters,
@@ -86,6 +88,10 @@ const reducers = {
   history,
   tags,
   followed_tags,
+  payment,
+  leaderboard,
+  challenges,
+  yowzaStore,
 };
 
 // We want the root state to be an ImmutableRecord, which is an object with a defined list of keys,

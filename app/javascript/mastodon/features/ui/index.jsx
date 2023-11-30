@@ -4,7 +4,7 @@ import { PureComponent } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import classNames from 'classnames';
-import { Redirect, Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, withRouter, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -13,6 +13,7 @@ import { HotKeys } from 'react-hotkeys';
 
 import { focusApp, unfocusApp, changeLayout } from 'mastodon/actions/app';
 import { synchronouslySubmitMarkers, submitMarkers, fetchMarkers } from 'mastodon/actions/markers';
+import { openModal } from 'mastodon/actions/modal';
 import { INTRODUCTION_VERSION } from 'mastodon/actions/onboarding';
 import PictureInPicture from 'mastodon/features/picture_in_picture';
 import { layoutFromWindow } from 'mastodon/is_mobile';
@@ -22,7 +23,7 @@ import { clearHeight } from '../../actions/height_cache';
 import { expandNotifications } from '../../actions/notifications';
 import { fetchServer, fetchServerTranslationLanguages } from '../../actions/server';
 import { expandHomeTimeline } from '../../actions/timelines';
-import initialState, { me, owner, singleUserMode, trendsEnabled, trendsAsLanding } from '../../initial_state';
+import initialState, { me, owner, singleUserMode, trendsEnabled, trendsAsLanding, inMobileWebview, eys, eyi } from '../../initial_state';
 
 import BundleColumnError from './components/bundle_column_error';
 import Header from './components/header';
@@ -53,7 +54,6 @@ import {
   FollowedTags,
   ListTimeline,
   Blocks,
-  DomainBlocks,
   Mutes,
   PinnedStatuses,
   Lists,
@@ -62,6 +62,10 @@ import {
   Onboarding,
   About,
   PrivacyPolicy,
+  Leaderboard,
+  Faq,
+  YowzaStore,
+  YowzaAppStore,
 } from './util/async-components';
 import { WrappedSwitch, WrappedRoute } from './util/react_router_helpers';
 
@@ -82,6 +86,7 @@ const mapStateToProps = state => ({
   dropdownMenuIsOpen: state.getIn(['dropdown_menu', 'openId']) !== null,
   firstLaunch: state.getIn(['settings', 'introductionVersion'], 0) < INTRODUCTION_VERSION,
   username: state.getIn(['accounts', me, 'username']),
+  notificationCount: state.getIn(['notifications', 'unread'])
 });
 
 const keyMap = {
@@ -127,6 +132,7 @@ class SwitchingColumnsArea extends PureComponent {
     children: PropTypes.node,
     location: PropTypes.object,
     singleColumn: PropTypes.bool,
+    dispatch: PropTypes.func.isRequired,
   };
 
   UNSAFE_componentWillMount () {
@@ -161,6 +167,10 @@ class SwitchingColumnsArea extends PureComponent {
     const { signedIn } = this.context.identity;
     const pathName = this.props.location.pathname;
 
+    if(pathName === '/success') {
+      this.props.dispatch(openModal({ modalType: 'INTERSTITIAL_PAYMENT', modalProps: { prepayment: false } }));
+    }
+
     let redirect;
 
     if (signedIn) {
@@ -181,7 +191,7 @@ class SwitchingColumnsArea extends PureComponent {
       <ColumnsAreaContainer ref={this.setRef} singleColumn={singleColumn}>
         <WrappedSwitch>
           {redirect}
-
+          <Redirect from='/success' to='/home' exact />
           {singleColumn ? <Redirect from='/deck' to='/home' exact /> : null}
           {singleColumn && pathName.startsWith('/deck/') ? <Redirect from={pathName} to={pathName.slice(5)} /> : null}
           {!singleColumn && pathName === '/getting-started' ? <Redirect from='/getting-started' to='/deck/getting-started' exact /> : null}
@@ -189,7 +199,8 @@ class SwitchingColumnsArea extends PureComponent {
           <WrappedRoute path='/getting-started' component={GettingStarted} content={children} />
           <WrappedRoute path='/keyboard-shortcuts' component={KeyboardShortcuts} content={children} />
           <WrappedRoute path='/about' component={About} content={children} />
-          <WrappedRoute path='/privacy-policy' component={PrivacyPolicy} content={children} />
+          <WrappedRoute path='/faq' component={Faq} content={children} />
+          <WrappedRoute path='/privacy' component={PrivacyPolicy} content={children} />
 
           <WrappedRoute path={['/home', '/timelines/home']} component={HomeTimeline} content={children} />
           <Redirect from='/timelines/public' to='/public' exact />
@@ -205,6 +216,12 @@ class SwitchingColumnsArea extends PureComponent {
 
           <WrappedRoute path='/bookmarks' component={BookmarkedStatuses} content={children} />
           <WrappedRoute path='/pinned' component={PinnedStatuses} content={children} />
+
+          <WrappedRoute path='/leaderboard' exact component={Leaderboard} content={children} />
+          <WrappedRoute path='/leaderboard/challenges' exact component={Leaderboard} content={children} componentParams={{ showChallenges: true }} />
+
+          { eys && !inMobileWebview &&(<WrappedRoute path='/store' component={YowzaStore} content={children} />) }
+          { eys && inMobileWebview && (<WrappedRoute path='/appstore' component={YowzaAppStore} content={children} />) }
 
           <WrappedRoute path='/start' exact component={Onboarding} content={children} />
           <WrappedRoute path='/directory' component={Directory} content={children} />
@@ -230,7 +247,6 @@ class SwitchingColumnsArea extends PureComponent {
 
           <WrappedRoute path='/follow_requests' component={FollowRequests} content={children} />
           <WrappedRoute path='/blocks' component={Blocks} content={children} />
-          <WrappedRoute path='/domain_blocks' component={DomainBlocks} content={children} />
           <WrappedRoute path='/followed_tags' component={FollowedTags} content={children} />
           <WrappedRoute path='/mutes' component={Mutes} content={children} />
           <WrappedRoute path='/lists' component={Lists} content={children} />
@@ -240,8 +256,9 @@ class SwitchingColumnsArea extends PureComponent {
       </ColumnsAreaContainer>
     );
   }
-
 }
+
+const SwitchingColumnsAreaContainer = connect()(SwitchingColumnsArea);
 
 class UI extends PureComponent {
 
@@ -263,6 +280,7 @@ class UI extends PureComponent {
     layout: PropTypes.string.isRequired,
     firstLaunch: PropTypes.bool,
     username: PropTypes.string,
+    notificationCount: PropTypes.number,
   };
 
   state = {
@@ -552,6 +570,7 @@ class UI extends PureComponent {
   render () {
     const { draggingOver } = this.state;
     const { children, isComposing, location, dropdownMenuIsOpen, layout } = this.props;
+    const { signedIn } = this.context.identity;
 
     const handlers = {
       help: this.handleHotkeyToggleHelp,
@@ -577,19 +596,29 @@ class UI extends PureComponent {
 
     return (
       <HotKeys keyMap={keyMap} handlers={handlers} ref={this.setHotkeysRef} attach={window} focused>
-        <div className={classNames('ui', { 'is-composing': isComposing })} ref={this.setRef} style={{ pointerEvents: dropdownMenuIsOpen ? 'none' : null }}>
+        <div className={classNames('ui', { 'is-composing': isComposing, 'mobile-webview': inMobileWebview })} ref={this.setRef} style={{ pointerEvents: dropdownMenuIsOpen ? 'none' : null }}>
           <Header />
 
-          <SwitchingColumnsArea location={location} singleColumn={layout === 'mobile' || layout === 'single-column'}>
+          <SwitchingColumnsAreaContainer location={location} singleColumn={layout === 'mobile' || layout === 'single-column'}>
             {children}
-          </SwitchingColumnsArea>
+          </SwitchingColumnsAreaContainer>
 
           {layout !== 'mobile' && <PictureInPicture />}
           <NotificationsContainer />
           <LoadingBarContainer className='loading-bar' />
           <ModalContainer />
-          <UploadArea active={draggingOver} onClose={this.closeUploadModal} />
+          {eyi && (<UploadArea active={draggingOver} onClose={this.closeUploadModal} />)}
+
+          {signedIn && location.pathname !== '/publish' && <div className='compose-button-floating__container'>
+            <Link to='/publish' className='compose-button-floating'>
+              <svg xmlns='http://www.w3.org/2000/svg' width='42' height='42' viewBox='0 0 42 42' fill='none'>
+                <path fillRule='evenodd' clipRule='evenodd' d='M22.5446 19.0808H38.1305V22.5444H22.5446V38.1303H19.0811V22.5444H3.49512V19.0808H19.0811V3.49487H22.5446V19.0808Z' fill='black' stroke='black' strokeWidth='2' />
+              </svg>
+            </Link>
+          </div>}
+
         </div>
+        { inMobileWebview && (<span hidden id='webview-notification-count'>{this.props.notificationCount}</span>)}
       </HotKeys>
     );
   }

@@ -1,0 +1,108 @@
+:root {
+  --color-brand-yowza-dark: #000;
+  --color-brand-yowza-light: #fff;
+  --color-brand-yowza-gray: #f5f5f5;
+  --color-brand-yowza-blue: #39dbff;
+  --color-brand-yowza-blue-dark: #3ccded;
+  --color-brand-yowza-green: #00ff75;
+  --color-brand-yowza-yellow: #fff500;
+  --color-brand-yowza-red: #ff5e5e;
+  --color-brand-yowza-orange: #ffb443;
+  --color-brand-yowza-purple: #dd7dff;
+  --gradient-brand-yowza-rainbow1: linear-gradient(
+    341deg,
+    #ffb443 -37.83%,
+    #ff5e5e -7.68%,
+    #dd7dff 22.47%,
+    #39dbff 51.19%,
+    #00ff75 78.47%,
+    #fff500 96.9%
+  );
+  --gradient-brand-yowza-rainbow2: linear-gradient(
+    162deg,
+    #ffb443 0%,
+    #ff5e5e 35.96%,
+    #dd7dff 71.92%,
+    #39dbff 106.17%,
+    #00ff75 138.7%,
+    #fff500 160.69%
+  );
+  --color-bg: var(--color-brand-yowza-light);
+  --color-fg: var(--color-brand-yowza-dark);
+}
+
+body.error {
+  background: var(--gradient-brand-yowza-rainbow1);
+  color: var(--color-fg);
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  font-size: 18px;
+}
+
+body.error .dialog__message .button {
+  background-color: var(--color-brand-yowza-yellow);
+}
+
+body.error .dialog__message {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+body.error .dialog__message h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+body.error .dialog__message p {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+@media screen and (width <= 899px) {
+  body.error .dialog__message h1 {
+    font-size: 28px;
+  }
+
+  body.error .dialog__message p {
+    font-size: 14px;
+  }
+}
+
+body.error .button {
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-fg);
+  box-shadow: 3px 3px 0 var(--color-fg);
+  color: var(--color-fg);
+  font-weight: 700;
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease;
+  border-radius: 1000px;
+}
+
+body.error .button:disabled {
+  color: #808080 !important;
+  border-color: #808080 !important;
+  background-color: #d9d9d9 !important;
+  cursor: not-allowed;
+}
+
+body.error .button:hover {
+  box-shadow: 2px 2px 0 var(--color-fg) !important;
+  top: 1px !important;
+  left: 1px !important;
+}
+
+body.error .button:active {
+  box-shadow: 0 0 0 var(--color-fg) !important;
+  top: 3px !important;
+  left: 3px !important;
+}
+
+body.error .button:focus {
+  outline: 1px solid var(--color-fg);
+}

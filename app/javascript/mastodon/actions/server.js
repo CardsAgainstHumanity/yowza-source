@@ -14,10 +14,6 @@ export const EXTENDED_DESCRIPTION_REQUEST = 'EXTENDED_DESCRIPTION_REQUEST';
 export const EXTENDED_DESCRIPTION_SUCCESS = 'EXTENDED_DESCRIPTION_SUCCESS';
 export const EXTENDED_DESCRIPTION_FAIL    = 'EXTENDED_DESCRIPTION_FAIL';
 
-export const SERVER_DOMAIN_BLOCKS_FETCH_REQUEST = 'SERVER_DOMAIN_BLOCKS_FETCH_REQUEST';
-export const SERVER_DOMAIN_BLOCKS_FETCH_SUCCESS = 'SERVER_DOMAIN_BLOCKS_FETCH_SUCCESS';
-export const SERVER_DOMAIN_BLOCKS_FETCH_FAIL    = 'SERVER_DOMAIN_BLOCKS_FETCH_FAIL';
-
 export const fetchServer = () => (dispatch, getState) => {
   if (getState().getIn(['server', 'server', 'isLoading'])) {
     return;
@@ -93,39 +89,5 @@ const fetchExtendedDescriptionSuccess = description => ({
 
 const fetchExtendedDescriptionFail = error => ({
   type: EXTENDED_DESCRIPTION_FAIL,
-  error,
-});
-
-export const fetchDomainBlocks = () => (dispatch, getState) => {
-  if (getState().getIn(['server', 'domainBlocks', 'isLoading'])) {
-    return;
-  }
-
-  dispatch(fetchDomainBlocksRequest());
-
-  api(getState)
-    .get('/api/v1/instance/domain_blocks')
-    .then(({ data }) => dispatch(fetchDomainBlocksSuccess(true, data)))
-    .catch(err => {
-      if (err.response.status === 404) {
-        dispatch(fetchDomainBlocksSuccess(false, []));
-      } else {
-        dispatch(fetchDomainBlocksFail(err));
-      }
-    });
-};
-
-const fetchDomainBlocksRequest = () => ({
-  type: SERVER_DOMAIN_BLOCKS_FETCH_REQUEST,
-});
-
-const fetchDomainBlocksSuccess = (isAvailable, blocks) => ({
-  type: SERVER_DOMAIN_BLOCKS_FETCH_SUCCESS,
-  isAvailable,
-  blocks,
-});
-
-const fetchDomainBlocksFail = error => ({
-  type: SERVER_DOMAIN_BLOCKS_FETCH_FAIL,
   error,
 });

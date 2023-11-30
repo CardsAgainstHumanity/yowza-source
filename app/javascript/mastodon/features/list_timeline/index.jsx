@@ -26,7 +26,7 @@ import StatusListContainer from 'mastodon/features/ui/containers/status_list_con
 const messages = defineMessages({
   deleteMessage: { id: 'confirmations.delete_list.message', defaultMessage: 'Are you sure you want to permanently delete this list?' },
   deleteConfirm: { id: 'confirmations.delete_list.confirm', defaultMessage: 'Delete' },
-  followed:   { id: 'lists.replies_policy.followed', defaultMessage: 'Any followed user' },
+  followed:   { id: 'lists.replies_policy.followed', defaultMessage: 'Any followed yowzer' },
   none:    { id: 'lists.replies_policy.none', defaultMessage: 'No one' },
   list:  { id: 'lists.replies_policy.list', defaultMessage: 'Members of the list' },
 });
@@ -203,7 +203,7 @@ class ListTimeline extends PureComponent {
           <div className='setting-toggle'>
             <Toggle id={`list-${id}-exclusive`} defaultChecked={isExclusive} onChange={this.onExclusiveToggle} />
             <label htmlFor={`list-${id}-exclusive`} className='setting-toggle__label'>
-              <FormattedMessage id='lists.exclusive' defaultMessage='Hide these posts from home' />
+              <FormattedMessage id='lists.exclusive' defaultMessage='Hide these yowzas from home' />
             </label>
           </div>
 
@@ -226,7 +226,7 @@ class ListTimeline extends PureComponent {
           scrollKey={`list_timeline-${columnId}`}
           timelineId={`list:${id}`}
           onLoadMore={this.handleLoadMore}
-          emptyMessage={<FormattedMessage id='empty_column.list' defaultMessage='There is nothing in this list yet. When members of this list post new statuses, they will appear here.' />}
+          emptyMessage={<FormattedMessage id='empty_column.list' defaultMessage='There is nothing in this list yet. When members of this list post new yowzas, they will appear here.' />}
           bindToDocument={!multiColumn}
         />
 

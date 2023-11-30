@@ -1,30 +1,26 @@
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
+
 import ImmutablePureComponent from 'react-immutable-pure-component';
 
-import SensitiveButtonContainer from '../containers/sensitive_button_container';
 import UploadContainer from '../containers/upload_container';
 import UploadProgressContainer from '../containers/upload_progress_container';
 
 export default class UploadForm extends ImmutablePureComponent {
 
   static propTypes = {
-    mediaIds: ImmutablePropTypes.list.isRequired,
+    fileUpload: PropTypes.string,
   };
 
   render () {
-    const { mediaIds } = this.props;
+    const { fileUpload } = this.props;
 
     return (
       <div className='compose-form__upload-wrapper'>
         <UploadProgressContainer />
 
         <div className='compose-form__uploads-wrapper'>
-          {mediaIds.map(id => (
-            <UploadContainer id={id} key={id} />
-          ))}
+          <UploadContainer fileUpload={fileUpload} />
         </div>
-
-        {!mediaIds.isEmpty() && <SensitiveButtonContainer />}
       </div>
     );
   }

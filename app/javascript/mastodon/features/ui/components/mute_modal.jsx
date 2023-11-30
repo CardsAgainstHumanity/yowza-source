@@ -94,27 +94,21 @@ class MuteModal extends PureComponent {
     return (
       <div className='modal-root__modal mute-modal'>
         <div className='mute-modal__container'>
-          <p>
+          <h1>
             <FormattedMessage
               id='confirmations.mute.message'
               defaultMessage='Are you sure you want to mute {name}?'
-              values={{ name: <strong>@{account.get('acct')}</strong> }}
+              values={{ name: <span>@{account.get('acct')}</span> }}
             />
-          </p>
+          </h1>
           <p className='mute-modal__explanation'>
             <FormattedMessage
               id='confirmations.mute.explanation'
-              defaultMessage='This will hide posts from them and posts mentioning them, but it will still allow them to see your posts and follow you.'
+              defaultMessage='This will hide yowzas from them and yowzas mentioning them, but it will still allow them to see your yowzas and follow you.'
             />
           </p>
-          <div className='setting-toggle'>
-            <Toggle id='mute-modal__hide-notifications-checkbox' checked={notifications} onChange={this.toggleNotifications} />
-            <label className='setting-toggle__label' htmlFor='mute-modal__hide-notifications-checkbox'>
-              <FormattedMessage id='mute_modal.hide_notifications' defaultMessage='Hide notifications from this user?' />
-            </label>
-          </div>
-          <div>
-            <span><FormattedMessage id='mute_modal.duration' defaultMessage='Duration' />: </span>
+          <div className='mute-modal__duration'>
+            <label><FormattedMessage id='mute_modal.duration' defaultMessage='Duration' />: </label>
 
             {/* eslint-disable-next-line jsx-a11y/no-onchange */}
             <select value={muteDuration} onChange={this.changeMuteDuration}>
@@ -128,14 +122,20 @@ class MuteModal extends PureComponent {
               <option value={604800}>{intl.formatMessage(messages.days, { number: 7 })}</option>
             </select>
           </div>
+          <div className='setting-toggle'>
+            <Toggle id='mute-modal__hide-notifications-checkbox' checked={notifications} onChange={this.toggleNotifications} />
+            <label className='setting-toggle__label' htmlFor='mute-modal__hide-notifications-checkbox'>
+              <FormattedMessage id='mute_modal.hide_notifications' defaultMessage='Hide notifications from this yowzer?' />
+            </label>
+          </div>
         </div>
 
         <div className='mute-modal__action-bar'>
-          <Button onClick={this.handleCancel} className='mute-modal__cancel-button'>
-            <FormattedMessage id='confirmation_modal.cancel' defaultMessage='Cancel' />
-          </Button>
           <Button onClick={this.handleClick} ref={this.setRef}>
             <FormattedMessage id='confirmations.mute.confirm' defaultMessage='Mute' />
+          </Button>
+          <Button onClick={this.handleCancel} className='mute-modal__cancel-button button--underline'>
+            <FormattedMessage id='confirmation_modal.cancel' defaultMessage='Cancel' />
           </Button>
         </div>
       </div>

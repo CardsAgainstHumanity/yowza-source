@@ -1,0 +1,24 @@
+- content_for :page_title do
+  = 'Opt in'
+
+- content_for :header_tags do
+  = render partial: 'shared/og'
+
+  .container-alt
+    .logo-container
+      %h1
+        = link_to root_path do
+          = logo_as_symbol(:wordmark)
+
+    .form-container
+      .simple_form
+        %h1.title='Today is Black Friday, and Yowza will be making some special announcements.'
+        %p.lead
+          Just text
+          %strong YOWZA
+          to 
+          %strong 1-866-376-3341
+          to get them. You’ll be happy you did.
+        .actions
+          = link_to 'Continue', updates_opt_in_verify_url, class: 'btn'
+

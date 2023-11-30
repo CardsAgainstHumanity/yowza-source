@@ -24,7 +24,7 @@ const messages = defineMessages({
   reblog: { id: 'status.reblog', defaultMessage: 'Boost' },
   reblog_private: { id: 'status.reblog_private', defaultMessage: 'Boost with original visibility' },
   cancel_reblog_private: { id: 'status.cancel_reblog_private', defaultMessage: 'Unboost' },
-  cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
+  cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This yowza cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favorite' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
   more: { id: 'status.more', defaultMessage: 'More' },
@@ -38,11 +38,9 @@ const messages = defineMessages({
   unpin: { id: 'status.unpin', defaultMessage: 'Unpin from profile' },
   embed: { id: 'status.embed', defaultMessage: 'Embed' },
   admin_account: { id: 'status.admin_account', defaultMessage: 'Open moderation interface for @{name}' },
-  admin_status: { id: 'status.admin_status', defaultMessage: 'Open this post in the moderation interface' },
+  admin_status: { id: 'status.admin_status', defaultMessage: 'Open this yowza in the moderation interface' },
   admin_domain: { id: 'status.admin_domain', defaultMessage: 'Open moderation interface for {domain}' },
-  copy: { id: 'status.copy', defaultMessage: 'Copy link to post' },
-  blockDomain: { id: 'account.block_domain', defaultMessage: 'Block domain {domain}' },
-  unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unblock domain {domain}' },
+  copy: { id: 'status.copy', defaultMessage: 'Copy link to yowza' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   openOriginalPage: { id: 'account.open_original_page', defaultMessage: 'Open original page' },
@@ -74,8 +72,6 @@ class ActionBar extends PureComponent {
     onUnmute: PropTypes.func,
     onBlock: PropTypes.func,
     onUnblock: PropTypes.func,
-    onBlockDomain: PropTypes.func,
-    onUnblockDomain: PropTypes.func,
     onMuteConversation: PropTypes.func,
     onReport: PropTypes.func,
     onPin: PropTypes.func,
@@ -141,20 +137,6 @@ class ActionBar extends PureComponent {
     }
   };
 
-  handleBlockDomain = () => {
-    const { status, onBlockDomain } = this.props;
-    const account = status.get('account');
-
-    onBlockDomain(account.get('acct').split('@')[1]);
-  };
-
-  handleUnblockDomain = () => {
-    const { status, onUnblockDomain } = this.props;
-    const account = status.get('account');
-
-    onUnblockDomain(account.get('acct').split('@')[1]);
-  };
-
   handleConversationMuteClick = () => {
     this.props.onMuteConversation(this.props.status);
   };
@@ -201,13 +183,9 @@ class ActionBar extends PureComponent {
 
     menu.push({ text: intl.formatMessage(messages.copy), action: this.handleCopy });
 
-    if (publicStatus && 'share' in navigator) {
-      menu.push({ text: intl.formatMessage(messages.share), action: this.handleShare });
-    }
-
-    if (publicStatus && (signedIn || !isRemote)) {
-      menu.push({ text: intl.formatMessage(messages.embed), action: this.handleEmbed });
-    }
+    // if (publicStatus && (signedIn || !isRemote)) {
+    //   menu.push({ text: intl.formatMessage(messages.embed), action: this.handleEmbed });
+    // }
 
     if (signedIn) {
       menu.push(null);
@@ -220,9 +198,7 @@ class ActionBar extends PureComponent {
 
         menu.push({ text: intl.formatMessage(mutingConversation ? messages.unmuteConversation : messages.muteConversation), action: this.handleConversationMuteClick });
         menu.push(null);
-        menu.push({ text: intl.formatMessage(messages.edit), action: this.handleEditClick });
         menu.push({ text: intl.formatMessage(messages.delete), action: this.handleDeleteClick, dangerous: true });
-        menu.push({ text: intl.formatMessage(messages.redraft), action: this.handleRedraftClick, dangerous: true });
       } else {
         menu.push({ text: intl.formatMessage(messages.mention, { name: status.getIn(['account', 'username']) }), action: this.handleMentionClick });
         menu.push(null);
@@ -242,15 +218,7 @@ class ActionBar extends PureComponent {
         menu.push({ text: intl.formatMessage(messages.report, { name: status.getIn(['account', 'username']) }), action: this.handleReport, dangerous: true });
 
         if (account.get('acct') !== account.get('username')) {
-          const domain = account.get('acct').split('@')[1];
-
           menu.push(null);
-
-          if (relationship && relationship.get('domain_blocking')) {
-            menu.push({ text: intl.formatMessage(messages.unblockDomain, { domain }), action: this.handleUnblockDomain });
-          } else {
-            menu.push({ text: intl.formatMessage(messages.blockDomain, { domain }), action: this.handleBlockDomain, dangerous: true });
-          }
         }
 
         if ((permissions & PERMISSION_MANAGE_USERS) === PERMISSION_MANAGE_USERS || (isRemote && (permissions & PERMISSION_MANAGE_FEDERATION) === PERMISSION_MANAGE_FEDERATION)) {

@@ -65,7 +65,7 @@ export default class ImpactReport extends PureComponent {
 
             <tr className={classNames('dimension__item', { negative: !loading && data[1].total > 0 })}>
               <td className='dimension__item__key'>
-                <FormattedMessage id='admin.impact_report.instance_follows' defaultMessage='Followers their users would lose' />
+                <FormattedMessage id='admin.impact_report.instance_follows' defaultMessage='Followers their yowzers would lose' />
               </td>
 
               <td className='dimension__item__value'>
@@ -75,7 +75,7 @@ export default class ImpactReport extends PureComponent {
 
             <tr className={classNames('dimension__item', { negative: !loading && data[2].total > 0 })}>
               <td className='dimension__item__key'>
-                <FormattedMessage id='admin.impact_report.instance_followers' defaultMessage='Followers our users would lose' />
+                <FormattedMessage id='admin.impact_report.instance_followers' defaultMessage='Followers our yowzers would lose' />
               </td>
 
               <td className='dimension__item__value'>

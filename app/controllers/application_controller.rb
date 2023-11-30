@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_functional!
-    redirect_to edit_user_registration_path unless current_user.functional?
+    redirect_to auth_confirm_phone_path unless current_user.functional?
   end
 
   def skip_csrf_meta_tags?

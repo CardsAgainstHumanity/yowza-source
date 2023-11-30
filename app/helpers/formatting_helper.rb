@@ -57,7 +57,7 @@ module FormattingHelper
     if field.verified? && !field.account.local?
       TextFormatter.shortened_link(field.value_for_verification)
     else
-      html_aware_format(field.value, field.account.local?, with_rel_me: with_rel_me, with_domains: true, multiline: false)
+      html_aware_format(field.translated_value, field.account.local?, with_rel_me: with_rel_me, with_domains: true, multiline: false)
     end
   end
 end

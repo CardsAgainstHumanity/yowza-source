@@ -18,7 +18,7 @@ import AccountContainer from '../../containers/account_container';
 import Column from '../ui/components/column';
 
 const messages = defineMessages({
-  heading: { id: 'column.mutes', defaultMessage: 'Muted users' },
+  heading: { id: 'column.mutes', defaultMessage: 'Muted yowzers' },
 });
 
 const mapStateToProps = state => ({
@@ -58,7 +58,7 @@ class Mutes extends ImmutablePureComponent {
       );
     }
 
-    const emptyMessage = <FormattedMessage id='empty_column.mutes' defaultMessage="You haven't muted any users yet." />;
+    const emptyMessage = <FormattedMessage id='empty_column.mutes' defaultMessage="You haven't muted any yowzers yet." />;
 
     return (
       <Column bindToDocument={!multiColumn} icon='volume-off' heading={intl.formatMessage(messages.heading)}>

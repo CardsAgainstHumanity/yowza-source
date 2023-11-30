@@ -27,6 +27,8 @@
 #  edited_at                    :datetime
 #  trendable                    :boolean
 #  ordered_media_attachment_ids :bigint(8)        is an Array
+#  image                        :string
+#  cosmetic_favourites_count    :integer          default(0)
 #
 
 class Status < ApplicationRecord
@@ -423,6 +425,10 @@ class Status < ApplicationRecord
     inbox_owners.each do |inbox_owner|
       AccountConversation.remove_status(inbox_owner, self)
     end
+  end
+
+  def increment_cosmetic_favourites_count!
+    increment!(:cosmetic_favourites_count)
   end
 
   private

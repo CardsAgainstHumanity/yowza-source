@@ -17,7 +17,13 @@ en:
     errors:
       models:
         account:
+          invalid_field_value: An invalid field was submitted. Please try again.
           attributes:
+            fields:
+              invalid_fields: Submitted fields are invalid
+              invalid_age: Please select a value from the list
+              invalid_gender: Please select a value from the list
+              invalid_location: Please select a value from the list
             username:
               invalid: must contain only letters, numbers and underscores
               reserved: is reserved
@@ -39,11 +45,16 @@ en:
               taken: of post already exists
         user:
           attributes:
+            display_name:
+              invalid: Display names may contain letters, numbers, and ()[]!?.*%&|/\-_—
             email:
-              blocked: uses a disallowed e-mail provider
-              unreachable: does not seem to exist
+              blocked: This uses a disallowed email provider.
+              unreachable: This is not a real email address.
             role_id:
               elevated: cannot be higher than your current role
+            phone:
+              taken: This number is already taken.
+              invalid: This is not a valid phone number for Yowza.
         user_role:
           attributes:
             permissions_as_keys:

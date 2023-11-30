@@ -64,7 +64,7 @@ export default class Retention extends PureComponent {
 
               <th>
                 <div className='retention__table__number retention__table__label'>
-                  <FormattedMessage id='admin.dashboard.retention.cohort_size' defaultMessage='New users' />
+                  <FormattedMessage id='admin.dashboard.retention.cohort_size' defaultMessage='New yowzers' />
                 </div>
               </th>
 
@@ -136,10 +136,10 @@ export default class Retention extends PureComponent {
     let title = null;
     switch(frequency) {
     case 'day':
-      title = <FormattedMessage id='admin.dashboard.daily_retention' defaultMessage='User retention rate by day after sign-up' />;
+      title = <FormattedMessage id='admin.dashboard.daily_retention' defaultMessage='Yowzer retention rate by day after sign-up' />;
       break;
     default:
-      title = <FormattedMessage id='admin.dashboard.monthly_retention' defaultMessage='User retention rate by month after sign-up' />;
+      title = <FormattedMessage id='admin.dashboard.monthly_retention' defaultMessage='Yowzer retention rate by month after sign-up' />;
     }
 
     return (

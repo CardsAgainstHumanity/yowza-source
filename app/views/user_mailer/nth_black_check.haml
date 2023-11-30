@@ -1,0 +1,19 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear yowzer,
+                            %br
+                            %p Thanks for buying your #{@checks_count_english} cool black check! Your account, @#{@resource.account.username}, will be upgraded within the next 5 minutes. This email serves as your receipt for a #{@price} payment.
+                            %br
+                            = render 'shared/yowza_signature'

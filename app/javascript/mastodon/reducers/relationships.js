@@ -21,10 +21,6 @@ import {
   FOLLOW_REQUEST_REJECT_SUCCESS,
 } from '../actions/accounts';
 import {
-  DOMAIN_BLOCK_SUCCESS,
-  DOMAIN_UNBLOCK_SUCCESS,
-} from '../actions/domain_blocks';
-import {
   NOTIFICATIONS_UPDATE,
 } from '../actions/notifications';
 
@@ -37,14 +33,6 @@ const normalizeRelationships = (state, relationships) => {
   });
 
   return state;
-};
-
-const setDomainBlocking = (state, accounts, blocking) => {
-  return state.withMutations(map => {
-    accounts.forEach(id => {
-      map.setIn([id, 'domain_blocking'], blocking);
-    });
-  });
 };
 
 const initialState = ImmutableMap();
@@ -77,10 +65,6 @@ export default function relationships(state = initialState, action) {
     return normalizeRelationship(state, action.relationship);
   case RELATIONSHIPS_FETCH_SUCCESS:
     return normalizeRelationships(state, action.relationships);
-  case DOMAIN_BLOCK_SUCCESS:
-    return setDomainBlocking(state, action.accounts, true);
-  case DOMAIN_UNBLOCK_SUCCESS:
-    return setDomainBlocking(state, action.accounts, false);
   default:
     return state;
   }

@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_24_164613) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "account_aliases", force: :cascade do |t|
@@ -98,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "last_status_at", precision: nil
+    t.boolean "counted_as_referral", default: false, null: false
     t.index ["account_id"], name: "index_account_stats_on_account_id", unique: true
   end
 
@@ -152,11 +154,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.string "url"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.integer "avatar_file_size"
+    t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at", precision: nil
     t.string "header_file_name"
     t.string "header_content_type"
-    t.integer "header_file_size"
+    t.bigint "header_file_size"
     t.datetime "header_updated_at", precision: nil
     t.string "avatar_remote_url"
     t.boolean "locked", default: false, null: false
@@ -172,7 +174,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.string "featured_collection_url"
     t.jsonb "fields"
     t.string "actor_type"
-    t.boolean "discoverable"
+    t.boolean "discoverable", default: true
     t.string "also_known_as", array: true
     t.datetime "silenced_at", precision: nil
     t.datetime "suspended_at", precision: nil
@@ -180,12 +182,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.integer "avatar_storage_schema_version"
     t.integer "header_storage_schema_version"
     t.string "devices_url"
-    t.integer "suspension_origin"
     t.datetime "sensitized_at", precision: nil
+    t.integer "suspension_origin"
     t.boolean "trendable"
     t.datetime "reviewed_at", precision: nil
     t.datetime "requested_review_at", precision: nil
     t.boolean "indexable", default: false, null: false
+    t.string "yowza_black_status"
+    t.boolean "winner", default: false, null: false
+    t.boolean "avatar_passed_moderation", default: false, null: false
+    t.boolean "header_passed_moderation", default: false, null: false
+    t.integer "cosmetic_followers_count", default: 0
+    t.integer "purchased_checks", default: 0
+    t.boolean "shazam", default: false, null: false
+    t.integer "price"
+    t.integer "avatar_moderation_attempts", default: 0
+    t.integer "header_moderation_attempts", default: 0
     t.index "(((setweight(to_tsvector('simple'::regconfig, (display_name)::text), 'A'::\"char\") || setweight(to_tsvector('simple'::regconfig, (username)::text), 'B'::\"char\")) || setweight(to_tsvector('simple'::regconfig, (COALESCE(domain, ''::character varying))::text), 'C'::\"char\")))", name: "search_index", using: :gin
     t.index "lower((username)::text), COALESCE(lower((domain)::text), ''::text)", name: "index_accounts_on_username_and_domain_lower", unique: true
     t.index ["domain", "id"], name: "index_accounts_on_domain_and_id"
@@ -329,6 +341,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.index ["reference_account_id"], name: "index_canonical_email_blocks_on_reference_account_id"
   end
 
+  create_table "challenge_completions", force: :cascade do |t|
+    t.string "completion_for"
+    t.boolean "processed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "challenge_results", force: :cascade do |t|
+    t.string "result_for"
+    t.text "result", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "conversation_mutes", force: :cascade do |t|
     t.bigint "conversation_id", null: false
     t.bigint "account_id", null: false
@@ -354,7 +380,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.string "domain"
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -461,6 +487,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.index ["status_id"], name: "index_favourites_on_status_id"
   end
 
+  create_table "feature_releases", force: :cascade do |t|
+    t.integer "current_features", default: 0, null: false
+    t.integer "singleton_guard", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["singleton_guard"], name: "index_feature_releases_on_singleton_guard", unique: true
+  end
+
   create_table "featured_tags", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "tag_id", null: false
@@ -521,7 +555,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "data_file_name"
     t.string "data_content_type"
-    t.integer "data_file_size"
+    t.bigint "data_file_size"
     t.datetime "data_updated_at", precision: nil
     t.bigint "account_id", null: false
     t.boolean "overwrite", default: false, null: false
@@ -537,17 +571,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "autofollow", default: false, null: false
     t.text "comment"
+    t.integer "referrals", default: 0
     t.index ["code"], name: "index_invites_on_code", unique: true
     t.index ["user_id"], name: "index_invites_on_user_id"
   end
 
   create_table "ip_blocks", force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "expires_at", precision: nil
     t.inet "ip", default: "0.0.0.0", null: false
     t.integer "severity", default: 0, null: false
+    t.datetime "expires_at", precision: nil
     t.text "comment", default: "", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["ip"], name: "index_ip_blocks_on_ip", unique: true
   end
 
@@ -598,7 +633,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.bigint "status_id"
     t.string "file_file_name"
     t.string "file_content_type"
-    t.integer "file_file_size"
+    t.bigint "file_file_size"
     t.datetime "file_updated_at", precision: nil
     t.string "remote_url", default: "", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -614,8 +649,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.integer "file_storage_schema_version"
     t.string "thumbnail_file_name"
     t.string "thumbnail_content_type"
-    t.integer "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at", precision: nil
+    t.bigint "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
     t.string "thumbnail_remote_url"
     t.index ["account_id", "status_id"], name: "index_media_attachments_on_account_id_and_status_id", order: { status_id: :desc }
     t.index ["scheduled_status_id"], name: "index_media_attachments_on_scheduled_status_id", where: "(scheduled_status_id IS NOT NULL)"
@@ -782,7 +817,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.string "description", default: "", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at", precision: nil
     t.integer "type", default: 0, null: false
     t.text "html", default: "", null: false
@@ -810,6 +845,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
   create_table "preview_cards_statuses", primary_key: ["status_id", "preview_card_id"], force: :cascade do |t|
     t.bigint "preview_card_id", null: false
     t.bigint "status_id", null: false
+  end
+
+  create_table "promo_codes", force: :cascade do |t|
+    t.string "code"
+    t.boolean "used", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_promo_codes_on_user_id"
   end
 
   create_table "relays", force: :cascade do |t|
@@ -894,7 +938,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.string "var", default: "", null: false
     t.string "file_file_name"
     t.string "file_content_type"
-    t.integer "file_file_size"
+    t.bigint "file_file_size"
     t.datetime "file_updated_at", precision: nil
     t.json "meta"
     t.datetime "created_at", precision: nil, null: false
@@ -921,8 +965,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
   create_table "status_pins", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.datetime "created_at", precision: nil, default: -> { "now()" }, null: false
-    t.datetime "updated_at", precision: nil, default: -> { "now()" }, null: false
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["account_id", "status_id"], name: "index_status_pins_on_account_id_and_status_id", unique: true
     t.index ["status_id"], name: "index_status_pins_on_status_id"
   end
@@ -934,6 +978,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.bigint "favourites_count", default: 0, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.boolean "is_awooga", default: false
     t.index ["status_id"], name: "index_status_stats_on_status_id", unique: true
   end
 
@@ -971,6 +1016,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.datetime "edited_at", precision: nil
     t.boolean "trendable"
     t.bigint "ordered_media_attachment_ids", array: true
+    t.string "image"
+    t.integer "cosmetic_favourites_count", default: 0
     t.index ["account_id", "id", "visibility", "updated_at"], name: "index_statuses_20190820", order: { id: :desc }, where: "(deleted_at IS NULL)"
     t.index ["account_id"], name: "index_statuses_on_account_id"
     t.index ["deleted_at"], name: "index_statuses_on_deleted_at", where: "(deleted_at IS NOT NULL)"
@@ -1092,10 +1139,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_142253) do
     t.bigint "role_id"
     t.text "settings"
     t.string "time_zone"
+    t.string "phone"
+    t.boolean "phone_confirmed_at", default: false, null: false
+    t.boolean "paid_for_referral", default: false, null: false
+    t.boolean "paid_as_referee", default: false, null: false
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_by_application_id"], name: "index_users_on_created_by_application_id", where: "(created_by_application_id IS NOT NULL)"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["phone"], name: "index_users_on_phone", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, opclass: :text_pattern_ops, where: "(reset_password_token IS NOT NULL)"
     t.index ["role_id"], name: "index_users_on_role_id", where: "(role_id IS NOT NULL)"
     t.index ["unconfirmed_email"], name: "index_users_on_unconfirmed_email", where: "(unconfirmed_email IS NOT NULL)"

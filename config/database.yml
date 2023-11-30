@@ -53,6 +53,7 @@ production:
     host: <%= ENV['DB_HOST'] || 'localhost' %>
     port: <%= ENV['DB_PORT'] || 5432 %>
     prepared_statements: <%= ENV['PREPARED_STATEMENTS'] || 'true' %>
+    url: <%= ENV['DATABASE_URL'].sub(/:5432/, ':5433') %>
   replica:
     <<: *default
     database: <%= ENV['REPLICA_DB_NAME'] ||ENV['DB_NAME'] || 'mastodon_production' %>
@@ -61,4 +62,5 @@ production:
     host: <%= ENV['REPLICA_DB_HOST'] ||ENV['DB_HOST'] || 'localhost' %>
     port: <%= ENV['REPLICA_DB_PORT'] ||ENV['DB_PORT'] || 5432 %>
     prepared_statements: <%= ENV['PREPARED_STATEMENTS'] || 'true' %>
+    url: <%= ENV['REPLICA_DATABASE_URL'].sub(/:5432/, ':5433') %>
     replica: true

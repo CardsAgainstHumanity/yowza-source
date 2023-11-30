@@ -84,6 +84,8 @@ class DeleteAccountService < BaseService
 
     @options[:skip_activitypub] = true if @options[:skip_side_effects]
 
+    AccountDeletedMailerWorker.perform_async(@account.user.id) if @account.user
+
     distribute_activities!
     purge_content!
     fulfill_deletion_request!

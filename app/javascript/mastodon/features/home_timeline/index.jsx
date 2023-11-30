@@ -120,6 +120,9 @@ class HomeTimeline extends PureComponent {
 
   componentDidUpdate (prevProps) {
     this._checkIfReloadNeeded(prevProps.isPartial, this.props.isPartial);
+    if (prevProps.unreadAnnouncements < this.props.unreadAnnouncements && !this.props.showAnnouncements) {
+      this.props.dispatch(toggleShowAnnouncements());
+    }
   }
 
   componentWillUnmount () {
@@ -153,7 +156,7 @@ class HomeTimeline extends PureComponent {
   };
 
   render () {
-    const { intl, hasUnread, columnId, multiColumn, tooSlow, hasAnnouncements, unreadAnnouncements, showAnnouncements } = this.props;
+    const { intl, hasUnread, columnId, multiColumn, tooSlow, hasAnnouncements, showAnnouncements } = this.props;
     const pinned = !!columnId;
     const { signedIn } = this.context.identity;
 
@@ -168,7 +171,7 @@ class HomeTimeline extends PureComponent {
           aria-label={intl.formatMessage(showAnnouncements ? messages.hide_announcements : messages.show_announcements)}
           onClick={this.handleToggleAnnouncementsClick}
         >
-          <IconWithBadge id='bullhorn' count={unreadAnnouncements} />
+          <IconWithBadge id='bullhorn' count={0} />
         </button>
       );
     }

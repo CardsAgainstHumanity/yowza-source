@@ -278,6 +278,28 @@ code {
     }
   }
 
+  .input.with_block_label_no_hint {
+    max-width: none;
+
+    & > label {
+      font-family: inherit;
+      font-size: 14px;
+      color: $primary-text-color;
+      display: block;
+      font-weight: 500;
+      margin-bottom: 12px;
+      padding-top: 5px;
+    }
+
+    .hint {
+      display: none;
+    }
+
+    ul {
+      columns: 2;
+    }
+  }
+
   .input.with_block_label.user_role_permissions_as_keys ul {
     columns: unset;
   }
@@ -422,6 +444,7 @@ code {
   input[type='number'],
   input[type='email'],
   input[type='password'],
+  input[type='tel'],
   input[type='url'],
   input[type='datetime-local'],
   textarea {
@@ -465,6 +488,7 @@ code {
   input[type='number'],
   input[type='email'],
   input[type='password'],
+  input[type='tel'],
   input[type='datetime-local'] {
     &:focus:invalid:not(:placeholder-shown),
     &:required:invalid:not(:placeholder-shown) {
@@ -481,6 +505,7 @@ code {
     input[type='number'],
     input[type='email'],
     input[type='password'],
+    input[type='tel'],
     input[type='datetime-local'],
     textarea,
     select {
@@ -507,6 +532,51 @@ code {
       margin-top: 0;
       margin-bottom: 30px;
     }
+
+    .sign-up-btn {
+      display: block;
+      width: 100%;
+      border: 0;
+      border-radius: 4px;
+      background: $ui-button-background-color;
+      color: $ui-button-color;
+      font-size: 18px;
+      line-height: inherit;
+      height: auto;
+      padding: 10px;
+      text-decoration: none;
+      text-align: center;
+      box-sizing: border-box;
+      cursor: pointer;
+      font-weight: 500;
+      outline: 0;
+      margin-bottom: 10px;
+      margin-inline-end: 10px;
+
+      &:last-child {
+        margin-inline-end: 0;
+      }
+
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: $ui-button-focus-background-color;
+      }
+
+      &:disabled:hover {
+        background-color: $ui-primary-color;
+      }
+
+      &.negative {
+        background: $ui-button-destructive-background-color;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: $ui-button-destructive-focus-background-color;
+        }
+      }
+    }
   }
 
   .stacked-actions {
@@ -528,7 +598,6 @@ code {
     height: auto;
     padding: 10px;
     text-decoration: none;
-    text-transform: uppercase;
     text-align: center;
     box-sizing: border-box;
     cursor: pointer;
@@ -735,10 +804,6 @@ code {
         font-weight: 700;
       }
     }
-  }
-
-  @media screen and (440px < width <= 740px) {
-    margin-top: 40px;
   }
 
   &.translation-prompt {

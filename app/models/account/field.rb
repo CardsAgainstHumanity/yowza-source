@@ -62,6 +62,12 @@ class Account::Field < ActiveModelSerializers::Model
     { name: name, value: value, verified_at: verified_at }
   end
 
+  def translated_value
+    return value if value.blank?
+
+    I18n.t("edit_profile.#{name.downcase}.#{value}")
+  end
+
   private
 
   def sanitize(str)

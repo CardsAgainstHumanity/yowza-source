@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Link, withRouter } from 'react-router-dom';
 
@@ -10,9 +10,10 @@ import { connect } from 'react-redux';
 import { openModal } from 'mastodon/actions/modal';
 import { fetchServer } from 'mastodon/actions/server';
 import { Avatar } from 'mastodon/components/avatar';
-import { Icon } from 'mastodon/components/icon';
 import { WordmarkLogo, SymbolLogo } from 'mastodon/components/logo';
-import { registrationsOpen, me, sso_redirect } from 'mastodon/initial_state';
+import { YB, messages as yowzaBlackMessages } from 'mastodon/features/yowza_black';
+import  YowzaBlackButton from 'mastodon/features/yowza_black/components/yowza_black_button';
+import { registrationsOpen, me, sso_redirect, eyb, cybs, inMobileWebview, nybs } from 'mastodon/initial_state';
 
 const Account = connect(state => ({
   account: state.getIn(['accounts', me]),
@@ -21,10 +22,6 @@ const Account = connect(state => ({
     <Avatar account={account} size={35} />
   </Link>
 ));
-
-const messages = defineMessages({
-  search: { id: 'navigation_bar.search', defaultMessage: 'Search' },
-});
 
 const mapStateToProps = (state) => ({
   signupUrl: state.getIn(['server', 'server', 'registrations', 'url'], null) || '/auth/sign_up',
@@ -59,16 +56,20 @@ class Header extends PureComponent {
   }
 
   render () {
+    if (inMobileWebview) {
+      return null;
+    }
+
     const { signedIn } = this.context.identity;
-    const { location, openClosedRegistrationsModal, signupUrl, intl } = this.props;
+    const { openClosedRegistrationsModal, signupUrl } = this.props;
 
     let content;
 
     if (signedIn) {
+      const buttonText = cybs === YB ? this.props.intl.formatMessage(yowzaBlackMessages.yowzaBlacker) : this.props.intl.formatMessage(yowzaBlackMessages.yowzaBlack);
       content = (
         <>
-          {location.pathname !== '/search' && <Link to='/search' className='button button-secondary' aria-label={intl.formatMessage(messages.search)}><Icon id='search' /></Link>}
-          {location.pathname !== '/publish' && <Link to='/publish' className='button button-secondary'><FormattedMessage id='compose_form.publish_form' defaultMessage='New post' /></Link>}
+          {eyb && nybs && <YowzaBlackButton buttonText={buttonText} />}
           <Account />
         </>
       );
@@ -76,7 +77,7 @@ class Header extends PureComponent {
 
       if (sso_redirect) {
         content = (
-            <a href={sso_redirect} data-method='post' className='button button--block button-tertiary'><FormattedMessage id='sign_in_banner.sso_redirect' defaultMessage='Login or Register' /></a>
+            <a href={sso_redirect} data-method='post' className='button button--block'><FormattedMessage id='sign_in_banner.sso_redirect' defaultMessage='Login or Register' /></a>
         )
       } else {
         let signupButton;
@@ -98,7 +99,7 @@ class Header extends PureComponent {
         content = (
           <>
             {signupButton}
-            <a href='/auth/sign_in' className='button button-tertiary'><FormattedMessage id='sign_in_banner.sign_in' defaultMessage='Login' /></a>
+            <a href='/auth/sign_in' className='button'><FormattedMessage id='sign_in_banner.sign_in' defaultMessage='Log in' /></a>
           </>
         );
       }

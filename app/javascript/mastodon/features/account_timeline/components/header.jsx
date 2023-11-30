@@ -23,8 +23,6 @@ export default class Header extends ImmutablePureComponent {
     onReblogToggle: PropTypes.func.isRequired,
     onReport: PropTypes.func.isRequired,
     onMute: PropTypes.func.isRequired,
-    onBlockDomain: PropTypes.func.isRequired,
-    onUnblockDomain: PropTypes.func.isRequired,
     onEndorseToggle: PropTypes.func.isRequired,
     onAddToList: PropTypes.func.isRequired,
     onChangeLanguages: PropTypes.func.isRequired,
@@ -70,22 +68,6 @@ export default class Header extends ImmutablePureComponent {
 
   handleMute = () => {
     this.props.onMute(this.props.account);
-  };
-
-  handleBlockDomain = () => {
-    const domain = this.props.account.get('acct').split('@')[1];
-
-    if (!domain) return;
-
-    this.props.onBlockDomain(domain);
-  };
-
-  handleUnblockDomain = () => {
-    const domain = this.props.account.get('acct').split('@')[1];
-
-    if (!domain) return;
-
-    this.props.onUnblockDomain(domain);
   };
 
   handleEndorseToggle = () => {
@@ -134,8 +116,6 @@ export default class Header extends ImmutablePureComponent {
           onNotifyToggle={this.handleNotifyToggle}
           onReport={this.handleReport}
           onMute={this.handleMute}
-          onBlockDomain={this.handleBlockDomain}
-          onUnblockDomain={this.handleUnblockDomain}
           onEndorseToggle={this.handleEndorseToggle}
           onAddToList={this.handleAddToList}
           onEditAccountNote={this.handleEditAccountNote}
@@ -149,9 +129,8 @@ export default class Header extends ImmutablePureComponent {
 
         {!(hideTabs || hidden) && (
           <div className='account__section-headline'>
-            <NavLink exact to={`/@${account.get('acct')}`}><FormattedMessage id='account.posts' defaultMessage='Posts' /></NavLink>
-            <NavLink exact to={`/@${account.get('acct')}/with_replies`}><FormattedMessage id='account.posts_with_replies' defaultMessage='Posts and replies' /></NavLink>
-            <NavLink exact to={`/@${account.get('acct')}/media`}><FormattedMessage id='account.media' defaultMessage='Media' /></NavLink>
+            <NavLink exact to={`/@${account.get('acct')}`}><FormattedMessage id='account.posts' defaultMessage='Yowzas' /></NavLink>
+            <NavLink exact to={`/@${account.get('acct')}/with_replies`}><FormattedMessage id='account.posts_with_replies' defaultMessage='Yowzas and replies' /></NavLink>
           </div>
         )}
       </div>

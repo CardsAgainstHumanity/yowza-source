@@ -1,0 +1,19 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear yowzer,
+                            %br
+                            %p Thanks for paying $0.99 to make @#{@purchased_follower.account.username} follow you! Your new cool celebrity follower should show up as follower of @#{@resource.account.username} within the next 5 minutes. This email serves as your receipt.
+                            %br
+                            = render 'shared/yowza_signature'

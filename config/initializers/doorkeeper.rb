@@ -5,26 +5,26 @@ Doorkeeper.configure do
   orm :active_record
 
   # This block will be called to check whether the resource owner is authenticated or not.
-  resource_owner_authenticator do
-    current_user || redirect_to(new_user_session_url)
-  end
+  # resource_owner_authenticator do
+  #   current_user || redirect_to(new_user_session_url)
+  # end
 
-  resource_owner_from_credentials do |_routes|
-    user   = User.authenticate_with_ldap(email: request.params[:username], password: request.params[:password]) if Devise.ldap_authentication
-    user ||= User.authenticate_with_pam(email: request.params[:username], password: request.params[:password]) if Devise.pam_authentication
+  # resource_owner_from_credentials do |_routes|
+  #   user   = User.authenticate_with_ldap(email: request.params[:username], password: request.params[:password]) if Devise.ldap_authentication
+  #   user ||= User.authenticate_with_pam(email: request.params[:username], password: request.params[:password]) if Devise.pam_authentication
 
-    if user.nil?
-      user = User.find_by(email: request.params[:username])
-      user = nil unless user&.valid_password?(request.params[:password])
-    end
+  #   if user.nil?
+  #     user = User.find_by(email: request.params[:username])
+  #     user = nil unless user&.valid_password?(request.params[:password])
+  #   end
 
-    user unless user&.otp_required_for_login?
-  end
+  #   user unless user&.otp_required_for_login?
+  # end
 
-  # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
-  admin_authenticator do
-    current_user&.admin? || redirect_to(new_user_session_url)
-  end
+  # # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
+  # admin_authenticator do
+  #   current_user&.admin? || redirect_to(new_user_session_url)
+  # end
 
   # Authorization Code expiration time (default 10 minutes).
   # authorization_code_expires_in 10.minutes
@@ -47,73 +47,73 @@ Doorkeeper.configure do
   # https://github.com/doorkeeper-gem/doorkeeper#custom-base-controller
   base_controller 'ApplicationController'
 
-  # Reuse access token for the same resource owner within an application (disabled by default)
-  # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
-  reuse_access_token
+  # # Reuse access token for the same resource owner within an application (disabled by default)
+  # # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
+  # reuse_access_token
 
-  # Issue access tokens with refresh token (disabled by default)
-  # use_refresh_token
+  # # Issue access tokens with refresh token (disabled by default)
+  # # use_refresh_token
 
-  # Forbids creating/updating applications with arbitrary scopes that are
-  # not in configuration, i.e. `default_scopes` or `optional_scopes`.
-  # (Disabled by default)
-  enforce_configured_scopes
+  # # Forbids creating/updating applications with arbitrary scopes that are
+  # # not in configuration, i.e. `default_scopes` or `optional_scopes`.
+  # # (Disabled by default)
+  # enforce_configured_scopes
 
-  # Provide support for an owner to be assigned to each registered application (disabled by default)
-  # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
-  # a registered application
-  # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
-  enable_application_owner
+  # # Provide support for an owner to be assigned to each registered application (disabled by default)
+  # # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
+  # # a registered application
+  # # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
+  # enable_application_owner
 
-  # Define access token scopes for your provider
-  # For more information go to
-  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  default_scopes  :read
-  optional_scopes :write,
-                  :'write:accounts',
-                  :'write:blocks',
-                  :'write:bookmarks',
-                  :'write:conversations',
-                  :'write:favourites',
-                  :'write:filters',
-                  :'write:follows',
-                  :'write:lists',
-                  :'write:media',
-                  :'write:mutes',
-                  :'write:notifications',
-                  :'write:reports',
-                  :'write:statuses',
-                  :read,
-                  :'read:accounts',
-                  :'read:blocks',
-                  :'read:bookmarks',
-                  :'read:favourites',
-                  :'read:filters',
-                  :'read:follows',
-                  :'read:lists',
-                  :'read:mutes',
-                  :'read:notifications',
-                  :'read:search',
-                  :'read:statuses',
-                  :follow,
-                  :push,
-                  :'admin:read',
-                  :'admin:read:accounts',
-                  :'admin:read:reports',
-                  :'admin:read:domain_allows',
-                  :'admin:read:domain_blocks',
-                  :'admin:read:ip_blocks',
-                  :'admin:read:email_domain_blocks',
-                  :'admin:read:canonical_email_blocks',
-                  :'admin:write',
-                  :'admin:write:accounts',
-                  :'admin:write:reports',
-                  :'admin:write:domain_allows',
-                  :'admin:write:domain_blocks',
-                  :'admin:write:ip_blocks',
-                  :'admin:write:email_domain_blocks',
-                  :'admin:write:canonical_email_blocks',
-                  :crypto
+  # # Define access token scopes for your provider
+  # # For more information go to
+  # # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
+  # default_scopes  :read
+  # optional_scopes :write,
+  #                 :'write:accounts',
+  #                 :'write:blocks',
+  #                 :'write:bookmarks',
+  #                 :'write:conversations',
+  #                 :'write:favourites',
+  #                 :'write:filters',
+  #                 :'write:follows',
+  #                 :'write:lists',
+  #                 :'write:media',
+  #                 :'write:mutes',
+  #                 :'write:notifications',
+  #                 :'write:reports',
+  #                 :'write:statuses',
+  #                 :read,
+  #                 :'read:accounts',
+  #                 :'read:blocks',
+  #                 :'read:bookmarks',
+  #                 :'read:favourites',
+  #                 :'read:filters',
+  #                 :'read:follows',
+  #                 :'read:lists',
+  #                 :'read:mutes',
+  #                 :'read:notifications',
+  #                 :'read:search',
+  #                 :'read:statuses',
+  #                 :follow,
+  #                 :push,
+  #                 :'admin:read',
+  #                 :'admin:read:accounts',
+  #                 :'admin:read:reports',
+  #                 :'admin:read:domain_allows',
+  #                 :'admin:read:domain_blocks',
+  #                 :'admin:read:ip_blocks',
+  #                 :'admin:read:email_domain_blocks',
+  #                 :'admin:read:canonical_email_blocks',
+  #                 :'admin:write',
+  #                 :'admin:write:accounts',
+  #                 :'admin:write:reports',
+  #                 :'admin:write:domain_allows',
+  #                 :'admin:write:domain_blocks',
+  #                 :'admin:write:ip_blocks',
+  #                 :'admin:write:email_domain_blocks',
+  #                 :'admin:write:canonical_email_blocks',
+  #                 :crypto
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
@@ -138,14 +138,14 @@ Doorkeeper.configure do
   # by default in non-development environments). OAuth2 delegates security in
   # communication to the HTTPS protocol so it is wise to keep this enabled.
   #
-  force_ssl_in_redirect_uri false
+  # force_ssl_in_redirect_uri false
 
   # Specify what redirect URI's you want to block during Application creation.
   # Any redirect URI is whitelisted by default.
   #
   # You can use this option in order to forbid URI's with 'javascript' scheme
   # for example.
-  forbid_redirect_uri { |uri| %w[data vbscript javascript].include?(uri.scheme.to_s.downcase) }
+  # forbid_redirect_uri { |uri| %w[data vbscript javascript].include?(uri.scheme.to_s.downcase) }
 
   # Specify what grant flows are enabled in array of Strings. The valid
   # strings and the flows they enable are:
@@ -164,14 +164,14 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
 
-  grant_flows %w(authorization_code password client_credentials)
+  # grant_flows %w(authorization_code password client_credentials)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
-  skip_authorization do |resource_owner, client|
-    client.application.superapp?
-  end
+  # skip_authorization do |resource_owner, client|
+  #   client.application.superapp?
+  # end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"

@@ -27,7 +27,7 @@ class REST::AnnouncementSerializer < ActiveModel::Serializer
   end
 
   def content
-    linkify(object.text)
+    object.text # this second argument is a 'local' argument.  since we're not federated it's ok to hardcode to true
   end
 
   def reactions

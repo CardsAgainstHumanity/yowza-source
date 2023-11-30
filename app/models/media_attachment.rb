@@ -4,11 +4,10 @@
 #
 # Table name: media_attachments
 #
-#  id                          :bigint(8)        not null, primary key
 #  status_id                   :bigint(8)
 #  file_file_name              :string
 #  file_content_type           :string
-#  file_file_size              :integer
+#  file_file_size              :bigint(8)
 #  file_updated_at             :datetime
 #  remote_url                  :string           default(""), not null
 #  created_at                  :datetime         not null
@@ -17,6 +16,7 @@
 #  type                        :integer          default("image"), not null
 #  file_meta                   :json
 #  account_id                  :bigint(8)
+#  id                          :bigint(8)        not null, primary key
 #  description                 :text
 #  scheduled_status_id         :bigint(8)
 #  blurhash                    :string
@@ -24,7 +24,7 @@
 #  file_storage_schema_version :integer
 #  thumbnail_file_name         :string
 #  thumbnail_content_type      :string
-#  thumbnail_file_size         :integer
+#  thumbnail_file_size         :bigint(8)
 #  thumbnail_updated_at        :datetime
 #  thumbnail_remote_url        :string
 #
@@ -45,7 +45,7 @@ class MediaAttachment < ApplicationRecord
   MAX_VIDEO_MATRIX_LIMIT = 8_294_400 # 3840x2160px
   MAX_VIDEO_FRAME_RATE   = 120
 
-  IMAGE_FILE_EXTENSIONS = %w(.jpg .jpeg .png .gif .webp .heic .heif .avif).freeze
+  IMAGE_FILE_EXTENSIONS = %w(.jpg .jpeg .png).freeze
   VIDEO_FILE_EXTENSIONS = %w(.webm .mp4 .m4v .mov).freeze
   AUDIO_FILE_EXTENSIONS = %w(.ogg .oga .mp3 .wav .flac .opus .aac .m4a .3gp .wma).freeze
 
@@ -56,7 +56,7 @@ class MediaAttachment < ApplicationRecord
     small
   ).freeze
 
-  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/heic image/heif image/webp image/avif).freeze
+  IMAGE_MIME_TYPES             = %w(image/jpeg image/png).freeze
   IMAGE_CONVERTIBLE_MIME_TYPES = %w(image/heic image/heif image/avif).freeze
   VIDEO_MIME_TYPES             = %w(video/webm video/mp4 video/quicktime video/ogg).freeze
   VIDEO_CONVERTIBLE_MIME_TYPES = %w(video/webm video/quicktime).freeze
@@ -283,11 +283,11 @@ class MediaAttachment < ApplicationRecord
 
   class << self
     def supported_mime_types
-      IMAGE_MIME_TYPES + VIDEO_MIME_TYPES + AUDIO_MIME_TYPES
+      IMAGE_MIME_TYPES
     end
 
     def supported_file_extensions
-      IMAGE_FILE_EXTENSIONS + VIDEO_FILE_EXTENSIONS + AUDIO_FILE_EXTENSIONS
+      IMAGE_FILE_EXTENSIONS
     end
 
     private

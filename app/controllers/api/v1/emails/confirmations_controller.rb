@@ -21,7 +21,7 @@ class Api::V1::Emails::ConfirmationsController < Api::BaseController
   private
 
   def require_user_owned_by_application!
-    render json: { error: 'This method is only available to the application the user originally signed-up with' }, status: 403 unless current_user && current_user.created_by_application_id == doorkeeper_token.application_id
+    render json: { error: 'This method is only available to the application the yowzer originally signed-up with' }, status: 403 unless current_user && current_user.created_by_application_id == doorkeeper_token.application_id
   end
 
   def require_user_not_confirmed!

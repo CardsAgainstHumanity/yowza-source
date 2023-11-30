@@ -66,6 +66,7 @@ docker-compose.override.yml
 
 # Ignore vendored CSS reset
 app/javascript/styles/mastodon/reset.scss
+app/javascript/styles/mastodon/custom.css
 
 # Ignore Javascript pending https://github.com/mastodon/mastodon/pull/23631
 *.js

@@ -117,7 +117,7 @@ class DropdownMenu extends PureComponent {
 
   renderItem = (option, i) => {
     if (option === null) {
-      return <li key={`sep-${i}`} className='dropdown-menu__separator' />;
+      return <li key={`sep-${i}`} className='dropdown-menu__separator' style={{display: 'none'}} />;
     }
 
     const { text, href = '#', target = '_blank', method, dangerous } = option;

@@ -10,7 +10,11 @@ class Auth::SetupController < ApplicationController
 
   skip_before_action :require_functional!
 
-  def show; end
+  def show
+    @user.confirm unless @user.confirmed?
+
+    redirect_to root_path
+  end
 
   def update
     # This allows updating the e-mail without entering a password as is required

@@ -47,7 +47,7 @@
 }
 
 .button {
-  background-color: $ui-button-background-color;
+  background-color: white;
   border: 10px none;
   border-radius: 4px;
   box-sizing: border-box;
@@ -760,6 +760,17 @@ body > [data-popper-placement] {
   img {
     width: auto;
   }
+}
+
+.layout-single-column .yb-badges-wrapper {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.yb-badge-aligner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .reply-indicator {
@@ -1801,6 +1812,7 @@ a.account__display-name {
 
 .display-name {
   display: block;
+  gap: 5px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1924,6 +1936,11 @@ a.account__display-name {
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.navigation-bar__profile-account-badge {
+  display: flex;
+  gap: 5px;
 }
 
 .navigation-bar__profile-edit {
@@ -2404,11 +2421,6 @@ $ui-header-height: 55px;
     @supports (display: grid) {
       contain: content;
     }
-  }
-
-  @media screen and (min-width: $no-gap-breakpoint) {
-    padding: 10px 0;
-    padding-top: 0;
   }
 }
 
@@ -2931,9 +2943,7 @@ $ui-header-height: 55px;
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 310px;
-    padding-bottom: 71px;
-    margin-bottom: -71px;
+    padding-bottom: 25px;
   }
 
   .compose-form__autosuggest-wrapper {
@@ -2951,6 +2961,8 @@ $ui-header-height: 55px;
     height: 80px;
   }
 }
+
+// NOTE: .leaderboard-list moved to reskin.css file (matt, 2023-11-09)
 
 .navigation-panel {
   margin-top: 10px;
@@ -3133,10 +3145,6 @@ $ui-header-height: 55px;
   font-size: 16px;
   padding: 0 5px 0 0;
   z-index: 3;
-
-  &:hover {
-    text-decoration: underline;
-  }
 
   &:last-child {
     padding: 0 15px 0 0;
@@ -3994,7 +4002,6 @@ a.status-card {
 
   &.collapsed {
     max-height: 0;
-    opacity: 0.5;
   }
 
   &.animating {
@@ -4270,13 +4277,6 @@ a.status-card {
     &__action {
       font-weight: 400;
       font-size: 13px;
-    }
-
-    &:hover,
-    &:focus {
-      .spoiler-button__overlay__label {
-        background-color: rgba($black, 0.9);
-      }
     }
   }
 }
@@ -5564,12 +5564,16 @@ a.status-card {
 .actions-modal,
 .mute-modal,
 .block-modal,
+.payment-modal,
+.referral-modal,
+.pre-payment-modal,
 .compare-history-modal {
   background: lighten($ui-secondary-color, 8%);
   color: $inverted-text-color;
   border-radius: 8px;
   overflow: hidden;
   max-width: 90vw;
+  max-height: 90vh;
   width: 480px;
   position: relative;
   flex-direction: column;
@@ -6038,9 +6042,19 @@ a.status-card {
   }
 }
 
+.referral-modal__container {
+  padding: 10px;
+  background-color: $white;
+}
+
+.payment-modal__container {
+  padding: 10px;
+  background-color: $white;
+  overflow-y: auto;
+}
+
 .confirmation-modal__container,
 .mute-modal__container,
-.block-modal__container,
 .report-modal__target {
   padding: 30px;
   font-size: 16px;
@@ -7485,6 +7499,11 @@ noscript {
       }
     }
 
+    &__name__badge {
+      display: flex;
+      gap: 5px;
+    }
+
     .spacer {
       flex: 1 1 auto;
     }
@@ -8431,6 +8450,7 @@ noscript {
 }
 
 .interaction-modal {
+  box-sizing: border-box;
   max-width: 90vw;
   width: 600px;
   background: var(--modal-background-color);
@@ -9278,5 +9298,82 @@ noscript {
     &:active {
       background: rgba($highlight-text-color, 0.3);
     }
+  }
+}
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 15px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 33px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 22px;
+  }
+}
+
+.copy-box {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+
+    strong,
+    b,
+    a {
+      font-weight: 700;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+.yowza-black {
+  margin: 10px;
+  display: flex;
+
+  .button {
+    flex-grow: 1;
   }
 }

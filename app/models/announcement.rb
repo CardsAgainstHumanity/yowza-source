@@ -69,19 +69,8 @@ class Announcement < ApplicationRecord
     @emojis ||= CustomEmoji.from_text(text)
   end
 
-  def reactions(account = nil)
-    records = begin
-      scope = announcement_reactions.group(:announcement_id, :name, :custom_emoji_id).order(Arel.sql('MIN(created_at) ASC'))
-
-      if account.nil?
-        scope.select('name, custom_emoji_id, count(*) as count, false as me')
-      else
-        scope.select("name, custom_emoji_id, count(*) as count, exists(select 1 from announcement_reactions r where r.account_id = #{account.id} and r.announcement_id = announcement_reactions.announcement_id and r.name = announcement_reactions.name) as me")
-      end
-    end
-
-    ActiveRecord::Associations::Preloader.new(records: records, associations: :custom_emoji)
-    records
+  def reactions(_account = nil)
+    []
   end
 
   private

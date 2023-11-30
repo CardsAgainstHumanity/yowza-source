@@ -1,0 +1,18 @@
+- content_for :page_title do
+  = t('auth.confirm_code')
+
+= simple_form_for(current_user, as: User, url: auth_verify_otp_path, html: { novalidate: false }) do |f|
+  %h1.title= t('auth.sign_up.title', domain: site_hostname)
+  %p.lead= t('auth.sign_up.otp_message', last_four: current_user.phone.try(:last, 4))
+
+  = render 'shared/error_messages', object: current_user
+
+  .fields-group
+    = f.input :otp, placeholder: t('simple_form.labels.defaults.otp'), required: true, input_html: { 'aria-label': t('simple_form.labels.defaults.otp') }, hint: false
+
+  .actions
+    = f.button :button, t('auth.confirm_code'), type: :submit
+
+.form-footer
+  %ul.no-list
+    %li= link_to "I didn't get a code", auth_phone_form_path

@@ -13,7 +13,7 @@ import { HASHTAG_REGEX } from 'mastodon/utils/hashtags';
 
 const messages = defineMessages({
   placeholder: { id: 'search.placeholder', defaultMessage: 'Search' },
-  placeholderSignedIn: { id: 'search.search_or_paste', defaultMessage: 'Search or paste URL' },
+  placeholderSignedIn: { id: 'search.search_or_paste', defaultMessage: 'Search Yowza' },
 });
 
 class Search extends PureComponent {
@@ -246,19 +246,19 @@ class Search extends PureComponent {
       const couldBeUsername = trimmedValue.match(/^@?[a-z0-9_-]+(@[^\s]+)?$/i);
 
       if (couldBeUsername) {
-        options.push({ key: 'go-to-account', label: <FormattedMessage id='search.quick_action.go_to_account' defaultMessage='Go to profile {x}' values={{ x: <mark>@{trimmedValue.replace(/^@/, '')}</mark> }} />, action: this.handleAccountClick });
+        options.push({ key: 'go-to-account', label: <FormattedMessage id='search.quick_action.go_to_account' defaultMessage='Go to yowzer {x}' values={{ x: <mark>@{trimmedValue.replace(/^@/, '')}</mark> }} />, action: this.handleAccountClick });
       }
 
       const couldBeStatusSearch = searchEnabled;
 
       if (couldBeStatusSearch) {
-        options.push({ key: 'status-search', label: <FormattedMessage id='search.quick_action.status_search' defaultMessage='Posts matching {x}' values={{ x: <mark>{trimmedValue}</mark> }} />, action: this.handleStatusSearch });
+        options.push({ key: 'status-search', label: <FormattedMessage id='search.quick_action.status_search' defaultMessage='Yowzas matching {x}' values={{ x: <mark>{trimmedValue}</mark> }} />, action: this.handleStatusSearch });
       }
 
       const couldBeUserSearch = true;
 
       if (couldBeUserSearch) {
-        options.push({ key: 'account-search', label: <FormattedMessage id='search.quick_action.account_search' defaultMessage='Profiles matching {x}' values={{ x: <mark>{trimmedValue}</mark> }} />, action: this.handleAccountSearch });
+        options.push({ key: 'account-search', label: <FormattedMessage id='search.quick_action.account_search' defaultMessage='Yowzers matching {x}' values={{ x: <mark>{trimmedValue}</mark> }} />, action: this.handleAccountSearch });
       }
     }
 

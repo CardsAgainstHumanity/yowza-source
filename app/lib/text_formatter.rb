@@ -40,6 +40,8 @@ class TextFormatter
         link_to_hashtag(entity)
       elsif entity[:screen_name]
         link_to_mention(entity)
+      elsif entity[:shazam]
+        shazamify_shazam(entity)
       end
     end
 
@@ -54,6 +56,7 @@ class TextFormatter
     def shortened_link(url, rel_me: false)
       url = Addressable::URI.parse(url).to_s
       rel = rel_me ? (DEFAULT_REL + %w(me)) : DEFAULT_REL
+      href = /yow.za/i.match?(url) ? Rails.application.routes.url_helpers.root_path : url
 
       prefix      = url.match(URL_PREFIX_REGEX).to_s
       display_url = url[prefix.length, 30]
@@ -61,7 +64,7 @@ class TextFormatter
       cutoff      = url[prefix.length..].length > 30
 
       <<~HTML.squish.html_safe # rubocop:disable Rails/OutputSafety
-        <a href="#{h(url)}" target="_blank" rel="#{rel.join(' ')}" translate="no"><span class="invisible">#{h(prefix)}</span><span class="#{cutoff ? 'ellipsis' : ''}">#{h(display_url)}</span><span class="invisible">#{h(suffix)}</span></a>
+        <a href="#{href}" target="_blank" rel="#{rel.join(' ')}" translate="no"><span class="invisible">#{h(prefix)}</span><span class="#{cutoff ? 'ellipsis' : ''}">#{h(display_url)}</span><span class="invisible">#{h(suffix)}</span></a>
       HTML
     rescue Addressable::URI::InvalidURIError, IDN::Idna::IdnaError
       h(url)
@@ -131,6 +134,14 @@ class TextFormatter
 
     <<~HTML.squish
       <span class="h-card" translate="no"><a href="#{h(url)}" class="u-url mention">@<span>#{h(display_username)}</span></a></span>
+    HTML
+  end
+
+  def shazamify_shazam(entity)
+    shazam = entity[:shazam]
+
+    <<~HTML.squish
+      <span class='shazam'>#{shazam}</span>
     HTML
   end
 

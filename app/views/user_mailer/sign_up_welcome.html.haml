@@ -1,0 +1,50 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear #{link_to '@' + @resource.account.username, short_account_url(@resource.account)},
+                            %br
+                            %p Welcome to Yowza, the revolutionary social network by Cards Against Humanity with no hate, lies, or crypto enthusiasts. We hope you enjoy posting yowzas, following yowzers, and so much more!
+                            %br
+                            %p
+                              With your help, Yowza is poised to become the world’s #1 social media platform. All we need is millions of users—and we’re not afraid to pay for them! We’re offering up to
+                              %strong $69,420
+                              to refer new people to Yowza by 7:30 PM PT tonight.
+                            %hr
+                            %p Here’s how it works.
+
+                            %ul
+                              %li Share the referral code below with everyone you know and ask them to enter it when they #{link_to 'sign up for Yowza', new_user_registration_url}.
+                              %li
+                                Depending on how many new yowzers use your code, you could win $69, a free copy of #{link_to 'Head Trip', 'https://www.cardsagainsthumanity.com/products/head-trip'}, or even the grand prize of
+                                %strong $69,420!
+                              %li
+                                %strong If you’re one of the first 10,000 people to complete a referral, you’ll also get an instant payment of $4.20!
+                              %li Everyone who enters your referral code at sign-up will receive a coupon for 25% off their entire order at the #{link_to 'CAH Store', 'https://www.cardsagainsthumanity.com/shop/all'}.
+                            
+                            %br
+                            %p
+                              Here’s your referral code:
+                              %strong.uppercase #{@resource.invites.first.code}.
+                            %br
+                            %p
+                              IMPORTANT: For a referral to count, the new yowzer must post a yowza! You can track who's referring the most new yowzers on the
+                              %strong #{link_to 'Official Yowza Leaderboard', leaderboard_url}.
+                            %hr
+                            %p That about does it. Here are your Yowza account details:
+                            %ul
+                              %li Profile link: #{link_to short_account_url(@resource.account), short_account_url(@resource.account)}
+                              %li Phone number: #{@resource.phone}
+                              %li Email address: #{@resource.email}
+
+                            = render 'shared/yowza_signature'

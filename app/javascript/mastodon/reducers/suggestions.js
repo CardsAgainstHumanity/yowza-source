@@ -1,7 +1,6 @@
 import { Map as ImmutableMap, List as ImmutableList, fromJS } from 'immutable';
 
 import { ACCOUNT_BLOCK_SUCCESS, ACCOUNT_MUTE_SUCCESS } from 'mastodon/actions/accounts';
-import { DOMAIN_BLOCK_SUCCESS } from 'mastodon/actions/domain_blocks';
 
 import {
   SUGGESTIONS_FETCH_REQUEST,
@@ -32,8 +31,6 @@ export default function suggestionsReducer(state = initialState, action) {
   case ACCOUNT_BLOCK_SUCCESS:
   case ACCOUNT_MUTE_SUCCESS:
     return state.update('items', list => list.filterNot(x => x.account === action.relationship.id));
-  case DOMAIN_BLOCK_SUCCESS:
-    return state.update('items', list => list.filterNot(x => action.accounts.includes(x.account)));
   default:
     return state;
   }

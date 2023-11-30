@@ -2,24 +2,28 @@
 
 class InvitePolicy < ApplicationPolicy
   def index?
-    role.can?(:manage_invites)
+    referrals_enabled? && role.can?(:manage_invites)
   end
 
   def create?
-    role.can?(:invite_users)
+    referrals_enabled? && role.can?(:invite_users)
   end
 
   def deactivate_all?
-    role.can?(:manage_invites)
+    referrals_enabled? && role.can?(:manage_invites)
   end
 
   def destroy?
-    owner? || role.can?(:manage_invites)
+    referrals_enabled? && (owner? || role.can?(:manage_invites))
   end
 
   private
 
   def owner?
     record.user_id == current_user&.id
+  end
+
+  def referrals_enabled?
+    FeatureRelease.referrals_enabled?
   end
 end

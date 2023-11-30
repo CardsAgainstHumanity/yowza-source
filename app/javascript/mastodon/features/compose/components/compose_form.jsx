@@ -10,28 +10,22 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import { length } from 'stringz';
 
 import { Icon }  from 'mastodon/components/icon';
+import { eyi } from 'mastodon/initial_state';
 
 import AutosuggestInput from '../../../components/autosuggest_input';
 import AutosuggestTextarea from '../../../components/autosuggest_textarea';
 import Button from '../../../components/button';
-import EmojiPickerDropdown from '../containers/emoji_picker_dropdown_container';
-import LanguageDropdown from '../containers/language_dropdown_container';
 import PollButtonContainer from '../containers/poll_button_container';
 import PollFormContainer from '../containers/poll_form_container';
 import PrivacyDropdownContainer from '../containers/privacy_dropdown_container';
 import ReplyIndicatorContainer from '../containers/reply_indicator_container';
-import SpoilerButtonContainer from '../containers/spoiler_button_container';
 import UploadButtonContainer from '../containers/upload_button_container';
 import UploadFormContainer from '../containers/upload_form_container';
 import WarningContainer from '../containers/warning_container';
 import { countableText } from '../util/counter';
 
-import CharacterCounter from './character_counter';
-
-const allowedAroundShortCode = '><\u0085\u0020\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029\u0009\u000a\u000b\u000c\u000d';
-
 const messages = defineMessages({
-  placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
+  placeholder: { id: 'compose_form.placeholder', defaultMessage: 'Write a yowza.' },
   spoiler_placeholder: { id: 'compose_form.spoiler_placeholder', defaultMessage: 'Write your warning here' },
   publish: { id: 'compose_form.publish', defaultMessage: 'Publish' },
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
@@ -65,7 +59,6 @@ class ComposeForm extends ImmutablePureComponent {
     onSuggestionSelected: PropTypes.func.isRequired,
     onChangeSpoilerText: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
-    onPickEmoji: PropTypes.func.isRequired,
     autoFocus: PropTypes.bool,
     anyMedia: PropTypes.bool,
     isInReply: PropTypes.bool,
@@ -214,14 +207,6 @@ class ComposeForm extends ImmutablePureComponent {
     this.composeForm = c;
   };
 
-  handleEmojiPick = (data) => {
-    const { text }     = this.props;
-    const position     = this.autosuggestTextarea.textarea.selectionStart;
-    const needsSpace   = data.custom && position > 0 && !allowedAroundShortCode.includes(text[position - 1]);
-
-    this.props.onPickEmoji(position, data, needsSpace);
-  };
-
   render () {
     const { intl, onPaste, autoFocus } = this.props;
     const { highlighted } = this.state;
@@ -281,23 +266,16 @@ class ComposeForm extends ImmutablePureComponent {
             lang={this.props.lang}
           >
             <div className='compose-form__modifiers'>
-              <UploadFormContainer />
+              {eyi && (<UploadFormContainer />)}
               <PollFormContainer />
             </div>
           </AutosuggestTextarea>
-          <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} />
 
           <div className='compose-form__buttons-wrapper'>
             <div className='compose-form__buttons'>
-              <UploadButtonContainer />
+              { eyi && <UploadButtonContainer /> }
               <PollButtonContainer />
               <PrivacyDropdownContainer disabled={this.props.isEditing} />
-              <SpoilerButtonContainer />
-              <LanguageDropdown />
-            </div>
-
-            <div className='character-counter__wrapper'>
-              <CharacterCounter max={500} text={this.getFulltextForCharacterCounting()} />
             </div>
           </div>
         </div>

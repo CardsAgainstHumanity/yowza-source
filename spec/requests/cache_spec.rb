@@ -26,7 +26,7 @@ module TestEndpoints
     /explore
     /public
     /about
-    /privacy-policy
+    /privacy
     /directory
     /@alice
     /@alice/110224538612341312

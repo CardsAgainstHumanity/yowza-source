@@ -3,6 +3,7 @@
   %head
     %meta{ charset: 'utf-8' }/
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }/
+    %meta{ name: 'apple-itunes-app', content: 'app-id=' + t('about.apple_app_id')}
 
     - if cdn_host?
       %link{ rel: 'dns-prefetch', href: cdn_host }/
@@ -19,10 +20,12 @@
     - %w(57 60 72 76 114 120 144 152 167 180 1024).each do |size|
       %link{ rel: 'apple-touch-icon', sizes: "#{size}x#{size}", href: asset_pack_path("media/icons/apple-touch-icon-#{size}x#{size}.png") }/
 
-    %link{ rel: 'mask-icon', href: asset_pack_path('media/images/logo-symbol-icon.svg'), color: '#6364FF' }/
+    / %link{ rel: 'mask-icon', href: asset_pack_path('media/images/logo-symbol-icon.svg'), color: '#6364FF' }/
     %link{ rel: 'manifest', href: manifest_path(format: :json) }/
     %meta{ name: 'theme-color', content: '#191b22' }/
     %meta{ name: 'apple-mobile-web-app-capable', content: 'yes' }/
+    - if Time.now.in_time_zone('Pacific Time (US & Canada)') < DateTime.new(2023, 11, 23, 22, 0, 0, '-8')
+      %meta{ name: 'robots', content: 'noindex, noarchive' }/
 
     %title= content_for?(:page_title) ? safe_join([yield(:page_title).chomp.html_safe, title], ' - ') : title
 

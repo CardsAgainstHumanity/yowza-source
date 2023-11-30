@@ -108,12 +108,31 @@ class UserRole < ApplicationRecord
     UserRole.create!(id: -99, permissions: Flags::DEFAULT)
   end
 
+  def self.fauxbot
+    UserRole.find(-999)
+  rescue ActiveRecord::RecordNotFound
+    UserRole.create!(id: -999, permissions: Flags::DEFAULT, name: 'fauxbot')
+  end
+
   def self.that_can(*any_of_privileges)
     all.select { |role| role.can?(*any_of_privileges) }
   end
 
+  def internal?
+    %w(
+      Owner
+      Moderator
+      Admin
+      Developer
+    ).include?(name)
+  end
+
   def everyone?
     id == -99
+  end
+
+  def fauxbot?
+    id == -999 || name == 'Admin' || name == 'Developer'
   end
 
   def nobody?

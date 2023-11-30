@@ -1,5 +1,11 @@
 - content_for :page_title do
-  = t('errors.404')
+  = t('errors.404.title')
 
 - content_for :content do
-  = t('errors.404')
+  = t('errors.404.content')
+
+- content_for :action_label do
+  = t('errors.404.action.label')
+
+- content_for :action_url do
+  = t('errors.404.action.url')

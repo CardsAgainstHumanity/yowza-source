@@ -8,8 +8,8 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import Hashtag from 'mastodon/components/hashtag';
 
 const messages = defineMessages({
-  lastStatusAt: { id: 'account.featured_tags.last_status_at', defaultMessage: 'Last post on {date}' },
-  empty: { id: 'account.featured_tags.last_status_never', defaultMessage: 'No posts' },
+  lastStatusAt: { id: 'account.featured_tags.last_status_at', defaultMessage: 'Last yowza on {date}' },
+  empty: { id: 'account.featured_tags.last_status_never', defaultMessage: 'No yowzas' },
 });
 
 class FeaturedTags extends ImmutablePureComponent {

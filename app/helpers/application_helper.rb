@@ -168,6 +168,10 @@ module ApplicationHelper
     cdn_host.present?
   end
 
+  def in_mobile_webview?
+    request.user_agent == 'yowza-app'
+  end
+
   def storage_host
     "https://#{storage_host_var}"
   end
@@ -191,6 +195,7 @@ module ApplicationHelper
     default_privacy     = current_account&.user&.setting_default_privacy
     permit_visibilities.shift(permit_visibilities.index(default_privacy) + 1) if default_privacy.present?
     state_params[:visibility] = params[:visibility] if permit_visibilities.include? params[:visibility]
+    state_params[:in_mobile_webview] = in_mobile_webview?
 
     if user_signed_in? && current_user.functional?
       state_params[:settings]          = state_params[:settings].merge(Web::Setting.find_by(user: current_user)&.data || {})

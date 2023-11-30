@@ -15,7 +15,7 @@ import Account from 'mastodon/containers/account_container';
 import { domain } from 'mastodon/initial_state';
 
 const messages = defineMessages({
-  aboutActiveUsers: { id: 'server_banner.about_active_users', defaultMessage: 'People using this server during the last 30 days (Monthly Active Users)' },
+  aboutActiveUsers: { id: 'server_banner.about_active_users', defaultMessage: 'People using this server during the last 30 days (Monthly Active Yowzers)' },
 });
 
 const mapStateToProps = state => ({
@@ -79,7 +79,7 @@ class ServerBanner extends PureComponent {
               <>
                 <strong className='server-banner__number'><ShortNumber value={server.getIn(['usage', 'users', 'active_month'])} /></strong>
                 <br />
-                <span className='server-banner__number-label' title={intl.formatMessage(messages.aboutActiveUsers)}><FormattedMessage id='server_banner.active_users' defaultMessage='active users' /></span>
+                <span className='server-banner__number-label' title={intl.formatMessage(messages.aboutActiveUsers)}><FormattedMessage id='server_banner.active_users' defaultMessage='active yowzers' /></span>
               </>
             )}
           </div>

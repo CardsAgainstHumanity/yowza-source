@@ -12,11 +12,11 @@ import {
   COMPOSE_SUBMIT_SUCCESS,
   COMPOSE_SUBMIT_FAIL,
   COMPOSE_UPLOAD_REQUEST,
-  COMPOSE_UPLOAD_SUCCESS,
   COMPOSE_UPLOAD_FAIL,
   COMPOSE_UPLOAD_UNDO,
   COMPOSE_UPLOAD_PROGRESS,
   COMPOSE_UPLOAD_PROCESSING,
+  COMPOSE_UPLOAD_STUB,
   THUMBNAIL_UPLOAD_REQUEST,
   THUMBNAIL_UPLOAD_SUCCESS,
   THUMBNAIL_UPLOAD_FAIL,
@@ -94,11 +94,12 @@ const initialState = ImmutableMap({
     focusY: 0,
     dirty: false,
   }),
+  file_upload: null
 });
 
 const initialPoll = ImmutableMap({
   options: ImmutableList(['', '']),
-  expires_in: 24 * 3600,
+  expires_in: 1 * 3600,
   multiple: false,
 });
 
@@ -127,39 +128,7 @@ function clearAll(state) {
     map.update('media_attachments', list => list.clear());
     map.set('poll', null);
     map.set('idempotencyKey', uuid());
-  });
-}
-
-function appendMedia(state, media, file) {
-  const prevSize = state.get('media_attachments').size;
-
-  return state.withMutations(map => {
-    if (media.get('type') === 'image') {
-      media = media.set('file', file);
-    }
-    map.update('media_attachments', list => list.push(media.set('unattached', true)));
-    map.set('is_uploading', false);
-    map.set('is_processing', false);
-    map.set('resetFileKey', Math.floor((Math.random() * 0x10000)));
-    map.set('idempotencyKey', uuid());
-    map.update('pending_media_attachments', n => n - 1);
-
-    if (prevSize === 0 && (state.get('default_sensitive') || state.get('spoiler'))) {
-      map.set('sensitive', true);
-    }
-  });
-}
-
-function removeMedia(state, mediaId) {
-  const prevSize = state.get('media_attachments').size;
-
-  return state.withMutations(map => {
-    map.update('media_attachments', list => list.filterNot(item => item.get('id') === mediaId));
-    map.set('idempotencyKey', uuid());
-
-    if (prevSize === 1) {
-      map.set('sensitive', false);
-    }
+    map.set('file_upload', null);
   });
 }
 
@@ -247,9 +216,9 @@ const expandMentions = status => {
 };
 
 const expiresInFromExpiresAt = expires_at => {
-  if (!expires_at) return 24 * 3600;
+  if (!expires_at) return 1 * 3600;
   const delta = (new Date(expires_at).getTime() - Date.now()) / 1000;
-  return [300, 1800, 3600, 21600, 86400, 259200, 604800].find(expires_in => expires_in >= delta) || 24 * 3600;
+  return [600, 1800, 3600, 7200, 10800, 21600, 86400, 172800, 259200].find(expires_in => expires_in >= delta) || 1 * 3600;
 };
 
 const mergeLocalHashtagResults = (suggestions, prefix, tagHistory) => {
@@ -368,17 +337,28 @@ export default function compose(state = initialState, action) {
   case COMPOSE_UPLOAD_CHANGE_FAIL:
     return state.set('is_changing_upload', false);
   case COMPOSE_UPLOAD_REQUEST:
-    return state.set('is_uploading', true).update('pending_media_attachments', n => n + 1);
+    return state.set('is_uploading', true);
   case COMPOSE_UPLOAD_PROCESSING:
     return state.set('is_processing', true);
-  case COMPOSE_UPLOAD_SUCCESS:
-    return appendMedia(state, fromJS(action.media), action.file);
   case COMPOSE_UPLOAD_FAIL:
     return state.set('is_uploading', false).set('is_processing', false).update('pending_media_attachments', n => n - 1);
   case COMPOSE_UPLOAD_UNDO:
-    return removeMedia(state, action.media_id);
+    return state.withMutations(map => {
+      map.set('file_upload', null);
+      map.set('idempotencyKey', uuid());
+    });
   case COMPOSE_UPLOAD_PROGRESS:
     return state.set('progress', Math.round((action.loaded / action.total) * 100));
+  case COMPOSE_UPLOAD_STUB:
+    return state.withMutations((map) => {
+      map.set('file_upload', URL.createObjectURL(action.files[0]));
+      map.set('is_uploading', false);
+      map.set('is_processing', false);
+      map.set('progress', 0);
+      map.set('resetFileKey', Math.floor((Math.random() * 0x10000)));
+      map.set('idempotencyKey', uuid());
+      map.set('pending_media_attachments', 0);
+    });
   case THUMBNAIL_UPLOAD_REQUEST:
     return state.set('isUploadingThumbnail', true);
   case THUMBNAIL_UPLOAD_PROGRESS:

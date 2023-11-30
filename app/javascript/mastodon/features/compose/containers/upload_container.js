@@ -1,20 +1,12 @@
 import { connect } from 'react-redux';
 
-import { undoUploadCompose, initMediaEditModal, submitCompose } from '../../../actions/compose';
+import { undoUploadCompose, submitCompose } from '../../../actions/compose';
 import Upload from '../components/upload';
-
-const mapStateToProps = (state, { id }) => ({
-  media: state.getIn(['compose', 'media_attachments']).find(item => item.get('id') === id),
-});
 
 const mapDispatchToProps = dispatch => ({
 
-  onUndo: id => {
-    dispatch(undoUploadCompose(id));
-  },
-
-  onOpenFocalPoint: id => {
-    dispatch(initMediaEditModal(id));
+  onUndo: () => {
+    dispatch(undoUploadCompose());
   },
 
   onSubmit (router) {
@@ -23,4 +15,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Upload);
+export default connect(null, mapDispatchToProps)(Upload);

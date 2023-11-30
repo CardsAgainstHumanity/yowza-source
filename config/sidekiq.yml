@@ -50,11 +50,31 @@
       cron: '0 * * * *'
       class: Scheduler::InstanceRefreshScheduler
       queue: scheduler
-    accounts_statuses_cleanup_scheduler:
-      interval: 1 minute
-      class: Scheduler::AccountsStatusesCleanupScheduler
-      queue: scheduler
+    # accounts_statuses_cleanup_scheduler:
+    # interval: 1 minute
+    # class: Scheduler::AccountsStatusesCleanupScheduler
+    # queue: scheduler
     suspended_user_cleanup_scheduler:
       interval: 1 minute
       class: Scheduler::SuspendedUserCleanupScheduler
       queue: scheduler
+    bot_activity_scheduler:
+      interval: 90 minutes
+      class: Scheduler::BotActivityScheduler
+      queue: scheduler
+    # challenge_calculator_scheduler:
+    # interval: 1 minute
+    # class: Scheduler::ChallengeCalculatorScheduler
+    # queue: scheduler
+    # challenge_completion_scheduler:
+    # interval: 5 minute
+    # class: Scheduler::ChallengeCompletionScheduler
+    # queue: scheduler
+    # site_feature_scheduler:
+    # interval: 1 minute
+    # class: Scheduler::SiteFeatureScheduler
+    # queue: scheduler
+    # referral_payout_scheduler:
+    # interval: 5 minutes
+    # class: Scheduler::ReferralPayoutScheduler
+    # queue: scheduler

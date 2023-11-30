@@ -34,6 +34,7 @@ export const COMPOSE_UPLOAD_FAIL       = 'COMPOSE_UPLOAD_FAIL';
 export const COMPOSE_UPLOAD_PROGRESS   = 'COMPOSE_UPLOAD_PROGRESS';
 export const COMPOSE_UPLOAD_PROCESSING = 'COMPOSE_UPLOAD_PROCESSING';
 export const COMPOSE_UPLOAD_UNDO       = 'COMPOSE_UPLOAD_UNDO';
+export const COMPOSE_UPLOAD_STUB       = 'COMPOSE_UPLOAD_STUB';
 
 export const THUMBNAIL_UPLOAD_REQUEST  = 'THUMBNAIL_UPLOAD_REQUEST';
 export const THUMBNAIL_UPLOAD_SUCCESS  = 'THUMBNAIL_UPLOAD_SUCCESS';
@@ -83,7 +84,7 @@ const messages = defineMessages({
   uploadErrorLimit: { id: 'upload_error.limit', defaultMessage: 'File upload limit exceeded.' },
   uploadErrorPoll:  { id: 'upload_error.poll', defaultMessage: 'File upload not allowed with polls.' },
   open: { id: 'compose.published.open', defaultMessage: 'Open' },
-  published: { id: 'compose.published.body', defaultMessage: 'Post published.' },
+  published: { id: 'compose.published.body', defaultMessage: 'Yowza!' },
 });
 
 export const ensureComposeIsVisible = (getState, routerHistory) => {
@@ -166,9 +167,10 @@ export function submitCompose(routerHistory) {
   return function (dispatch, getState) {
     const status   = getState().getIn(['compose', 'text'], '');
     const media    = getState().getIn(['compose', 'media_attachments']);
+    const fileUpload    = getState().getIn(['compose', 'file_upload']);
     const statusId = getState().getIn(['compose', 'id'], null);
 
-    if ((!status || !status.length) && media.size === 0) {
+    if ((!status || !status.length) && !fileUpload) {
       return;
     }
 
@@ -200,7 +202,9 @@ export function submitCompose(routerHistory) {
       data: {
         status,
         in_reply_to_id: getState().getIn(['compose', 'in_reply_to'], null),
+        include_file: !!getState().getIn(['compose', 'file_upload']),
         media_ids: media.map(item => item.get('id')),
+
         media_attributes,
         sensitive: getState().getIn(['compose', 'sensitive']),
         spoiler_text: getState().getIn(['compose', 'spoiler']) ? getState().getIn(['compose', 'spoiler_text'], '') : '',
@@ -276,64 +280,23 @@ export function submitComposeFail(error) {
 }
 
 export function uploadCompose(files) {
-  return function (dispatch, getState) {
-    const uploadLimit = 4;
-    const media = getState().getIn(['compose', 'media_attachments']);
-    const pending = getState().getIn(['compose', 'pending_media_attachments']);
-    const progress = new Array(files.length).fill(0);
-
-    let total = Array.from(files).reduce((a, v) => a + v.size, 0);
-
-    if (files.length + media.size + pending > uploadLimit) {
-      dispatch(showAlert({ message: messages.uploadErrorLimit }));
-      return;
-    }
-
-    if (getState().getIn(['compose', 'poll'])) {
-      dispatch(showAlert({ message: messages.uploadErrorPoll }));
-      return;
-    }
-
+  return function (dispatch) {
     dispatch(uploadComposeRequest());
-
-    for (const [i, file] of Array.from(files).entries()) {
-      if (media.size + i > 3) break;
-
-      const data = new FormData();
-      data.append('file', file);
-
-      api(getState).post('/api/v2/media', data, {
-        onUploadProgress: function({ loaded }){
-          progress[i] = loaded;
-          dispatch(uploadComposeProgress(progress.reduce((a, v) => a + v, 0), total));
-        },
-      }).then(({ status, data }) => {
-        // If server-side processing of the media attachment has not completed yet,
-        // poll the server until it is, before showing the media attachment as uploaded
-
-        if (status === 200) {
-          dispatch(uploadComposeSuccess(data, file));
-        } else if (status === 202) {
-          dispatch(uploadComposeProcessing());
-
-          let tryCount = 1;
-
-          const poll = () => {
-            api(getState).get(`/api/v1/media/${data.id}`).then(response => {
-              if (response.status === 200) {
-                dispatch(uploadComposeSuccess(response.data, file));
-              } else if (response.status === 206) {
-                const retryAfter = (Math.log2(tryCount) || 1) * 1000;
-                tryCount += 1;
-                setTimeout(() => poll(), retryAfter);
-              }
-            }).catch(error => dispatch(uploadComposeFail(error)));
-          };
-
-          poll();
-        }
-      }).catch(error => dispatch(uploadComposeFail(error)));
-    }
+    let progress = 0;
+    const total = Math.floor(Math.random() * 400) + 100;
+    const step = 10;
+    const interval = setInterval(() => {
+      if (progress >= total) {
+        dispatch({
+          type: COMPOSE_UPLOAD_STUB,
+          files,
+        });
+        clearInterval(interval);
+      } else {
+        progress += step;
+        dispatch(uploadComposeProgress(progress, total));
+      }
+    }, 100)
   };
 }
 
@@ -480,15 +443,6 @@ export function uploadComposeProgress(loaded, total) {
   };
 }
 
-export function uploadComposeSuccess(media, file) {
-  return {
-    type: COMPOSE_UPLOAD_SUCCESS,
-    media: media,
-    file: file,
-    skipLoading: true,
-  };
-}
-
 export function uploadComposeFail(error) {
   return {
     type: COMPOSE_UPLOAD_FAIL,
@@ -497,10 +451,9 @@ export function uploadComposeFail(error) {
   };
 }
 
-export function undoUploadCompose(media_id) {
+export function undoUploadCompose() {
   return {
     type: COMPOSE_UPLOAD_UNDO,
-    media_id: media_id,
   };
 }
 

@@ -8,7 +8,7 @@ export const StatusesCounter = (
 ) => (
   <FormattedMessage
     id='account.statuses_counter'
-    defaultMessage='{count, plural, one {{counter} Post} other {{counter} Posts}}'
+    defaultMessage='{count, plural, one {{counter} Yowza} other {{counter} Yowzas}}'
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,
@@ -37,6 +37,20 @@ export const FollowersCounter = (
   <FormattedMessage
     id='account.followers_counter'
     defaultMessage='{count, plural, one {{counter} Follower} other {{counter} Followers}}'
+    values={{
+      count: pluralReady,
+      counter: <strong>{displayNumber}</strong>,
+    }}
+  />
+);
+
+export const ReferralsCounter = (
+  displayNumber: React.ReactNode,
+  pluralReady: number,
+) => (
+  <FormattedMessage
+    id='account.referrals_counter'
+    defaultMessage='{count, plural, one {{counter} Referral} other {{counter} Referrals}}'
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,

@@ -28,6 +28,6 @@ describe 'Profile' do
 
     first('button[type=submit]').click
 
-    expect(subject).to have_content 'Changes successfully saved!'
+    expect(subject).to have_content 'Changes saved!'
   end
 end

@@ -16,7 +16,7 @@ import StatusList from '../../components/status_list';
 import Column from '../ui/components/column';
 
 const messages = defineMessages({
-  heading: { id: 'column.pins', defaultMessage: 'Pinned post' },
+  heading: { id: 'column.pins', defaultMessage: 'Pinned yowza' },
 });
 
 const mapStateToProps = state => ({

@@ -3,6 +3,7 @@
 class Api::V1::Accounts::LookupController < Api::BaseController
   before_action -> { authorize_if_got_token! :read, :'read:accounts' }
   before_action :set_account
+  skip_before_action :require_authenticated_user!
 
   def show
     cache_if_unauthenticated!

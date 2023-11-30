@@ -13,6 +13,7 @@ class AccountsController < ApplicationController
 
   skip_around_action :set_locale, if: -> { [:json, :rss].include?(request.format&.to_sym) }
   skip_before_action :require_functional!, unless: :limited_federation_mode?
+  skip_before_action :authenticate_user!
 
   def show
     respond_to do |format|

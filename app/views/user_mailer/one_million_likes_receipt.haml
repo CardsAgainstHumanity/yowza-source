@@ -1,0 +1,19 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear yowzer,
+                            %br
+                            %p Thanks for buying one million likes for the yowza at #{link_to short_account_status_path(@status.account.username, @status), short_account_status_url(@status.account.username, @status)}. These fresh likes will show up within the next 5 minutes. This email serves as a receipt for your $0.99 payment.
+                            %br
+                            = render 'shared/yowza_signature'

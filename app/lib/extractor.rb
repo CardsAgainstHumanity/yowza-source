@@ -11,6 +11,7 @@ module Extractor
     entities = extract_urls_with_indices(text, options) +
                extract_hashtags_with_indices(text, check_url_overlap: false) +
                extract_mentions_or_lists_with_indices(text) +
+               extract_shazams_with_indices(text) +
                extract_extra_uris_with_indices(text)
 
     return [] if entities.empty?
@@ -111,6 +112,26 @@ module Extractor
       possible_entries.each do |url|
         yield url[:url], url[:indices].first, url[:indices].last
       end
+    end
+
+    possible_entries
+  end
+
+  def extract_shazams_with_indices(text)
+    return [] unless text =~ /sh/i
+
+    possible_entries = []
+
+    text.scan(/s+h+a+z+a+m+/i) do
+      valid_shazam_match_data = $LAST_MATCH_INFO
+
+      start_position = valid_shazam_match_data.char_begin(0)
+      end_position   = valid_shazam_match_data.char_end(0)
+
+      possible_entries << {
+        shazam: valid_shazam_match_data[0],
+        indices: [start_position, end_position],
+      }
     end
 
     possible_entries

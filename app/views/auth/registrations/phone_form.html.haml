@@ -1,0 +1,14 @@
+- content_for :page_title do
+  = t('auth.confirm_code')
+
+= simple_form_for(current_user, as: User, url: auth_resend_code_path, html: { novalidate: false }) do |f|
+  %h1.title= t('auth.sign_up.title', domain: site_hostname)
+  %p.lead= t('auth.sign_up.resend_message')
+
+  = render 'shared/error_messages', object: current_user
+
+  .fields-group
+    = f.input :phone, placeholder: t('simple_form.labels.defaults.phone'), required: true, input_html: { 'aria-label': t('simple_form.labels.defaults.phone'), autocomplete: 'phone' , value: current_user.formatted_phone}, hint: t('simple_form.hints.defaults.phone_update')
+
+  .actions
+    = f.button :button, t('auth.resend_code'), type: :submit

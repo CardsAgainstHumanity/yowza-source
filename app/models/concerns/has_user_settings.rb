@@ -16,7 +16,8 @@ module HasUserSettings
   end
 
   def preferred_posting_language
-    valid_locale_cascade(settings['default_language'], locale, I18n.locale)
+    # valid_locale_cascade(settings['default_language'], locale, I18n.locale)
+    valid_locale_cascade('en', locale, I18n.locale)
   end
 
   def setting_auto_play_gif
@@ -24,7 +25,8 @@ module HasUserSettings
   end
 
   def setting_default_sensitive
-    settings['default_sensitive']
+    # settings['default_sensitive']
+    false
   end
 
   def setting_unfollow_modal
@@ -52,7 +54,8 @@ module HasUserSettings
   end
 
   def setting_theme
-    settings['theme']
+    # settings['theme']
+    'mastodon-light'
   end
 
   def setting_display_media
@@ -64,7 +67,8 @@ module HasUserSettings
   end
 
   def setting_default_language
-    settings['default_language']
+    # settings['default_language']
+    'en'
   end
 
   def setting_aggregate_reblogs
@@ -72,11 +76,13 @@ module HasUserSettings
   end
 
   def setting_show_application
-    settings['show_application']
+    # settings['show_application']
+    false
   end
 
   def setting_advanced_layout
-    settings['web.advanced_layout']
+    # settings['web.advanced_layout']
+    false
   end
 
   def setting_use_blurhash
@@ -88,7 +94,8 @@ module HasUserSettings
   end
 
   def setting_trends
-    settings['web.trends']
+    # settings['web.trends']
+    true
   end
 
   def setting_disable_swiping
@@ -124,7 +131,8 @@ module HasUserSettings
   end
 
   def shows_application?
-    settings['show_application']
+    # settings['show_application']
+    false
   end
 
   def show_all_media?

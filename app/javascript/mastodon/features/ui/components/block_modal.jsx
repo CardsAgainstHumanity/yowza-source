@@ -79,24 +79,27 @@ class BlockModal extends PureComponent {
     return (
       <div className='modal-root__modal block-modal'>
         <div className='block-modal__container'>
-          <p>
+          <h1>
             <FormattedMessage
               id='confirmations.block.message'
               defaultMessage='Are you sure you want to block {name}?'
-              values={{ name: <strong>@{account.get('acct')}</strong> }}
+              values={{ name: <span>@{account.get('acct')}</span> }}
+            />
+          </h1>
+          <p>
+            <FormattedMessage
+              id='confirmations.block.description'
+              defaultMessage='You won’t see their posts, and they also won’t be able to see your posts. They’ll know you blocked them.'
             />
           </p>
         </div>
 
         <div className='block-modal__action-bar'>
-          <Button onClick={this.handleCancel} className='block-modal__cancel-button'>
-            <FormattedMessage id='confirmation_modal.cancel' defaultMessage='Cancel' />
-          </Button>
-          <Button onClick={this.handleSecondary} className='confirmation-modal__secondary-button'>
-            <FormattedMessage id='confirmations.block.block_and_report' defaultMessage='Block & Report' />
-          </Button>
           <Button onClick={this.handleClick} ref={this.setRef}>
             <FormattedMessage id='confirmations.block.confirm' defaultMessage='Block' />
+          </Button>
+          <Button onClick={this.handleCancel} className='block-modal__cancel-button button--underline'>
+            <FormattedMessage id='confirmation_modal.cancel' defaultMessage='Cancel' />
           </Button>
         </div>
       </div>

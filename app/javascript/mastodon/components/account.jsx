@@ -130,7 +130,7 @@ class Account extends ImmutablePureComponent {
       } else if (defaultAction === 'block') {
         buttons = <Button text={intl.formatMessage(messages.block)} onClick={this.handleBlock} />;
       } else if (!account.get('moved') || following) {
-        buttons = <Button text={intl.formatMessage(following ? messages.unfollow : messages.follow)} onClick={this.handleFollow} />;
+        buttons = <Button className={following ? 'unfollow' : 'follow'} text={intl.formatMessage(following ? messages.unfollow : messages.follow)} onClick={this.handleFollow} />;
       }
     }
 

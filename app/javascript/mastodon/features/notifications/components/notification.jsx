@@ -25,8 +25,8 @@ const messages = defineMessages({
   ownPoll: { id: 'notification.own_poll', defaultMessage: 'Your poll has ended' },
   poll: { id: 'notification.poll', defaultMessage: 'A poll you have voted in has ended' },
   reblog: { id: 'notification.reblog', defaultMessage: '{name} boosted your status' },
-  status: { id: 'notification.status', defaultMessage: '{name} just posted' },
-  update: { id: 'notification.update', defaultMessage: '{name} edited a post' },
+  status: { id: 'notification.status', defaultMessage: "{name} just yowza'd" },
+  update: { id: 'notification.update', defaultMessage: '{name} edited a yowza' },
   adminSignUp: { id: 'notification.admin.sign_up', defaultMessage: '{name} signed up' },
   adminReport: { id: 'notification.admin.report', defaultMessage: '{name} reported {target}' },
 });
@@ -266,7 +266,7 @@ class Notification extends ImmutablePureComponent {
             </div>
 
             <span title={notification.get('created_at')}>
-              <FormattedMessage id='notification.status' defaultMessage='{name} just posted' values={{ name: link }} />
+              <FormattedMessage id='notification.status' defaultMessage="{name} just yowza'd" values={{ name: link }} />
             </span>
           </div>
 
@@ -303,7 +303,7 @@ class Notification extends ImmutablePureComponent {
             </div>
 
             <span title={notification.get('created_at')}>
-              <FormattedMessage id='notification.update' defaultMessage='{name} edited a post' values={{ name: link }} />
+              <FormattedMessage id='notification.update' defaultMessage='{name} edited a yowza' values={{ name: link }} />
             </span>
           </div>
 

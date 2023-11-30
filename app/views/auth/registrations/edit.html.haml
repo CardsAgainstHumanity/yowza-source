@@ -3,7 +3,7 @@
 
 = render 'status'
 
-%h3= t('auth.security')
+%h4 Change Password
 
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'auth_edit', novalidate: false }) do |f|
   = render 'shared/error_messages', object: resource
@@ -11,7 +11,7 @@
   - if (!use_seamless_external_login? || resource.encrypted_password.present?) && !omniauth_only?
     .fields-row
       .fields-row__column.fields-group.fields-row__column-6
-        = f.input :email, wrapper: :with_label, input_html: { 'aria-label': t('simple_form.labels.defaults.email') }, required: true, disabled: current_account.suspended?
+        = f.input :email, wrapper: :with_label, input_html: { 'aria-label': t('simple_form.labels.defaults.email') }, required: true, disabled: true
       .fields-row__column.fields-group.fields-row__column-6
         = f.input :current_password, wrapper: :with_label, input_html: { 'aria-label': t('simple_form.labels.defaults.current_password'), autocomplete: 'current-password' }, required: true, disabled: current_account.suspended?, hint: false
 
@@ -30,20 +30,18 @@
 
 %hr.spacer/
 
-= render partial: 'sessions', object: @sessions
-
 - unless current_account.suspended?
   %hr.spacer/
 
-  %h3= t('auth.migrate_account')
-  %p.muted-hint= t('auth.migrate_account_html', path: settings_migration_path)
+  -# %h3= t('auth.migrate_account')
+  -# %p.muted-hint= t('auth.migrate_account_html', path: settings_migration_path)
 
-  %hr.spacer/
+  -# %hr.spacer/
 
-  %h3= t('migrations.incoming_migrations')
-  %p.muted-hint= t('migrations.incoming_migrations_html', path: settings_aliases_path)
+  -# %h3= t('migrations.incoming_migrations')
+  -# %p.muted-hint= t('migrations.incoming_migrations_html', path: settings_aliases_path)
 
-  %hr.spacer/
+  -# %hr.spacer/
 
-  %h3= t('auth.delete_account')
+  %h4= t('auth.delete_account')
   %p.muted-hint= t('auth.delete_account_html', path: settings_delete_path)

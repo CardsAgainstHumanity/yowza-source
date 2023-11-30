@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
@@ -13,7 +13,6 @@ import { createSelector } from 'reselect';
 
 import { HotKeys } from 'react-hotkeys';
 
-import { Icon }  from 'mastodon/components/icon';
 import { LoadingIndicator } from 'mastodon/components/loading_indicator';
 import ScrollContainer from 'mastodon/containers/scroll_container';
 import BundleColumnError from 'mastodon/features/ui/components/bundle_column_error';
@@ -29,10 +28,6 @@ import {
   mentionCompose,
   directCompose,
 } from '../../actions/compose';
-import {
-  blockDomain,
-  unblockDomain,
-} from '../../actions/domain_blocks';
 import {
   favourite,
   unfavourite,
@@ -72,14 +67,13 @@ const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
   deleteMessage: { id: 'confirmations.delete.message', defaultMessage: 'Are you sure you want to delete this status?' },
   redraftConfirm: { id: 'confirmations.redraft.confirm', defaultMessage: 'Delete & redraft' },
-  redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this status and re-draft it? Favorites and boosts will be lost, and replies to the original post will be orphaned.' },
+  redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this status and re-draft it? Likes and reyowzas will be lost, and replies to the original yowza will be orphaned.' },
   revealAll: { id: 'status.show_more_all', defaultMessage: 'Show more for all' },
   hideAll: { id: 'status.show_less_all', defaultMessage: 'Show less for all' },
-  statusTitleWithAttachments: { id: 'status.title.with_attachments', defaultMessage: '{user} posted {attachmentCount, plural, one {an attachment} other {# attachments}}' },
+  statusTitleWithAttachments: { id: 'status.title.with_attachments', defaultMessage: "{user} yowza'd {attachmentCount, plural, one {an attachment} other {# attachments}}" },
   detailedStatus: { id: 'status.detailed_status', defaultMessage: 'Detailed conversation view' },
   replyConfirm: { id: 'confirmations.reply.confirm', defaultMessage: 'Reply' },
   replyMessage: { id: 'confirmations.reply.message', defaultMessage: 'Replying now will overwrite the message you are currently composing. Are you sure you want to proceed?' },
-  blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Block entire domain' },
 });
 
 const makeMapStateToProps = () => {
@@ -156,7 +150,7 @@ const makeMapStateToProps = () => {
       status,
       ancestorsIds,
       descendantsIds,
-      askReplyConfirmation: state.getIn(['compose', 'text']).trim().length !== 0,
+      askReplyConfirmation: false,
       domain: state.getIn(['meta', 'domain']),
       pictureInPicture: getPictureInPicture(state, { id: props.params.statusId }),
     };
@@ -410,17 +404,6 @@ class Status extends ImmutablePureComponent {
     }
   };
 
-  handleToggleAll = () => {
-    const { status, ancestorsIds, descendantsIds } = this.props;
-    const statusIds = [status.get('id')].concat(ancestorsIds.toJS(), descendantsIds.toJS());
-
-    if (status.get('hidden')) {
-      this.props.dispatch(revealStatus(statusIds));
-    } else {
-      this.props.dispatch(hideStatus(statusIds));
-    }
-  };
-
   handleTranslate = status => {
     const { dispatch } = this.props;
 
@@ -455,22 +438,6 @@ class Status extends ImmutablePureComponent {
   handleUnblockClick = account => {
     this.props.dispatch(unblockAccount(account.get('id')));
   };
-
-  handleBlockDomainClick = domain => {
-    this.props.dispatch(openModal({
-      modalType: 'CONFIRM',
-      modalProps: {
-        message: <FormattedMessage id='confirmations.domain_block.message' defaultMessage='Are you really, really sure you want to block the entire {domain}? In most cases a few targeted blocks or mutes are sufficient and preferable. You will not see content from that domain in any public timelines or your notifications. Your followers from that domain will be removed.' values={{ domain: <strong>{domain}</strong> }} />,
-        confirm: this.props.intl.formatMessage(messages.blockDomainConfirm),
-        onConfirm: () => this.props.dispatch(blockDomain(domain)),
-      },
-    }));
-  };
-
-  handleUnblockDomainClick = domain => {
-    this.props.dispatch(unblockDomain(domain));
-  };
-
 
   handleHotkeyMoveUp = () => {
     this.handleMoveUp(this.props.status.get('id'));
@@ -655,9 +622,6 @@ class Status extends ImmutablePureComponent {
         <ColumnHeader
           showBackButton
           multiColumn={multiColumn}
-          extraButton={(
-            <button type='button' className='column-header__button' title={intl.formatMessage(status.get('hidden') ? messages.revealAll : messages.hideAll)} aria-label={intl.formatMessage(status.get('hidden') ? messages.revealAll : messages.hideAll)} onClick={this.handleToggleAll}><Icon id={status.get('hidden') ? 'eye-slash' : 'eye'} /></button>
-          )}
         />
 
         <ScrollContainer scrollKey='thread'>
@@ -695,8 +659,6 @@ class Status extends ImmutablePureComponent {
                   onMuteConversation={this.handleConversationMuteClick}
                   onBlock={this.handleBlockClick}
                   onUnblock={this.handleUnblockClick}
-                  onBlockDomain={this.handleBlockDomainClick}
-                  onUnblockDomain={this.handleUnblockDomainClick}
                   onReport={this.handleReport}
                   onPin={this.handlePin}
                   onEmbed={this.handleEmbed}

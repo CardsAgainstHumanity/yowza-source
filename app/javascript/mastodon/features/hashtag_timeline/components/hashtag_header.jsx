@@ -15,7 +15,7 @@ const messages = defineMessages({
 const usesRenderer = (displayNumber, pluralReady) => (
   <FormattedMessage
     id='hashtag.counter_by_uses'
-    defaultMessage='{count, plural, one {{counter} post} other {{counter} posts}}'
+    defaultMessage='{count, plural, one {{counter} yowza} other {{counter} yowzas}}'
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,
@@ -37,7 +37,7 @@ const peopleRenderer = (displayNumber, pluralReady) => (
 const usesTodayRenderer = (displayNumber, pluralReady) => (
   <FormattedMessage
     id='hashtag.counter_by_uses_today'
-    defaultMessage='{count, plural, one {{counter} post} other {{counter} posts}} today'
+    defaultMessage='{count, plural, one {{counter} yowza} other {{counter} yowzas}} today'
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,

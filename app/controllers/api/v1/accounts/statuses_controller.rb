@@ -6,6 +6,8 @@ class Api::V1::Accounts::StatusesController < Api::BaseController
 
   after_action :insert_pagination_headers, unless: -> { truthy_param?(:pinned) }
 
+  skip_before_action :require_authenticated_user!, only: :index
+
   def index
     cache_if_unauthenticated!
     @statuses = load_statuses

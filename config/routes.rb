@@ -7,30 +7,28 @@ Rails.application.routes.draw do
   # Paths of routes on the web app that to not require to be indexed or
   # have alternative format representations requiring separate controllers
   web_app_paths = %w(
-    /getting-started
-    /keyboard-shortcuts
     /home
+    /leaderboard
+    /leaderboard/challenges
     /public
     /public/local
-    /public/remote
     /conversations
-    /lists/(*any)
     /notifications
     /favourites
     /bookmarks
     /pinned
-    /start
-    /directory
     /explore/(*any)
     /search
     /publish
     /follow_requests
     /blocks
-    /domain_blocks
     /mutes
     /followed_tags
     /statuses/(*any)
-    /deck/(*any)
+    /faq
+    /store
+    /appstore
+    /success
   ).freeze
 
   root 'home#index'
@@ -44,19 +42,13 @@ Rails.application.routes.draw do
     mount PgHero::Engine, at: 'pghero', as: :pghero
   end
 
-  use_doorkeeper do
-    controllers authorizations: 'oauth/authorizations',
-                authorized_applications: 'oauth/authorized_applications',
-                tokens: 'oauth/tokens'
-  end
+  # get '.well-known/host-meta', to: 'well_known/host_meta#show', as: :host_meta, defaults: { format: 'xml' }
+  # get '.well-known/nodeinfo', to: 'well_known/nodeinfo#index', as: :nodeinfo, defaults: { format: 'json' }
+  # get '.well-known/webfinger', to: 'well_known/webfinger#show', as: :webfinger
+  # get '.well-known/change-password', to: redirect('/auth/edit')
+  # get '.well-known/proxy', to: redirect { |_, request| "/authorize_interaction?#{request.params.to_query}" }
 
-  get '.well-known/host-meta', to: 'well_known/host_meta#show', as: :host_meta, defaults: { format: 'xml' }
-  get '.well-known/nodeinfo', to: 'well_known/nodeinfo#index', as: :nodeinfo, defaults: { format: 'json' }
-  get '.well-known/webfinger', to: 'well_known/webfinger#show', as: :webfinger
-  get '.well-known/change-password', to: redirect('/auth/edit')
-  get '.well-known/proxy', to: redirect { |_, request| "/authorize_interaction?#{request.params.to_query}" }
-
-  get '/nodeinfo/2.0', to: 'well_known/nodeinfo#show', as: :nodeinfo_schema
+  # get '/nodeinfo/2.0', to: 'well_known/nodeinfo#show', as: :nodeinfo_schema
 
   get 'manifest', to: 'manifests#show', defaults: { format: 'json' }
   get 'intent', to: 'intents#show'
@@ -64,10 +56,10 @@ Rails.application.routes.draw do
 
   get 'remote_interaction_helper', to: 'remote_interaction_helper#index'
 
-  resource :instance_actor, path: 'actor', only: [:show] do
-    resource :inbox, only: [:create], module: :activitypub
-    resource :outbox, only: [:show], module: :activitypub
-  end
+  # resource :instance_actor, path: 'actor', only: [:show] do
+  # resource :inbox, only: [:create], module: :activitypub
+  # resource :outbox, only: [:show], module: :activitypub
+  # end
 
   devise_scope :user do
     get '/invite/:invite_code', to: 'auth/registrations#new', as: :public_invite
@@ -77,8 +69,12 @@ Rails.application.routes.draw do
     namespace :auth do
       resource :setup, only: [:show, :update], controller: :setup
       resource :challenge, only: [:create], controller: :challenges
-      get 'sessions/security_key_options', to: 'sessions#webauthn_options'
+      # get 'sessions/security_key_options', to: 'sessions#webauthn_options'
       post 'captcha_confirmation', to: 'confirmations#confirm_captcha', as: :captcha_confirmation
+      get 'confirm_phone', to: 'registrations#confirm_phone'
+      patch 'verify_otp', to: 'registrations#verify_otp'
+      get 'phone_form', to: 'registrations#phone_form'
+      patch 'resend_code', to: 'registrations#resend_code'
     end
   end
 
@@ -100,23 +96,23 @@ Rails.application.routes.draw do
     resources :statuses, only: [:show] do
       member do
         get :activity
-        get :embed
+        # get :embed
       end
 
-      resources :replies, only: [:index], module: :activitypub
+      # resources :replies, only: [:index], module: :activitypub
     end
 
     resources :followers, only: [:index], controller: :follower_accounts
     resources :following, only: [:index], controller: :following_accounts
 
-    resource :outbox, only: [:show], module: :activitypub
-    resource :inbox, only: [:create], module: :activitypub
-    resource :claim, only: [:create], module: :activitypub
+    # resource :outbox, only: [:show], module: :activitypub
+    # resource :inbox, only: [:create], module: :activitypub
+    # resource :claim, only: [:create], module: :activitypub
     resources :collections, only: [:show], module: :activitypub
-    resource :followers_synchronization, only: [:show], module: :activitypub
+    # resource :followers_synchronization, only: [:show], module: :activitypub
   end
 
-  resource :inbox, only: [:create], module: :activitypub
+  # resource :inbox, only: [:create], module: :activitypub
 
   get '/:encoded_at(*path)', to: redirect("/@%{path}"), constraints: { encoded_at: /%40/ }
 
@@ -131,7 +127,7 @@ Rails.application.routes.draw do
     get '/@:account_username/following', to: 'following_accounts#index'
     get '/@:account_username/followers', to: 'follower_accounts#index'
     get '/@:account_username/:id', to: 'statuses#show', as: :short_account_status
-    get '/@:account_username/:id/embed', to: 'statuses#embed', as: :embed_short_account_status
+    # get '/@:account_username/:id/embed', to: 'statuses#embed', as: :embed_short_account_status
   end
 
   get '/@:username_with_domain/(*any)', to: 'home#index', constraints: { username_with_domain: %r{([^/])+?} }, format: false
@@ -152,22 +148,22 @@ Rails.application.routes.draw do
   resources :tags,   only: [:show]
   resources :emojis, only: [:show]
   resources :invites, only: [:index, :create, :destroy]
-  resources :filters, except: [:show] do
-    resources :statuses, only: [:index], controller: 'filters/statuses' do
-      collection do
-        post :batch
-      end
-    end
-  end
+  # resources :filters, except: [:show] do
+  # resources :statuses, only: [:index], controller: 'filters/statuses' do
+  # collection do
+  # post :batch
+  # end
+  # end
+  # end
 
-  resource :relationships, only: [:show, :update]
-  resource :statuses_cleanup, controller: :statuses_cleanup, only: [:show, :update]
+  # resource :relationships, only: [:show, :update]
+  # resource :statuses_cleanup, controller: :statuses_cleanup, only: [:show, :update]
 
   get '/media_proxy/:id/(*any)', to: 'media_proxy#show', as: :media_proxy, format: false
   get '/backups/:id/download', to: 'backups#download', as: :download_backup, format: false
 
   resource :authorize_interaction, only: [:show]
-  resource :share, only: [:show]
+  # resource :share, only: [:show]
 
   draw(:admin)
 
@@ -180,11 +176,15 @@ Rails.application.routes.draw do
   end
 
   get '/web/(*any)', to: redirect('/%{any}', status: 302), as: :web, defaults: { any: '' }, format: false
-  get '/about',      to: 'about#show'
+  # get '/about',      to: 'about#show'
   get '/about/more', to: redirect('/about')
 
-  get '/privacy-policy', to: 'privacy#show', as: :privacy_policy
-  get '/terms',          to: redirect('/privacy-policy')
+  get '/privacy', to: 'privacy#show', as: :privacy_policy
+  get '/privacy-policy', to: redirect('/privacy')
+  get '/terms',          to: redirect('/privacy')
+
+  get '/updates_opt_in', to: 'updates_opt_in#show'
+  get '/updates_opt_in_verify', to: 'updates_opt_in#verify'
 
   match '/', via: [:post, :put, :patch, :delete], to: 'application#raise_not_found', format: false
   match '*unmatched_route', via: :all, to: 'application#raise_not_found', format: false

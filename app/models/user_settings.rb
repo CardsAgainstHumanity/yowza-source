@@ -11,7 +11,7 @@ class UserSettings
   setting :aggregate_reblogs, default: true
   setting :theme, default: -> { ::Setting.theme }
   setting :noindex, default: -> { ::Setting.noindex }
-  setting :show_application, default: true
+  setting :show_application, default: false
   setting :default_language, default: nil
   setting :default_sensitive, default: false
   setting :default_privacy, default: nil, in: %w(public unlisted private)
@@ -25,25 +25,25 @@ class UserSettings
     setting :use_pending_items, default: false
     setting :use_system_font, default: false
     setting :disable_swiping, default: false
-    setting :delete_modal, default: true
+    setting :delete_modal, default: false # Show confirmation dialog before deleting a post
     setting :reblog_modal, default: false
-    setting :unfollow_modal, default: true
+    setting :unfollow_modal, default: false # Show confirmation dialog before unfollowing someone
     setting :reduce_motion, default: false
     setting :expand_content_warnings, default: false
     setting :display_media, default: 'default', in: %w(default show_all hide_all)
-    setting :auto_play, default: false
+    setting :auto_play, default: true # Auto-play animated GIFs
   end
 
   namespace :notification_emails do
-    setting :follow, default: true
+    setting :follow, default: false
     setting :reblog, default: false
     setting :favourite, default: false
-    setting :mention, default: true
-    setting :follow_request, default: true
-    setting :report, default: true
-    setting :pending_account, default: true
-    setting :trends, default: true
-    setting :appeal, default: true
+    setting :mention, default: false
+    setting :follow_request, default: false
+    setting :report, default: false
+    setting :pending_account, default: false
+    setting :trends, default: false
+    setting :appeal, default: false
   end
 
   namespace :interactions do

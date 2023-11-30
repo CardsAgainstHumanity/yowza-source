@@ -94,7 +94,7 @@ class KeyboardShortcuts extends ImmutablePureComponent {
               </tr>
               <tr>
                 <td><kbd>alt</kbd>+<kbd>n</kbd></td>
-                <td><FormattedMessage id='keyboard_shortcuts.toot' defaultMessage='to start a brand new post' /></td>
+                <td><FormattedMessage id='keyboard_shortcuts.toot' defaultMessage='to start a brand new yowza' /></td>
               </tr>
               <tr>
                 <td><kbd>alt</kbd>+<kbd>x</kbd></td>
@@ -142,7 +142,7 @@ class KeyboardShortcuts extends ImmutablePureComponent {
               </tr>
               <tr>
                 <td><kbd>g</kbd>+<kbd>p</kbd></td>
-                <td><FormattedMessage id='keyboard_shortcuts.pinned' defaultMessage='to open pinned posts list' /></td>
+                <td><FormattedMessage id='keyboard_shortcuts.pinned' defaultMessage='to open pinned yowzas list' /></td>
               </tr>
               <tr>
                 <td><kbd>g</kbd>+<kbd>u</kbd></td>
@@ -150,11 +150,11 @@ class KeyboardShortcuts extends ImmutablePureComponent {
               </tr>
               <tr>
                 <td><kbd>g</kbd>+<kbd>b</kbd></td>
-                <td><FormattedMessage id='keyboard_shortcuts.blocked' defaultMessage='to open blocked users list' /></td>
+                <td><FormattedMessage id='keyboard_shortcuts.blocked' defaultMessage='to open blocked yowzers list' /></td>
               </tr>
               <tr>
                 <td><kbd>g</kbd>+<kbd>m</kbd></td>
-                <td><FormattedMessage id='keyboard_shortcuts.muted' defaultMessage='to open muted users list' /></td>
+                <td><FormattedMessage id='keyboard_shortcuts.muted' defaultMessage='to open muted yowzers list' /></td>
               </tr>
               <tr>
                 <td><kbd>g</kbd>+<kbd>r</kbd></td>

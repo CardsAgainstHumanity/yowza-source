@@ -19,6 +19,7 @@
  * @property {string} acct
  * @property {string} avatar
  * @property {string} avatar_static
+ * @property {string} badge_class
  * @property {boolean} bot
  * @property {string} created_at
  * @property {boolean=} discoverable
@@ -34,13 +35,22 @@
  * @property {string=} last_status_at
  * @property {boolean} locked
  * @property {string} note
+ * @property {number} total_checks
  * @property {number} statuses_count
+ * @property {number} referrals_count
  * @property {string} url
  * @property {string} username
  */
 
 /**
  * @typedef {[code: string, name: string, localName: string]} InitialStateLanguage
+ */
+
+/**
+ * @typedef TopReferrer
+ * @property {number} uses
+ * @property {string} username
+ * @property {string} code
  */
 
 /**
@@ -64,6 +74,7 @@
  * @property {string=} moved_to_account_id
  * @property {string=} owner
  * @property {boolean} profile_directory
+ * @property {boolean} referral_code
  * @property {boolean} registrations_open
  * @property {boolean} reduce_motion
  * @property {string} repository
@@ -75,12 +86,25 @@
  * @property {boolean} timeline_preview
  * @property {string} title
  * @property {boolean} show_trends
+ * @property {Array<TopReferrer>} top_referrers
  * @property {boolean} trends_as_landing_page
  * @property {boolean} unfollow_modal
  * @property {boolean} use_blurhash
  * @property {boolean=} use_pending_items
  * @property {string} version
  * @property {string} sso_redirect
+ * @property {string} stripe_public_key
+ * @property {boolean} eyb
+ * @property {boolean} referrals_enabled
+ * @property {boolean} eyi
+ * @property {boolean} eys
+ * @property {boolean} ec
+ * @property {string} cybs
+ * @property {string} nybs
+ * @property {boolean} shzm
+ * @property {number} referral_rank
+ * @property {number} number_of_uses
+ * @property {boolean} in_mobile_webview
  */
 
 /**
@@ -125,6 +149,7 @@ export const movedToAccountId = getMeta('moved_to_account_id');
 export const owner = getMeta('owner');
 export const profile_directory = getMeta('profile_directory');
 export const reduceMotion = getMeta('reduce_motion');
+export const referralCode = getMeta('referral_code');
 export const registrationsOpen = getMeta('registrations_open');
 export const repository = getMeta('repository');
 export const searchEnabled = getMeta('search_enabled');
@@ -134,6 +159,7 @@ export const singleUserMode = getMeta('single_user_mode');
 export const source_url = getMeta('source_url');
 export const timelinePreview = getMeta('timeline_preview');
 export const title = getMeta('title');
+export const topReferrers = getMeta('top_referrers');
 export const trendsAsLanding = getMeta('trends_as_landing_page');
 export const unfollowModal = getMeta('unfollow_modal');
 export const useBlurhash = getMeta('use_blurhash');
@@ -143,5 +169,17 @@ export const languages = initialState?.languages;
 // @ts-expect-error
 export const statusPageUrl = getMeta('status_page_url');
 export const sso_redirect = getMeta('sso_redirect');
+export const stripePublicKey = getMeta('stripe_public_key');
+export const eyb = getMeta('eyb');
+export const referralsEnabled = getMeta('referrals_enabled');
+export const eyi = getMeta('eyi');
+export const eys = getMeta('eys');
+export const ec = getMeta('ec');
+export const cybs = getMeta('cybs');
+export const nybs = getMeta('nybs');
+export const shzm = getMeta('shzm');
+export const referralRank = getMeta('referral_rank');
+export const numberOfUses = getMeta('number_of_uses');
+export const inMobileWebview = getMeta('in_mobile_webview');
 
 export default initialState;

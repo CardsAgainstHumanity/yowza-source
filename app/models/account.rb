@@ -17,11 +17,11 @@
 #  url                           :string
 #  avatar_file_name              :string
 #  avatar_content_type           :string
-#  avatar_file_size              :integer
+#  avatar_file_size              :bigint(8)
 #  avatar_updated_at             :datetime
 #  header_file_name              :string
 #  header_content_type           :string
-#  header_file_size              :integer
+#  header_file_size              :bigint(8)
 #  header_updated_at             :datetime
 #  avatar_remote_url             :string
 #  locked                        :boolean          default(FALSE), not null
@@ -37,7 +37,7 @@
 #  featured_collection_url       :string
 #  fields                        :jsonb
 #  actor_type                    :string
-#  discoverable                  :boolean
+#  discoverable                  :boolean          default(TRUE)
 #  also_known_as                 :string           is an Array
 #  silenced_at                   :datetime
 #  suspended_at                  :datetime
@@ -45,12 +45,22 @@
 #  avatar_storage_schema_version :integer
 #  header_storage_schema_version :integer
 #  devices_url                   :string
-#  suspension_origin             :integer
 #  sensitized_at                 :datetime
+#  suspension_origin             :integer
 #  trendable                     :boolean
 #  reviewed_at                   :datetime
 #  requested_review_at           :datetime
 #  indexable                     :boolean          default(FALSE), not null
+#  yowza_black_status            :string
+#  winner                        :boolean          default(FALSE), not null
+#  avatar_passed_moderation      :boolean          default(FALSE), not null
+#  header_passed_moderation      :boolean          default(FALSE), not null
+#  cosmetic_followers_count      :integer          default(0)
+#  purchased_checks              :integer          default(0)
+#  shazam                        :boolean          default(FALSE), not null
+#  price                         :integer
+#  avatar_moderation_attempts    :integer          default(0)
+#  header_moderation_attempts    :integer          default(0)
 #
 
 class Account < ApplicationRecord
@@ -65,10 +75,13 @@ class Account < ApplicationRecord
 
   BACKGROUND_REFRESH_INTERVAL = 1.week.freeze
 
-  USERNAME_RE   = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i
+  USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i
+  DISPLAY_NAME_RE = %r{\A[\w([à-ü]|[À-Ü])\-_/\\\ \|\.\!\?\(\)\%\*\&\[\]]+\z} # numbers, letters, spaces, special characters
   MENTION_RE    = %r{(?<=^|[^/[:word:]])@((#{USERNAME_RE})(?:@[[:word:].-]+[[:word:]]+)?)}i
   URL_PREFIX_RE = %r{\Ahttp(s?)://[^/]+}
   USERNAME_ONLY_RE = /\A#{USERNAME_RE}\z/i
+  LIKE_PURCHASE_MULTIPLIER = 1_000_000
+  FOLLOWER_PURCHASE_MULTIPLIER = 100_000
 
   include Attachmentable
   include AccountAssociations
@@ -82,11 +95,13 @@ class Account < ApplicationRecord
   include DomainMaterializable
   include AccountMerging
   include AccountSearch
+  include YowzafyHelper
 
   enum protocol: { ostatus: 0, activitypub: 1 }
   enum suspension_origin: { local: 0, remote: 1 }, _prefix: true
 
   validates :username, presence: true
+  validates :username, length: { maximum: 20 }, on: :create
   validates_with UniqueUsernameValidator, if: -> { will_save_change_to_username? }
 
   # Remote user validations, also applies to internal actors
@@ -98,13 +113,17 @@ class Account < ApplicationRecord
   # Local user validations
   validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
-  validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
+  validates :display_name, format: { with: DISPLAY_NAME_RE }, if: -> { local? && will_save_change_to_display_name? }
+  validates :display_name, length: { maximum: 25 }, on: :update
   validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
-  validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
+  validates_with AccountFieldsValidator, if: :will_save_change_to_fields?
   validates :uri, absence: true, if: :local?, on: :create
   validates :inbox_url, absence: true, if: :local?, on: :create
   validates :shared_inbox_url, absence: true, if: :local?, on: :create
   validates :followers_url, absence: true, if: :local?, on: :create
+  validates :yowza_black_status, inclusion: { in: [nil, 'yb', 'ybb'] }
+  validate :moderate_username, if: -> { ENV.fetch('SIGHTENGINE_API_KEY', nil).present? && Rails.env.production? }
+  validate :moderate_display_name, if: -> { display_name.present? && ENV.fetch('SIGHTENGINE_API_KEY', nil).present? && Rails.env.production? }
 
   scope :remote, -> { where.not(domain: nil) }
   scope :local, -> { where(domain: nil) }
@@ -278,6 +297,8 @@ class Account < ApplicationRecord
   end
 
   def trendable?
+    return false if owner?
+
     boolean_with_default('trendable', Setting.trendable_by_default)
   end
 
@@ -343,16 +364,67 @@ class Account < ApplicationRecord
     self[:fields] = fields
   end
 
-  DEFAULT_FIELDS_SIZE = 4
+  DEFAULT_FIELD_NAMES = [
+    I18n.t('edit_profile.age.label'),
+    I18n.t('edit_profile.gender.label'),
+    I18n.t('edit_profile.location.label'),
+  ].freeze
+
+  FIELD_INPUT_MAPPINGS = {
+    age: {
+      form_type: 'select',
+      collection: [
+        { display: I18n.t('edit_profile.age.a'), value: 'a' },
+        { display: I18n.t('edit_profile.age.b'), value: 'b' },
+        { display: I18n.t('edit_profile.age.c'), value: 'c' },
+        { display: I18n.t('edit_profile.age.d'), value: 'd' },
+        { display: I18n.t('edit_profile.age.e'), value: 'e' },
+      ],
+    },
+    gender: {
+      form_type: 'select',
+      collection: [
+        { display: I18n.t('edit_profile.gender.a'), value: 'a' },
+        { display: I18n.t('edit_profile.gender.b'), value: 'b' },
+        { display: I18n.t('edit_profile.gender.c'), value: 'c' },
+        { display: I18n.t('edit_profile.gender.d'), value: 'd' },
+        { display: I18n.t('edit_profile.gender.e'), value: 'e' },
+      ],
+    },
+    location: {
+      form_type: 'select',
+      collection: [
+        { display: I18n.t('edit_profile.location.us'), value: 'us' },
+        { display: I18n.t('edit_profile.location.ca'), value: 'ca' },
+        { display: I18n.t('edit_profile.location.mx'), value: 'mx' },
+        { display: I18n.t('edit_profile.location.uk'), value: 'uk' },
+        { display: I18n.t('edit_profile.location.au'), value: 'au' },
+        { display: I18n.t('edit_profile.location.nz'), value: 'nz' },
+        { display: I18n.t('edit_profile.location.eu'), value: 'eu' },
+        { display: I18n.t('edit_profile.location.sa'), value: 'sa' },
+        { display: I18n.t('edit_profile.location.cam'), value: 'cam' },
+        { display: I18n.t('edit_profile.location.af'), value: 'af' },
+        { display: I18n.t('edit_profile.location.as'), value: 'as' },
+        { display: I18n.t('edit_profile.location.an'), value: 'an' },
+        { display: I18n.t('edit_profile.location.ea'), value: 'ea' },
+        { display: I18n.t('edit_profile.location.yz'), value: 'yz' },
+      ],
+    },
+  }.freeze
 
   def build_fields
-    return if fields.size >= DEFAULT_FIELDS_SIZE
+    default_fields = DEFAULT_FIELD_NAMES.map do |name|
+      { name: name, value: '' }
+    end
+    return default_fields if fields.size >= default_fields.size
 
     tmp = self[:fields] || []
     tmp = [] if tmp.is_a?(Hash)
 
-    (DEFAULT_FIELDS_SIZE - tmp.size).times do
-      tmp << { name: '', value: '' }
+    tmp = default_fields.map do |f|
+      tmp_field = tmp.find { |tf| tf[:name] == f[:n] }
+
+      (tmp_field.presence || f)
     end
 
     self.fields = tmp
@@ -481,11 +553,109 @@ class Account < ApplicationRecord
     save!
   end
 
+  def next_yowza_black_status
+    case yowza_black_status
+    when nil
+      'yb'
+    when 'yb'
+      'ybb'
+    end
+  end
+
+  def do_a_bot_thing
+    BotThingService.new.call(self)
+  end
+
+  def moderate_username(override: nil)
+    return true if bot_or_fauxbot?
+
+    uri = URI('https://api.sightengine.com/1.0/text/check.json')
+    res = Net::HTTP.post_form(uri, text: override || username, categories: 'extremism', lang: 'en', mode: 'username', list: ENV.fetch('SIGHTENGINE_LIST_ID'), api_user: ENV.fetch('SIGHTENGINE_API_KEY'), api_secret: ENV.fetch('SIGHTENGINE_API_SECRET'))
+    parsed_result = JSON.parse(res.body)
+    return unless parsed_result['profanity']['matches'].any? { |match| match['intensity'] != 'low' } || parsed_result['extremism']['matches'].present? || parsed_result['blacklist']['matches'].present?
+
+    errors.add(:username, 'That username failed moderation. Try again.')
+  end
+
+  def moderate_display_name
+    return true if bot_or_fauxbot?
+
+    uri = URI('https://api.sightengine.com/1.0/text/check.json')
+    res = Net::HTTP.post_form(uri, text: display_name, categories: 'extremism', lang: 'en', mode: 'username', list: ENV.fetch('SIGHTENGINE_LIST_ID'), api_user: ENV.fetch('SIGHTENGINE_API_KEY'), api_secret: ENV.fetch('SIGHTENGINE_API_SECRET'))
+    parsed_result = JSON.parse(res.body)
+    return unless parsed_result['profanity']['matches'].any? { |match| match['intensity'] != 'low' } || parsed_result['extremism']['matches'].present? || parsed_result['blacklist']['matches'].present?
+
+    attempts = Rails.cache.increment("account_#{id}_display_name_attempts")
+
+    if attempts >= 3
+      self.display_name = "NaughtyYowzer#{rand(1...10_000)}"
+    else
+      errors.add(:display_name, 'That display name failed moderation. Fail 3 times and you will be out of luck.')
+    end
+  end
+
+  def allowed_words
+    @allowed_words ||= %w(yowza)
+
+    @allowed_words << 'awooga' if (bot? && FeatureRelease.yowza_black_enabled?) || yowza_black_status
+
+    @allowed_words << 'shazam' if shazam?
+
+    @allowed_words
+  end
+
+  # rubocop:disable Rails/SkipsModelValidations
+  def increment_cosmetic_followers_count!
+    increment!(:cosmetic_followers_count)
+  end
+
+  def increment_purchased_checks!
+    increment!(:purchased_checks) if purchased_checks < 3
+  end
+  # rubocop:enable Rails/SkipsModelValidations
+
+  def bot_or_fauxbot?
+    bot? || user&.fauxbot?
+  end
+
+  def owner?
+    user&.role&.name == 'Owner'
+  end
+
+  def badge_class
+    if owner? || username == 'spark'
+      'yowza-official-badge'
+    elsif shazam?
+      'shazam-badge'
+    end
+  end
+
+  def yowza_black_checks
+    case yowza_black_status
+    when 'yb'
+      1
+    when 'ybb'
+      2
+    else
+      0
+    end
+  end
+
+  def total_checks
+    if owner? || bot_or_fauxbot? || username == 'spark'
+      1
+    elsif winner?
+      5
+    else
+      yowza_black_checks + purchased_checks
+    end
+  end
+
   private
 
   def prepare_contents
     display_name&.strip!
-    note&.strip!
+    self.note = yowzafy(note, allowed_words: allowed_words)
   end
 
   def prepare_username

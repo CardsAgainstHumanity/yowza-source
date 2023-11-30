@@ -515,6 +515,7 @@ html {
   input[type='number'],
   input[type='email'],
   input[type='password'],
+  input[type='tel'],
   textarea {
     &:hover {
       border-color: lighten($ui-base-color, 12%);

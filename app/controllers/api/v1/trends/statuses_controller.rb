@@ -3,13 +3,18 @@
 class Api::V1::Trends::StatusesController < Api::BaseController
   vary_by 'Authorization, Accept-Language'
 
-  before_action :set_statuses
+  # before_action :set_statuses
 
   after_action :insert_pagination_headers
 
+  skip_before_action :require_authenticated_user!, only: :index
+
   def index
-    cache_if_unauthenticated!
-    render json: @statuses, each_serializer: REST::StatusSerializer
+    @trending_statuses = Rails.cache.fetch('trending_statuses', expires_in: 5.minute) do
+      set_statuses
+    end
+    # cache_even_if_unauthenticated!
+    render json: @trending_statuses, each_serializer: REST::StatusSerializer
   end
 
   private
@@ -28,7 +33,7 @@ class Api::V1::Trends::StatusesController < Api::BaseController
 
   def statuses_from_trends
     scope = Trends.statuses.query.allowed.in_locale(content_locale)
-    scope = scope.filtered_for(current_account) if user_signed_in?
+    # scope = scope.filtered_for(current_account) if user_signed_in?
     scope
   end
 
@@ -53,6 +58,6 @@ class Api::V1::Trends::StatusesController < Api::BaseController
   end
 
   def records_continue?
-    @statuses.size == limit_param(DEFAULT_STATUSES_LIMIT)
+    @trending_statuses.size == limit_param(DEFAULT_STATUSES_LIMIT)
   end
 end

@@ -120,7 +120,7 @@ class Api::BaseController < ApplicationController
   end
 
   def require_authenticated_user!
-    render json: { error: 'This method requires an authenticated user' }, status: 401 unless current_user
+    render json: { error: 'This method requires an authenticated yowzer' }, status: 401 unless current_user
   end
 
   def require_not_suspended!
@@ -129,7 +129,7 @@ class Api::BaseController < ApplicationController
 
   def require_user!
     if !current_user
-      render json: { error: 'This method requires an authenticated user' }, status: 422
+      render json: { error: 'This method requires an authenticated yowzer' }, status: 422
     elsif !current_user.confirmed?
       render json: { error: 'Your login is missing a confirmed e-mail address' }, status: 403
     elsif !current_user.approved?

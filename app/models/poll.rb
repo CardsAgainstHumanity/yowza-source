@@ -22,6 +22,7 @@
 
 class Poll < ApplicationRecord
   include Expireable
+  include YowzafyHelper
 
   belongs_to :account
   belongs_to :status
@@ -101,7 +102,12 @@ class Poll < ApplicationRecord
   end
 
   def prepare_options
-    self.options = options.map(&:strip).compact_blank
+    uniq_options = options.map(&:strip).map { |o| yowzafy(o, allowed_words: account.allowed_words) }.compact_blank.uniq
+    while uniq_options.length < [options.length, 4].min
+      uniq_options.push(yowzafy('string', allowed_words: account.allowed_words))
+      uniq_options.uniq!
+    end
+    self.options = uniq_options
   end
 
   def reset_parent_cache

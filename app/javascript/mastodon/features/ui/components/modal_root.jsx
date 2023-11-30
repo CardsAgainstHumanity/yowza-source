@@ -25,11 +25,15 @@ import ActionsModal from './actions_modal';
 import AudioModal from './audio_modal';
 import BoostModal from './boost_modal';
 import BundleModalError from './bundle_modal_error';
+import BuyYowzaModal from './buy_yowza_modal';
 import ConfirmationModal from './confirmation_modal';
 import FocalPointModal from './focal_point_modal';
 import ImageModal from './image_modal';
+import InterstitialPaymentModal from './interstitial_payment_modal';
 import MediaModal from './media_modal';
 import ModalLoading from './modal_loading';
+import PaymentModal from './payment_modal';
+import ReferralModal from './referral_modal';
 import VideoModal from './video_modal';
 
 export const MODAL_COMPONENTS = {
@@ -52,6 +56,10 @@ export const MODAL_COMPONENTS = {
   'SUBSCRIBED_LANGUAGES': SubscribedLanguagesModal,
   'INTERACTION': InteractionModal,
   'CLOSED_REGISTRATIONS': ClosedRegistrationsModal,
+  'INTERSTITIAL_PAYMENT': () => Promise.resolve({ default: InterstitialPaymentModal }),
+  'PAYMENT': () => Promise.resolve({ default: PaymentModal }),
+  'REFERRAL': () => Promise.resolve({ default: ReferralModal }),
+  'BUY_YOWZA': () => Promise.resolve({ default: BuyYowzaModal }),
 };
 
 export default class ModalRoot extends PureComponent {

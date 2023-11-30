@@ -3,6 +3,7 @@
 class PostStatusService < BaseService
   include Redisable
   include LanguagesHelper
+  include YowzafyHelper
 
   MIN_SCHEDULE_OFFSET = 5.minutes.freeze
 
@@ -63,7 +64,7 @@ class PostStatusService < BaseService
 
   def preprocess_attributes!
     @sensitive    = (@options[:sensitive].nil? ? @account.user&.setting_default_sensitive : @options[:sensitive]) || @options[:spoiler_text].present?
-    @text         = @options.delete(:spoiler_text) if @text.blank? && @options[:spoiler_text].present?
+    @text         = @account.user&.role&.name == 'Owner' ? @text : yowzafy((@text.presence || 'image_upload'), allowed_words: @account.allowed_words)
     @visibility   = @options[:visibility] || @account.user&.setting_default_privacy
     @visibility   = :unlisted if @visibility&.to_sym == :public && @account.silenced?
     @scheduled_at = @options[:scheduled_at]&.to_datetime
@@ -80,6 +81,7 @@ class PostStatusService < BaseService
     # The following transaction block is needed to wrap the UPDATEs to
     # the media attachments when the status is created
     ApplicationRecord.transaction do
+      @status.status_stat.is_awooga = @status.text.squeeze.downcase.include?('awoga')
       @status.save!
     end
   end
@@ -186,7 +188,7 @@ class PostStatusService < BaseService
   def status_attributes
     {
       text: @text,
-      media_attachments: @media || [],
+      image: select_image,
       ordered_media_attachment_ids: (@options[:media_ids] || []).map(&:to_i) & @media.map(&:id),
       thread: @in_reply_to,
       poll_attributes: poll_attributes,
@@ -197,6 +199,12 @@ class PostStatusService < BaseService
       application: @options[:application],
       rate_limit: @options[:with_rate_limit],
     }.compact
+  end
+
+  def select_image
+    return nil if FeatureRelease.yowza_images_enabled? == false
+
+    "yowza#{rand(1..120)}.jpg" if @options[:include_file]
   end
 
   def scheduled_status_attributes

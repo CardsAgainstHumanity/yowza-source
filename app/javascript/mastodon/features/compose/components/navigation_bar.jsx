@@ -8,6 +8,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 
 import { Avatar } from '../../../components/avatar';
+import VerifiedYowzaBadge from '../../../components/verified_yowza_badge';
 
 import ActionBar from './action_bar';
 
@@ -29,10 +30,11 @@ export default class NavigationBar extends ImmutablePureComponent {
         </Link>
 
         <div className='navigation-bar__profile'>
-          <span>
+          <span className='navigation-bar__profile-account-badge'>
             <Link to={`/@${username}`}>
               <strong className='navigation-bar__profile-account'>@{username}</strong>
             </Link>
+            <VerifiedYowzaBadge badgeClass={this.props.account?.get('badge_class')} badgeCount={this.props.account?.get('total_checks')} />
           </span>
 
           <span>

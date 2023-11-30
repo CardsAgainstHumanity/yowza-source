@@ -1,27 +1,28 @@
 ---
 en:
   about:
-    about_mastodon_html: 'The social network of the future: No ads, no corporate surveillance, ethical design, and decentralization! Own your data with Mastodon!'
+    about_mastodon_html: 'The new social network by Cards Against Humanity with no hate, lies, or crypto enthusiasts.'
     contact_missing: Not set
     contact_unavailable: N/A
-    hosted_on: Mastodon hosted on %{domain}
+    hosted_on: Yowza!
     title: About
+    apple_app_id: '6472224767'
   accounts:
     follow: Follow
     followers:
       one: Follower
       other: Followers
     following: Following
-    instance_actor_flash: This account is a virtual actor used to represent the server itself and not any individual user. It is used for federation purposes and should not be suspended.
+    instance_actor_flash: This account is a virtual actor used to represent the server itself and not any individual yowzer. It is used for federation purposes and should not be suspended.
     last_active: last active
     link_verified_on: Ownership of this link was checked on %{date}
     nothing_here: There is nothing here!
     pin_errors:
       following: You must be already following the person you want to endorse
     posts:
-      one: Post
-      other: Posts
-    posts_tab_heading: Posts
+      one: Yowza
+      other: Yowzas
+    posts_tab_heading: Yowzas
   admin:
     account_actions:
       action: Perform action
@@ -124,7 +125,7 @@ en:
       removed_avatar_msg: Successfully removed %{username}'s avatar image
       removed_header_msg: Successfully removed %{username}'s header image
       resend_confirmation:
-        already_confirmed: This user is already confirmed
+        already_confirmed: This yowzer is already confirmed
         send: Resend confirmation link
         success: Confirmation link successfully sent!
       reset: Reset
@@ -132,8 +133,8 @@ en:
       resubscribe: Resubscribe
       role: Role
       search: Search
-      search_same_email_domain: Other users with the same e-mail domain
-      search_same_ip: Other users with the same IP
+      search_same_email_domain: Other yowzers with the same e-mail domain
+      search_same_ip: Other yowzers with the same IP
       security: Security
       security_measures:
         only_password: Only password
@@ -146,7 +147,7 @@ en:
         targeted_reports: Reported by others
       silence: Limit
       silenced: Limited
-      statuses: Posts
+      statuses: Yowzas
       strikes: Previous strikes
       subscribe: Subscribe
       suspend: Suspend
@@ -171,11 +172,11 @@ en:
     action_logs:
       action_types:
         approve_appeal: Approve Appeal
-        approve_user: Approve User
+        approve_user: Approve Yowzer
         assigned_to_self_report: Assign Report
-        change_email_user: Change E-mail for User
-        change_role_user: Change Role of User
-        confirm_user: Confirm User
+        change_email_user: Change E-mail for Yowzer
+        change_role_user: Change Role of Yowzer
+        confirm_user: Confirm Yowzer
         create_account_warning: Create Warning
         create_announcement: Create Announcement
         create_canonical_email_block: Create E-mail Block
@@ -186,7 +187,7 @@ en:
         create_ip_block: Create IP rule
         create_unavailable_domain: Create Unavailable Domain
         create_user_role: Create Role
-        demote_user: Demote User
+        demote_user: Demote Yowzer
         destroy_announcement: Delete Announcement
         destroy_canonical_email_block: Delete E-mail Block
         destroy_custom_emoji: Delete Custom Emoji
@@ -195,20 +196,20 @@ en:
         destroy_email_domain_block: Delete E-mail Domain Block
         destroy_instance: Purge Domain
         destroy_ip_block: Delete IP rule
-        destroy_status: Delete Post
+        destroy_status: Delete Yowza
         destroy_unavailable_domain: Delete Unavailable Domain
         destroy_user_role: Destroy Role
         disable_2fa_user: Disable 2FA
         disable_custom_emoji: Disable Custom Emoji
-        disable_sign_in_token_auth_user: Disable E-mail Token Authentication for User
-        disable_user: Disable User
+        disable_sign_in_token_auth_user: Disable E-mail Token Authentication for Yowzer
+        disable_user: Disable Yowzer
         enable_custom_emoji: Enable Custom Emoji
-        enable_sign_in_token_auth_user: Enable E-mail Token Authentication for User
-        enable_user: Enable User
+        enable_sign_in_token_auth_user: Enable E-mail Token Authentication for Yowzer
+        enable_user: Enable Yowzer
         memorialize_account: Memorialize Account
-        promote_user: Promote User
+        promote_user: Promote Yowzer
         reject_appeal: Reject Appeal
-        reject_user: Reject User
+        reject_user: Reject Yowzer
         remove_avatar_user: Remove Avatar
         reopen_report: Reopen Report
         resend_user: Resend Confirmation Mail
@@ -226,15 +227,15 @@ en:
         update_custom_emoji: Update Custom Emoji
         update_domain_block: Update Domain Block
         update_ip_block: Update IP rule
-        update_status: Update Post
+        update_status: Update Yowza
         update_user_role: Update Role
       actions:
         approve_appeal_html: "%{name} approved moderation decision appeal from %{target}"
         approve_user_html: "%{name} approved sign-up from %{target}"
         assigned_to_self_report_html: "%{name} assigned report %{target} to themselves"
-        change_email_user_html: "%{name} changed the e-mail address of user %{target}"
+        change_email_user_html: "%{name} changed the e-mail address of yowzer %{target}"
         change_role_user_html: "%{name} changed role of %{target}"
-        confirm_user_html: "%{name} confirmed e-mail address of user %{target}"
+        confirm_user_html: "%{name} confirmed e-mail address of yowzer %{target}"
         create_account_warning_html: "%{name} sent a warning to %{target}"
         create_announcement_html: "%{name} created new announcement %{target}"
         create_canonical_email_block_html: "%{name} blocked e-mail with the hash %{target}"
@@ -245,7 +246,7 @@ en:
         create_ip_block_html: "%{name} created rule for IP %{target}"
         create_unavailable_domain_html: "%{name} stopped delivery to domain %{target}"
         create_user_role_html: "%{name} created %{target} role"
-        demote_user_html: "%{name} demoted user %{target}"
+        demote_user_html: "%{name} demoted yowzer %{target}"
         destroy_announcement_html: "%{name} deleted announcement %{target}"
         destroy_canonical_email_block_html: "%{name} unblocked e-mail with the hash %{target}"
         destroy_custom_emoji_html: "%{name} deleted emoji %{target}"
@@ -254,24 +255,24 @@ en:
         destroy_email_domain_block_html: "%{name} unblocked e-mail domain %{target}"
         destroy_instance_html: "%{name} purged domain %{target}"
         destroy_ip_block_html: "%{name} deleted rule for IP %{target}"
-        destroy_status_html: "%{name} removed post by %{target}"
+        destroy_status_html: "%{name} removed yowza by %{target}"
         destroy_unavailable_domain_html: "%{name} resumed delivery to domain %{target}"
         destroy_user_role_html: "%{name} deleted %{target} role"
-        disable_2fa_user_html: "%{name} disabled two factor requirement for user %{target}"
+        disable_2fa_user_html: "%{name} disabled two factor requirement for yowzer %{target}"
         disable_custom_emoji_html: "%{name} disabled emoji %{target}"
         disable_sign_in_token_auth_user_html: "%{name} disabled e-mail token authentication for %{target}"
-        disable_user_html: "%{name} disabled login for user %{target}"
+        disable_user_html: "%{name} disabled login for yowzer %{target}"
         enable_custom_emoji_html: "%{name} enabled emoji %{target}"
         enable_sign_in_token_auth_user_html: "%{name} enabled e-mail token authentication for %{target}"
-        enable_user_html: "%{name} enabled login for user %{target}"
+        enable_user_html: "%{name} enabled login for yowzer %{target}"
         memorialize_account_html: "%{name} turned %{target}'s account into a memoriam page"
-        promote_user_html: "%{name} promoted user %{target}"
+        promote_user_html: "%{name} promoted yowzer %{target}"
         reject_appeal_html: "%{name} rejected moderation decision appeal from %{target}"
         reject_user_html: "%{name} rejected sign-up from %{target}"
         remove_avatar_user_html: "%{name} removed %{target}'s avatar"
         reopen_report_html: "%{name} reopened report %{target}"
         resend_user_html: "%{name} resent confirmation e-mail for %{target}"
-        reset_password_user_html: "%{name} reset password of user %{target}"
+        reset_password_user_html: "%{name} reset password of yowzer %{target}"
         resolve_report_html: "%{name} resolved report %{target}"
         sensitive_account_html: "%{name} marked %{target}'s media as sensitive"
         silence_account_html: "%{name} limited %{target}'s account"
@@ -285,12 +286,12 @@ en:
         update_custom_emoji_html: "%{name} updated emoji %{target}"
         update_domain_block_html: "%{name} updated domain block for %{target}"
         update_ip_block_html: "%{name} changed rule for IP %{target}"
-        update_status_html: "%{name} updated post by %{target}"
+        update_status_html: "%{name} updated yowza by %{target}"
         update_user_role_html: "%{name} changed %{target} role"
       deleted_account: deleted account
       empty: No logs found.
       filter_by_action: Filter by action
-      filter_by_user: Filter by user
+      filter_by_user: Filter by yowzer
       title: Audit log
     announcements:
       destroyed_msg: Announcement successfully deleted!
@@ -344,10 +345,10 @@ en:
       updated_msg: Emoji successfully updated!
       upload: Upload
     dashboard:
-      active_users: active users
+      active_users: active yowzers
       interactions: interactions
       media_storage: Media storage
-      new_users: new users
+      new_users: new yowzers
       opened_reports: reports opened
       pending_appeals_html:
         one: "<strong>%{count}</strong> pending appeal"
@@ -359,8 +360,8 @@ en:
         one: "<strong>%{count}</strong> pending hashtag"
         other: "<strong>%{count}</strong> pending hashtags"
       pending_users_html:
-        one: "<strong>%{count}</strong> pending user"
-        other: "<strong>%{count}</strong> pending users"
+        one: "<strong>%{count}</strong> pending yowzer"
+        other: "<strong>%{count}</strong> pending yowzers"
       resolved_reports: reports resolved
       software: Software
       sources: Sign-up sources
@@ -403,7 +404,7 @@ en:
         create: Create block
         hint: The domain block will not prevent creation of account entries in the database, but will retroactively and automatically apply specific moderation methods on those accounts.
         severity:
-          desc_html: "<strong>Limit</strong> will make posts from accounts at this domain invisible to anyone who isn't following them. <strong>Suspend</strong> will remove all content, media, and profile data for this domain's accounts from your server. Use <strong>None</strong> if you just want to reject media files."
+          desc_html: "<strong>Limit</strong> will make yowzas from accounts at this domain invisible to anyone who isn't following them. <strong>Suspend</strong> will remove all content, media, and profile data for this domain's accounts from your server. Use <strong>None</strong> if you just want to reject media files."
           noop: None
           silence: Limit
           suspend: Suspend
@@ -458,7 +459,7 @@ en:
         title: Import domain blocks
       no_file: No file selected
     follow_recommendations:
-      description_html: "<strong>Follow recommendations help new users quickly find interesting content</strong>. When a user has not interacted with others enough to form personalized follow recommendations, these accounts are recommended instead. They are re-calculated on a daily basis from a mix of accounts with the highest recent engagements and highest local follower counts for a given language."
+      description_html: "<strong>Follow recommendations help new yowzers quickly find interesting content</strong>. When a yowzer has not interacted with others enough to form personalized follow recommendations, these accounts are recommended instead. They are re-calculated on a daily basis from a mix of accounts with the highest recent engagements and highest local follower counts for a given language."
       language: For language
       status: Status
       suppress: Suppress follow recommendation
@@ -502,7 +503,7 @@ en:
         instance_languages_dimension: Top languages
         instance_media_attachments_measure: stored media attachments
         instance_reports_measure: reports about them
-        instance_statuses_measure: stored posts
+        instance_statuses_measure: stored yowzas
       delivery:
         all: All
         clear: Clear delivery errors
@@ -561,11 +562,11 @@ en:
     relays:
       add_new: Add new relay
       delete: Delete
-      description_html: A <strong>federation relay</strong> is an intermediary server that exchanges large volumes of public posts between servers that subscribe and publish to it. <strong>It can help small and medium servers discover content from the fediverse</strong>, which would otherwise require local users manually following other people on remote servers.
+      description_html: A <strong>federation relay</strong> is an intermediary server that exchanges large volumes of public yowzas between servers that subscribe and publish to it. <strong>It can help small and medium servers discover content from the fediverse</strong>, which would otherwise require local yowzers manually following other people on remote servers.
       disable: Disable
       disabled: Disabled
       enable: Enable
-      enable_hint: Once enabled, your server will subscribe to all public posts from this relay, and will begin sending this server's public posts to it.
+      enable_hint: Once enabled, your server will subscribe to all public yowzas from this relay, and will begin sending this server's public yowzas to it.
       enabled: Enabled
       inbox_url: Relay URL
       pending: Waiting for relay's approval
@@ -585,8 +586,8 @@ en:
       action_log: Audit log
       action_taken_by: Action taken by
       actions:
-        delete_description_html: The reported posts will be deleted and a strike will be recorded to help you escalate on future infractions by the same account.
-        mark_as_sensitive_description_html: The media in the reported posts will be marked as sensitive and a strike will be recorded to help you escalate on future infractions by the same account.
+        delete_description_html: The reported yowzas will be deleted and a strike will be recorded to help you escalate on future infractions by the same account.
+        mark_as_sensitive_description_html: The media in the reported yowzas will be marked as sensitive and a strike will be recorded to help you escalate on future infractions by the same account.
         other_description_html: See more options for controlling the account's behaviour and customize communication to the reported account.
         resolve_description_html: No action will be taken against the reported account, no strike recorded, and the report will be closed.
         silence_description_html: The account will be visible only to those who already follow it or manually look it up, severely limiting its reach. Can always be reverted. Closes all reports against this account.
@@ -607,7 +608,7 @@ en:
       confirm: Confirm
       confirm_action: Confirm moderation action against @%{acct}
       created_at: Reported
-      delete_and_resolve: Delete posts
+      delete_and_resolve: Delete yowzas
       forwarded: Forwarded
       forwarded_to: Forwarded to %{domain}
       mark_as_resolved: Mark as resolved
@@ -624,7 +625,7 @@ en:
       notes_description_html: View and leave notes to other moderators and your future self
       processed_msg: 'Report #%{id} successfully processed'
       quick_actions_description_html: 'Take a quick action or scroll down to see reported content:'
-      remote_user_placeholder: the remote user from %{instance}
+      remote_user_placeholder: the remote yowzer from %{instance}
       reopen: Reopen report
       report: 'Report #%{id}'
       reported_account: Reported account
@@ -637,13 +638,13 @@ en:
       statuses_description_html: Offending content will be cited in communication with the reported account
       summary:
         action_preambles:
-          delete_html: 'You are about to <strong>remove</strong> some of <strong>@%{acct}</strong>''s posts. This will:'
-          mark_as_sensitive_html: 'You are about to <strong>mark</strong> some of <strong>@%{acct}</strong>''s posts as <strong>sensitive</strong>. This will:'
+          delete_html: 'You are about to <strong>remove</strong> some of <strong>@%{acct}</strong>''s yowzas. This will:'
+          mark_as_sensitive_html: 'You are about to <strong>mark</strong> some of <strong>@%{acct}</strong>''s yowzas as <strong>sensitive</strong>. This will:'
           silence_html: 'You are about to <strong>limit</strong> <strong>@%{acct}</strong>''s account. This will:'
           suspend_html: 'You are about to <strong>suspend</strong> <strong>@%{acct}</strong>''s account. This will:'
         actions:
-          delete_html: Remove the offending posts
-          mark_as_sensitive_html: Mark the offending posts' media as sensitive
+          delete_html: Remove the offending yowzas
+          mark_as_sensitive_html: Mark the offending yowzas' media as sensitive
           silence_html: Severely limit <strong>@%{acct}</strong>'s reach by making their profile and contents only visible to people already following them or manually looking it profile up
           suspend_html: Suspend <strong>@%{acct}</strong>, making their profile and contents inaccessible and impossible to interact with
         close_report: 'Mark report #%{id} as resolved'
@@ -663,8 +664,8 @@ en:
     roles:
       add_new: Add role
       assigned_users:
-        one: "%{count} user"
-        other: "%{count} users"
+        one: "%{count} yowzer"
+        other: "%{count} yowzers"
       categories:
         administration: Administration
         devops: DevOps
@@ -672,54 +673,54 @@ en:
         moderation: Moderation
         special: Special
       delete: Delete
-      description_html: With <strong>user roles</strong>, you can customize which functions and areas of Mastodon your users can access.
+      description_html: With <strong>yowzer roles</strong>, you can customize which functions and areas of Yowza your yowzers can access.
       edit: Edit '%{name}' role
       everyone: Default permissions
-      everyone_full_description_html: This is the <strong>base role</strong> affecting <strong>all users</strong>, even those without an assigned role. All other roles inherit permissions from it.
+      everyone_full_description_html: This is the <strong>base role</strong> affecting <strong>all yowzers</strong>, even those without an assigned role. All other roles inherit permissions from it.
       permissions_count:
         one: "%{count} permission"
         other: "%{count} permissions"
       privileges:
         administrator: Administrator
-        administrator_description: Users with this permission will bypass every permission
-        delete_user_data: Delete User Data
-        delete_user_data_description: Allows users to delete other users' data without delay
-        invite_users: Invite Users
-        invite_users_description: Allows users to invite new people to the server
+        administrator_description: Yowzers with this permission will bypass every permission
+        delete_user_data: Delete Yowzer Data
+        delete_user_data_description: Allows yowzers to delete other yowzers' data without delay
+        invite_users: Invite Yowzers
+        invite_users_description: Allows yowzers to invite new people to the server
         manage_announcements: Manage Announcements
-        manage_announcements_description: Allows users to manage announcements on the server
+        manage_announcements_description: Allows yowzers to manage announcements on the server
         manage_appeals: Manage Appeals
-        manage_appeals_description: Allows users to review appeals against moderation actions
+        manage_appeals_description: Allows yowzers to review appeals against moderation actions
         manage_blocks: Manage Blocks
-        manage_blocks_description: Allows users to block e-mail providers and IP addresses
+        manage_blocks_description: Allows yowzers to block e-mail providers and IP addresses
         manage_custom_emojis: Manage Custom Emojis
-        manage_custom_emojis_description: Allows users to manage custom emojis on the server
+        manage_custom_emojis_description: Allows yowzers to manage custom emojis on the server
         manage_federation: Manage Federation
-        manage_federation_description: Allows users to block or allow federation with other domains, and control deliverability
+        manage_federation_description: Allows yowzers to block or allow federation with other domains, and control deliverability
         manage_invites: Manage Invites
-        manage_invites_description: Allows users to browse and deactivate invite links
+        manage_invites_description: Allows yowzers to browse and deactivate invite links
         manage_reports: Manage Reports
-        manage_reports_description: Allows users to review reports and perform moderation actions against them
+        manage_reports_description: Allows yowzers to review reports and perform moderation actions against them
         manage_roles: Manage Roles
-        manage_roles_description: Allows users to manage and assign roles below theirs
+        manage_roles_description: Allows yowzers to manage and assign roles below theirs
         manage_rules: Manage Rules
-        manage_rules_description: Allows users to change server rules
+        manage_rules_description: Allows yowzers to change server rules
         manage_settings: Manage Settings
-        manage_settings_description: Allows users to change site settings
+        manage_settings_description: Allows yowzers to change site settings
         manage_taxonomies: Manage Taxonomies
-        manage_taxonomies_description: Allows users to review trending content and update hashtag settings
-        manage_user_access: Manage User Access
-        manage_user_access_description: Allows users to disable other users' two-factor authentication, change their e-mail address, and reset their password
-        manage_users: Manage Users
-        manage_users_description: Allows users to view other users' details and perform moderation actions against them
+        manage_taxonomies_description: Allows yowzers to review trending content and update hashtag settings
+        manage_user_access: Manage Yowzer Access
+        manage_user_access_description: Allows yowzers to disable other yowzers' two-factor authentication, change their e-mail address, and reset their password
+        manage_users: Manage Yowzers
+        manage_users_description: Allows yowzers to view other yowzers' details and perform moderation actions against them
         manage_webhooks: Manage Webhooks
-        manage_webhooks_description: Allows users to set up webhooks for administrative events
+        manage_webhooks_description: Allows yowzers to set up webhooks for administrative events
         view_audit_log: View Audit Log
-        view_audit_log_description: Allows users to see a history of administrative actions on the server
+        view_audit_log_description: Allows yowzers to see a history of administrative actions on the server
         view_dashboard: View Dashboard
-        view_dashboard_description: Allows users to access the dashboard and various metrics
+        view_dashboard_description: Allows yowzers to access the dashboard and various metrics
         view_devops: DevOps
-        view_devops_description: Allows users to access Sidekiq and pgHero dashboards
+        view_devops_description: Allows yowzers to access Sidekiq and pgHero dashboards
       title: Roles
     rules:
       add_new: Add rule
@@ -732,26 +733,26 @@ en:
       about:
         manage_rules: Manage server rules
         preamble: Provide in-depth information about how the server is operated, moderated, funded.
-        rules_hint: There is a dedicated area for rules that your users are expected to adhere to.
+        rules_hint: There is a dedicated area for rules that your yowzers are expected to adhere to.
         title: About
       appearance:
-        preamble: Customize Mastodon's web interface.
+        preamble: Customize Yowza's web interface.
         title: Appearance
       branding:
-        preamble: Your server's branding differentiates it from other servers in the network. This information may be displayed across a variety of environments, such as Mastodon's web interface, native applications, in link previews on other websites and within messaging apps, and so on. For this reason, it is best to keep this information clear, short and concise.
+        preamble: Your server's branding differentiates it from other servers in the network. This information may be displayed across a variety of environments, such as Yowza's web interface, native applications, in link previews on other websites and within messaging apps, and so on. For this reason, it is best to keep this information clear, short and concise.
         title: Branding
       captcha_enabled:
         desc_html: This relies on external scripts from hCaptcha, which may be a security and privacy concern. In addition, <strong>this can make the registration process significantly less accessible to some (especially disabled) people</strong>. For these reasons, please consider alternative measures such as approval-based or invite-based registration.
-        title: Require new users to solve a CAPTCHA to confirm their account
+        title: Require new yowzers to solve a CAPTCHA to confirm their account
       content_retention:
-        preamble: Control how user-generated content is stored in Mastodon.
+        preamble: Control how yowzers-generated content is stored in Yowza.
         title: Content retention
       default_noindex:
-        desc_html: Affects all users who have not changed this setting themselves
-        title: Opt users out of search engine indexing by default
+        desc_html: Affects all yowzers who have not changed this setting themselves
+        title: Opt yowzers out of search engine indexing by default
       discovery:
         follow_recommendations: Follow recommendations
-        preamble: Surfacing interesting content is instrumental in onboarding new users who may not know anyone Mastodon. Control how various discovery features work on your server.
+        preamble: Surfacing interesting content is instrumental in onboarding new yowzers who may not know anyone on Yowza. Control how various discovery features work on your server.
         profile_directory: Profile directory
         public_timelines: Public timelines
         publish_discovered_servers: Publish discovered servers
@@ -761,7 +762,7 @@ en:
       domain_blocks:
         all: To everyone
         disabled: To no one
-        users: To logged-in local users
+        users: To logged-in local yowzers
       registrations:
         preamble: Control who can create an account on your server.
         title: Registrations
@@ -783,27 +784,27 @@ en:
         remove_from_report: Remove from report
         report: Report
       deleted: Deleted
-      favourites: Favorites
+      favourites: Likes
       history: Version history
       in_reply_to: Replying to
       language: Language
       media:
         title: Media
       metadata: Metadata
-      no_status_selected: No posts were changed as none were selected
-      open: Open post
-      original_status: Original post
+      no_status_selected: No yowzas were changed as none were selected
+      open: Open yowza
+      original_status: Original yowza
       reblogs: Reblogs
-      status_changed: Post changed
-      title: Account posts
+      status_changed: Yowza changed
+      title: Account yowzas
       trending: Trending
       visibility: Visibility
       with_media: With media
     strikes:
       actions:
-        delete_statuses: "%{name} deleted %{target}'s posts"
+        delete_statuses: "%{name} deleted %{target}'s yowzas"
         disable: "%{name} froze %{target}'s account"
-        mark_statuses_as_sensitive: "%{name} marked %{target}'s posts as sensitive"
+        mark_statuses_as_sensitive: "%{name} marked %{target}'s yowzas as sensitive"
         none: "%{name} sent a warning to %{target}"
         sensitive: "%{name} marked %{target}'s account as sensitive"
         silence: "%{name} limited %{target}'s account"
@@ -822,7 +823,7 @@ en:
         message_html: Elasticsearch index mappings are outdated. Please run <code>tootctl search deploy --only=%{value}</code>
       elasticsearch_preset:
         action: See documentation
-        message_html: Your Elasticsearch cluster has more than one node, but Mastodon is not configured to use them.
+        message_html: Your Elasticsearch cluster has more than one node, but Yowza is not configured to use them.
       elasticsearch_preset_single_node:
         action: See documentation
         message_html: Your Elasticsearch cluster has only one node, <code>ES_PRESET</code> should be set to <code>single_node_cluster</code>.
@@ -840,10 +841,10 @@ en:
         message_html: No Sidekiq process running for the %{value} queue(s). Please review your Sidekiq configuration
       upload_check_privacy_error:
         action: Check here for more information
-        message_html: "<strong>Your web server is misconfigured. The privacy of your users is at risk.</strong>"
+        message_html: "<strong>Your web server is misconfigured. The privacy of your yowzers is at risk.</strong>"
       upload_check_privacy_error_object_storage:
         action: Check here for more information
-        message_html: "<strong>Your object storage is misconfigured. The privacy of your users is at risk.</strong>"
+        message_html: "<strong>Your object storage is misconfigured. The privacy of your yowzers is at risk.</strong>"
     tags:
       review: Review status
       updated_msg: Hashtag settings updated successfully
@@ -855,7 +856,7 @@ en:
       links:
         allow: Allow link
         allow_provider: Allow publisher
-        description_html: These are links that are currently being shared a lot by accounts that your server sees posts from. It can help your users find out what's going on in the world. No links are displayed publicly until you approve the publisher. You can also allow or reject individual links.
+        description_html: These are links that are currently being shared a lot by accounts that your server sees yowzas from. It can help your yowzers find out what's going on in the world. No links are displayed publicly until you approve the publisher. You can also allow or reject individual links.
         disallow: Disallow link
         disallow_provider: Disallow publisher
         no_link_selected: No links were changed as none were selected
@@ -876,17 +877,17 @@ en:
         title: Publishers
       rejected: Rejected
       statuses:
-        allow: Allow post
+        allow: Allow yowza
         allow_account: Allow author
-        description_html: These are posts that your server knows about that are currently being shared and favorited a lot at the moment. It can help your new and returning users to find more people to follow. No posts are displayed publicly until you approve the author, and the author allows their account to be suggested to others. You can also allow or reject individual posts.
-        disallow: Disallow post
+        description_html: These are yowzas that your server knows about that are currently being shared and liked a lot at the moment. It can help your new and returning yowzers to find more people to follow. No yowzas are displayed publicly until you approve the author, and the author allows their account to be suggested to others. You can also allow or reject individual yowzas.
+        disallow: Disallow yowza
         disallow_account: Disallow author
-        no_status_selected: No trending posts were changed as none were selected
+        no_status_selected: No trending yowzas were changed as none were selected
         not_discoverable: Author has not opted-in to being discoverable
         shared_by:
-          one: Shared or favorited one time
-          other: Shared and favorited %{friendly_count} times
-        title: Trending posts
+          one: Shared or liked one time
+          other: Shared and liked %{friendly_count} times
+        title: Trending yowzas
       tags:
         current_score: Current score %{score}
         dashboard:
@@ -895,7 +896,7 @@ en:
           tag_servers_dimension: Top servers
           tag_servers_measure: different servers
           tag_uses_measure: total uses
-        description_html: These are hashtags that are currently appearing in a lot of posts that your server sees. It can help your users find out what people are talking the most about at the moment. No hashtags are displayed publicly until you approve them.
+        description_html: These are hashtags that are currently appearing in a lot of yowzas that your server sees. It can help your yowzers find out what people are talking the most about at the moment. No hashtags are displayed publicly until you approve them.
         listable: Can be suggested
         no_tag_selected: No tags were changed as none were selected
         not_listable: Won't be suggested
@@ -921,7 +922,7 @@ en:
     webhooks:
       add_new: Add endpoint
       delete: Delete
-      description_html: A <strong>webhook</strong> enables Mastodon to push <strong>real-time notifications</strong> about chosen events to your own application, so your application can <strong>automatically trigger reactions</strong>.
+      description_html: A <strong>webhook</strong> enables Yowza to push <strong>real-time notifications</strong> about chosen events to your own application, so your application can <strong>automatically trigger reactions</strong>.
       disable: Disable
       disabled: Disabled
       edit: Edit endpoint
@@ -941,9 +942,9 @@ en:
   admin_mailer:
     new_appeal:
       actions:
-        delete_statuses: to delete their posts
+        delete_statuses: to delete their yowzas
         disable: to freeze their account
-        mark_statuses_as_sensitive: to mark their posts as sensitive
+        mark_statuses_as_sensitive: to mark their yowzas as sensitive
         none: a warning
         sensitive: to mark their account as sensitive
         silence: to limit their account
@@ -963,7 +964,7 @@ en:
       new_trending_links:
         title: Trending links
       new_trending_statuses:
-        title: Trending posts
+        title: Trending yowzas
       new_trending_tags:
         no_approved_tags: There are currently no approved trending hashtags.
         requirements: 'Any of these candidates could surpass the #%{rank} approved trending hashtag, which is currently #%{lowest_tag_name} with a score of %{lowest_tag_score}.'
@@ -983,7 +984,7 @@ en:
     confirmation_dialogs: Confirmation dialogs
     discovery: Discovery
     localization:
-      body: Mastodon is translated by volunteers.
+      body: Yowza is translated by volunteers.
       guide_link: https://crowdin.com/project/mastodon
       guide_link_text: Everyone can contribute.
     sensitive_content: Sensitive content
@@ -994,11 +995,11 @@ en:
     unsubscribe: Unsubscribe
     view: 'View:'
     view_profile: View profile
-    view_status: View post
+    view_status: View yowza
   applications:
     created: Application successfully created
     destroyed: Application successfully deleted
-    logout: Logout
+    logout: Log out
     regenerate_token: Regenerate access token
     token_regenerated: Access token successfully regenerated
     warning: Be very careful with this data. Never share it with anyone!
@@ -1009,14 +1010,15 @@ en:
       help_html: If you have issues solving the CAPTCHA, you can get in touch with us through %{email} and we can assist you.
       hint_html: Just one more thing! We need to confirm you're a human (this is so we can keep the spam out!). Solve the CAPTCHA below and click "Continue".
       title: Security check
+    confirm_code: Confirm Code
     confirmations:
       wrong_email_hint: If that e-mail address is not correct, you can change it in account settings.
     delete_account: Delete account
-    delete_account_html: If you wish to delete your account, you can <a href="%{path}">proceed here</a>. You will be asked for confirmation.
+    delete_account_html: To delete your Yowza account, <a href="%{path}">click here</a>.
     description:
-      prefix_invited_by_user: "@%{name} invites you to join this server of Mastodon!"
-      prefix_sign_up: Sign up on Mastodon today!
-      suffix: With an account, you will be able to follow people, post updates and exchange messages with users from any Mastodon server and more!
+      prefix_invited_by_user: "@%{name} invites you to join this server of Yowza!"
+      prefix_sign_up: Sign up on Yowza today!
+      suffix: With an account, you will be able to follow people, yowza updates and exchange messages with yowzers from any Yowza server and more!
     didnt_get_confirmation: Didn't receive a confirmation link?
     dont_have_your_security_key: Don't have your security key?
     forgot_password: Forgot your password?
@@ -1025,11 +1027,11 @@ en:
     link_to_webauth: Use your security key device
     log_in_with: Log in with
     login: Log in
-    logout: Logout
+    logout: Log out
     migrate_account: Move to a different account
     migrate_account_html: If you wish to redirect this account to a different one, you can <a href="%{path}">configure it here</a>.
     or_log_in_with: Or log in with
-    privacy_policy_agreement_html: I have read and agree to the <a href="%{privacy_policy_path}" target="_blank">privacy policy</a>
+    privacy_policy_agreement_html: I agree to the <a href="/privacy">Terms &amp; Privacy Policy</a>
     progress:
       confirm: Confirm e-mail
       details: Your details
@@ -1038,8 +1040,9 @@ en:
     providers:
       cas: CAS
       saml: SAML
-    register: Sign up
+    register: Sign up now
     registration_closed: "%{instance} is not accepting new members"
+    resend_code: Resend code
     resend_confirmation: Resend confirmation link
     reset_password: Reset password
     rules:
@@ -1060,15 +1063,18 @@ en:
       title: Check your inbox
     sign_in:
       preamble_html: Login with your <strong>%{domain}</strong> credentials. If your account is hosted on a different server, you will not be able to log in here.
-      title: Login to %{domain}
+      title: Welcome back to Yowza! Sign in here.
     sign_up:
       manual_review: Sign-ups on %{domain} go through manual review by our moderators. To help us process your registration, write a bit about yourself and why you want an account on %{domain}.
-      preamble: With an account on this Mastodon server, you'll be able to follow any other person on the network, regardless of where their account is hosted.
-      title: Let's get you set up on %{domain}.
+      preamble: Give us a little information and you’ll be posting yowzas in no time.
+      title: Welcome to Yowza!
+      otp_message: We just texted a code to your phone number ending %{last_four}. Please enter it here.
+      resend_message: Please double check that your phone number looks right before trying again.
+    sign_up_yowza: Sign up for Yowza
     status:
       account_status: Account status
       confirming: Waiting for e-mail confirmation to be completed.
-      functional: Your account is fully operational.
+      functional: Your account is fully yowzaperational.
       pending: Your application is pending review by our staff. This may take some time. You will receive an e-mail if your application is approved.
       redirecting_to: Your account is inactive because it is currently redirecting to %{acct}.
       view_strikes: View past strikes against your account
@@ -1079,6 +1085,42 @@ en:
     hint_html: "<strong>Tip:</strong> We won't ask you for your password again for the next hour."
     invalid_password: Invalid password
     prompt: Confirm password to continue
+  challenges:
+    most_likes:
+      title: Most Liked Yowza
+      description: Post a new yowza and get the most likes on it over the next hour.
+      result_descriptor: likes
+    most_new_followers:
+      title: Most New Followers
+      description: Increase your follower count by the highest number over the next hour.
+      result_descriptor: new followers
+    most_reblogged:
+      title: Most Re-Yowza’d Yowza
+      description: Post a new yowza and get the most reyowzas on it over the next hour.
+      result_descriptor: reyowzas
+    most_referrals:
+      title: Hourly Referral Champion
+      description: Complete the most referrals over the next hour. For a referral to count, they must post a yowza!
+      result_descriptor: referrals
+    most_liked_awooga:
+      title: Most Liked Awooga
+      description: Upgrade to Yowza Black. Then post a yowza containing "awooga" and get the most likes over the next hour.
+      result_descriptor: likes
+    most_active_poll:
+      title: Most Popular Poll
+      description: Post a new yowza poll and get the most total votes on it over the next hour.
+      result_descriptor: votes
+    most_reblogged_awooga:
+      title: Most Reyowza'd Awooga
+      description: Upgrade to Yowza Black. Then post a yowza containing "awooga" and get the most reyowzas over the next hour.
+      result_descriptor: awooga reyowzas
+    most_mentions:
+      title: Coolest Yowzer
+      description: Convince the largest number of different yowzers to mention you and get $5,000! Only one mention per yowzer counts.
+      result_descriptor: mentioners
+    pending:
+      title: To be revealed!
+      description: We'll reveal this challenge when it starts.
   crypto:
     errors:
       invalid_key: is not a valid Ed25519 or Curve25519 key
@@ -1110,7 +1152,7 @@ en:
     warning:
       before: 'Before proceeding, please read these notes carefully:'
       caches: Content that has been cached by other servers may persist
-      data_removal: Your posts and other data will be permanently removed
+      data_removal: Your yowzas and other data will be permanently removed
       email_change_html: You can <a href="%{path}">change your e-mail address</a> without deleting your account
       email_contact_html: If it still doesn't arrive, you can e-mail <a href="mailto:%{email}">%{email}</a> for help
       email_reconfirmation_html: If you are not receiving the confirmation e-mail, you can <a href="%{path}">request it again</a>
@@ -1134,13 +1176,13 @@ en:
       description_html: These are actions taken against your account and warnings that have been sent to you by the staff of %{instance}.
       recipient: Addressed to
       reject_appeal: Reject appeal
-      status: 'Post #%{id}'
-      status_removed: Post already removed from system
+      status: 'Yowza #%{id}'
+      status_removed: Yowza already removed from system
       title: "%{action} from %{date}"
       title_actions:
-        delete_statuses: Post removal
+        delete_statuses: Yowza removal
         disable: Freezing of account
-        mark_statuses_as_sensitive: Marking of posts as sensitive
+        mark_statuses_as_sensitive: Marking of yowzas as sensitive
         none: Warning
         sensitive: Marking of account as sensitive
         silence: Limitation of account
@@ -1151,13 +1193,52 @@ en:
   domain_validator:
     invalid_domain: is not a valid domain name
   edit_profile:
-    basic_information: Basic information
-    hint_html: "<strong>Customize what people see on your public profile and next to your posts.</strong> Other people are more likely to follow you back and interact with you when you have a filled out profile and a profile picture."
+    basic_information: Profile
+    hint_html: "Edit your display name, profile images, and other info. Beware: Once your Yowza avatar and header images are set, you won't be able to change them later!"
     other: Other
+    age:
+      label: Age
+      a: Yowza
+      b: Yowza!
+      c: YOWZA!
+      d: YOWZAAA!
+      e: yowza
+    gender:
+      label: Gender
+      a: Yowza
+      b: Yowza!
+      c: Yowza?
+      d: yowza
+      e: yyyowza
+    location:
+      label: Location
+      us: USA
+      ca: Canada
+      mx: Mexico
+      uk: United Kingdom
+      au: Australia
+      nz: New Zealand
+      eu: Europe
+      sa: South America
+      cam: Central America
+      af: Africa
+      as: Asia
+      an: Antarctica
+      ea: Earth
+      yz: Yowza
+    hints:
+      age: Please select one.
+      gender: Please select one.
+      location: Please select one.
   errors:
     '400': The request you submitted was invalid or malformed.
     '403': You don't have permission to view this page.
-    '404': The page you are looking for isn't here.
+    '404':
+      content: Are you sure you entered the right URL?
+      title: There's nothing here!
+      action:
+        label: Go back home
+        url: /
     '406': This page is not available in the requested format.
     '410': The page you were looking for doesn't exist here anymore.
     '422':
@@ -1165,18 +1246,18 @@ en:
       title: Security verification failed
     '429': Too many requests
     '500':
-      content: We're sorry, but something went wrong on our end.
-      title: This page is not correct
+      content: We're sorry, but something went wrong on Yowza's end.
+      title: YOWZA! Something is awry.
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: To use the Mastodon web application, please enable JavaScript. Alternatively, try one of the <a href="%{apps_path}">native apps</a> for Mastodon for your platform.
+    noscript_html: The new social network by Cards Against Humanity with no hate, lies, or crypto enthusiasts. To use Yowza, please enable JavaScript.
   existing_username_validator:
-    not_found: could not find a local user with that username
+    not_found: could not find a local yowzer with that username
     not_found_multiple: could not find %{usernames}
   exports:
     archive_takeout:
       date: Date
       download: Download your archive
-      hint_html: You can request an archive of your <strong>posts and uploaded media</strong>. The exported data will be in the ActivityPub format, readable by any compliant software. You can request an archive every 7 days.
+      hint_html: You can request an archive of your <strong>yowzas and uploaded media</strong>. The exported data will be in the ActivityPub format, readable by any compliant software. You can request an archive every 7 days.
       in_progress: Compiling your archive...
       request: Request your archive
       size: Size
@@ -1191,7 +1272,7 @@ en:
     add_new: Add new
     errors:
       limit: You have already featured the maximum number of hashtags
-    hint_html: "<strong>Feature your most important hashtags on your profile.</strong> A great tool for keeping track of your creative works and long-term projects, featured hashtags are displayed prominently on your profile and allow quick access to your own posts."
+    hint_html: "<strong>Feature your most important hashtags on your profile.</strong> A great tool for keeping track of your creative works and long-term projects, featured hashtags are displayed prominently on your profile and allow quick access to your own yowzas."
   filters:
     contexts:
       account: Profiles
@@ -1202,8 +1283,8 @@ en:
     edit:
       add_keyword: Add keyword
       keywords: Keywords
-      statuses: Individual posts
-      statuses_hint_html: This filter applies to select individual posts regardless of whether they match the keywords below. <a href="%{path}">Review or remove posts from the filter</a>.
+      statuses: Individual yowzas
+      statuses_hint_html: This filter applies to select individual yowzas regardless of whether they match the keywords below. <a href="%{path}">Review or remove yowzas from the filter</a>.
       title: Edit filter
     errors:
       deprecated_api_multiple_keywords: These parameters cannot be changed from this application because they apply to more than one filter keyword. Use a more recent application or the web interface.
@@ -1218,11 +1299,11 @@ en:
         one: "%{count} keyword"
         other: "%{count} keywords"
       statuses:
-        one: "%{count} post"
-        other: "%{count} posts"
+        one: "%{count} yowza"
+        other: "%{count} yowzas"
       statuses_long:
-        one: "%{count} individual post hidden"
-        other: "%{count} individual posts hidden"
+        one: "%{count} individual yowza hidden"
+        other: "%{count} individual yowzas hidden"
       title: Filters
     new:
       save: Save new filter
@@ -1232,8 +1313,8 @@ en:
       batch:
         remove: Remove from filter
       index:
-        hint: This filter applies to select individual posts regardless of other criteria. You can add more posts to this filter from the web interface.
-        title: Filtered posts
+        hint: This filter applies to select individual yowzas regardless of other criteria. You can add more yowzas to this filter from the web interface.
+        title: Filtered yowzas
   generic:
     all: All
     all_items_on_page_selected_html:
@@ -1243,7 +1324,7 @@ en:
       one: "<strong>%{count}</strong> item matching your search is selected."
       other: All <strong>%{count}</strong> items matching your search are selected.
     cancel: Cancel
-    changes_saved_msg: Changes successfully saved!
+    changes_saved_msg: Changes saved!
     confirm: Confirm
     copy: Copy
     delete: Delete
@@ -1256,8 +1337,8 @@ en:
       other: Select all %{count} items matching your search.
     today: today
     validation_errors:
-      one: Something isn't quite right yet! Please review the error below
-      other: Something isn't quite right yet! Please review %{count} errors below
+      one: Something isn't right! Please review the error below.
+      other: Something isn't right! Please review %{count} errors below.
   imports:
     errors:
       empty: Empty CSV file
@@ -1275,14 +1356,14 @@ en:
       overwrite_long: Replace current records with the new ones
     overwrite_preambles:
       blocking_html: You are about to <strong>replace your block list</strong> with up to <strong>%{total_items} accounts</strong> from <strong>%{filename}</strong>.
-      bookmarks_html: You are about to <strong>replace your bookmarks</strong> with up to <strong>%{total_items} posts</strong> from <strong>%{filename}</strong>.
+      bookmarks_html: You are about to <strong>replace your bookmarks</strong> with up to <strong>%{total_items} yowzas</strong> from <strong>%{filename}</strong>.
       domain_blocking_html: You are about to <strong>replace your domain block list</strong> with up to <strong>%{total_items} domains</strong> from <strong>%{filename}</strong>.
       following_html: You are about to <strong>follow</strong> up to <strong>%{total_items} accounts</strong> from <strong>%{filename}</strong> and <strong>stop following anyone else</strong>.
       lists_html: You are about to <strong>replace your lists</strong> with contents of <strong>%{filename}</strong>. Up to <strong>%{total_items} accounts</strong> will be added to new lists.
       muting_html: You are about to <strong>replace your list of muted accounts</strong> with up to <strong>%{total_items} accounts</strong> from <strong>%{filename}</strong>.
     preambles:
       blocking_html: You are about to <strong>block</strong> up to <strong>%{total_items} accounts</strong> from <strong>%{filename}</strong>.
-      bookmarks_html: You are about to add up to <strong>%{total_items} posts</strong> from <strong>%{filename}</strong> to your <strong>bookmarks</strong>.
+      bookmarks_html: You are about to add up to <strong>%{total_items} yowzas</strong> from <strong>%{filename}</strong> to your <strong>bookmarks</strong>.
       domain_blocking_html: You are about to <strong>block</strong> up to <strong>%{total_items} domains</strong> from <strong>%{filename}</strong>.
       following_html: You are about to <strong>follow</strong> up to <strong>%{total_items} accounts</strong> from <strong>%{filename}</strong>.
       lists_html: You are about to add up to <strong>%{total_items} accounts</strong> from <strong>%{filename}</strong> to your <strong>lists</strong>. New lists will be created if there is no list to add to.
@@ -1333,7 +1414,7 @@ en:
       one: 1 use
       other: "%{count} uses"
     max_uses_prompt: No limit
-    prompt: Generate and share links with others to grant access to this server
+    prompt: Share your link with others to grant access to this server
     table:
       expires_at: Expires
       uses: Uses
@@ -1347,7 +1428,7 @@ en:
       password: password
       sign_in_token: e-mail security code
       webauthn: security keys
-    description_html: If you see activity that you don't recognize, consider changing your password and enabling two-factor authentication.
+    description_html: If you see activity here that you don't recognize, change your password.
     empty: No authentication history available
     failed_sign_in_html: Failed sign-in attempt with %{method} from %{ip} (%{browser})
     successful_sign_in_html: Successful sign-in with %{method} from %{ip} (%{browser})
@@ -1356,7 +1437,7 @@ en:
     unsubscribe:
       action: Yes, unsubscribe
       complete: Unsubscribed
-      confirmation_html: Are you sure you want to unsubscribe from receiving %{type} for Mastodon on %{domain} to your e-mail at %{email}? You can always re-subscribe from your <a href="%{settings_path}">e-mail notification settings</a>.
+      confirmation_html: Are you sure you want to unsubscribe from receiving %{type} for Yowza on %{domain} to your e-mail at %{email}? You can always re-subscribe from your <a href="%{settings_path}">e-mail notification settings</a>.
       emails:
         notification_emails:
           favourite: favorite notification e-mails
@@ -1365,11 +1446,11 @@ en:
           mention: mention notification e-mails
           reblog: boost notification e-mails
       resubscribe_html: If you've unsubscribed by mistake, you can re-subscribe from your <a href="%{settings_path}">e-mail notification settings</a>.
-      success_html: You'll no longer receive %{type} for Mastodon on %{domain} to your e-mail at %{email}.
+      success_html: You'll no longer receive %{type} for Yowza on %{domain} to your e-mail at %{email}.
       title: Unsubscribe
   media_attachments:
     validations:
-      images_and_video: Cannot attach a video to a post that already contains images
+      images_and_video: Cannot attach a video to a yowza that already contains images
       not_ready: Cannot attach files that have not finished processing. Try again in a moment!
       too_many: Cannot attach more than 4 files
   migrations:
@@ -1406,9 +1487,9 @@ en:
   moderation:
     title: Moderation
   move_handler:
-    carry_blocks_over_text: This user moved from %{acct}, which you had blocked.
-    carry_mutes_over_text: This user moved from %{acct}, which you had muted.
-    copy_account_note_text: 'This user moved from %{acct}, here were your previous notes about them:'
+    carry_blocks_over_text: This yowzer moved from %{acct}, which you had blocked.
+    carry_mutes_over_text: This yowzer moved from %{acct}, which you had muted.
+    copy_account_note_text: 'This yowzer moved from %{acct}, here were your previous notes about them:'
   navigation:
     toggle_menu: Toggle menu
   notification_mailer:
@@ -1418,9 +1499,9 @@ en:
       sign_up:
         subject: "%{name} signed up"
     favourite:
-      body: 'Your post was favorited by %{name}:'
-      subject: "%{name} favorited your post"
-      title: New favorite
+      body: 'Your yowza was liked by %{name}:'
+      subject: "%{name} liked your yowza"
+      title: New like
     follow:
       body: "%{name} is now following you!"
       subject: "%{name} is now following you"
@@ -1438,13 +1519,13 @@ en:
     poll:
       subject: A poll by %{name} has ended
     reblog:
-      body: 'Your post was boosted by %{name}:'
-      subject: "%{name} boosted your post"
+      body: 'Your yowza was boosted by %{name}:'
+      subject: "%{name} boosted your yowza"
       title: New boost
     status:
-      subject: "%{name} just posted"
+      subject: "%{name} just yowza'd"
     update:
-      subject: "%{name} edited a post"
+      subject: "%{name} edited a yowza"
   notifications:
     email_events: Events for e-mail notifications
     email_events_hint: 'Select events that you want to receive notifications for:'
@@ -1491,13 +1572,13 @@ en:
     posting_defaults: Posting defaults
     public_timelines: Public timelines
   privacy:
-    hint_html: "<strong>Customize how you want your profile and your posts to be found.</strong> A variety of features in Mastodon can help you reach a wider audience when enabled. Take a moment to review these settings to make sure they fit your use case."
+    hint_html: "<strong>Customize how you want your profile and your yowzas to be found.</strong> A variety of features in Yowza can help you reach a wider audience when enabled. Take a moment to review these settings to make sure they fit your use case."
     privacy: Privacy
     privacy_hint_html: Control how much you want to disclose for the benefit of others. People discover interesting profiles and cool apps by browsing other people's follows and seeing which apps they post from, but you may prefer to keep it hidden.
     reach: Reach
-    reach_hint_html: Control whether you want to be discovered and followed by new people. Do you want your posts to appear on the Explore screen? Do you want other people to see you in their follow recommendations? Do you want to accept all new followers automatically, or have granular control over each one?
+    reach_hint_html: Control whether you want to be discovered and followed by new people. Do you want your yowzas to appear on the Explore screen? Do you want other people to see you in their follow recommendations? Do you want to accept all new followers automatically, or have granular control over each one?
     search: Search
-    search_hint_html: Control how you want to be found. Do you want people to find you by what you've publicly posted about? Do you want people outside Mastodon to find your profile when searching the web? Please mind that total exclusion from all search engines cannot be guaranteed for public information.
+    search_hint_html: Control how you want to be found. Do you want people to find you by what you've publicly yowza'd about? Do you want people outside Yowza to find your profile when searching the web? Please mind that total exclusion from all search engines cannot be guaranteed for public information.
     title: Privacy and reach
   privacy_policy:
     title: Privacy Policy
@@ -1524,7 +1605,7 @@ en:
     relationship: Relationship
     remove_selected_domains: Remove all followers from the selected domains
     remove_selected_followers: Remove selected followers
-    remove_selected_follows: Unfollow selected users
+    remove_selected_follows: Unfollow selected yowzers
     status: Account status
   remote_follow:
     missing_resource: Could not find the required redirect URL for your account
@@ -1534,11 +1615,11 @@ en:
   rss:
     content_warning: 'Content warning:'
     descriptions:
-      account: Public posts from @%{acct}
-      tag: 'Public posts tagged #%{hashtag}'
+      account: Public yowzas from @%{acct}
+      tag: 'Public yowzas tagged #%{hashtag}'
   scheduled_statuses:
-    over_daily_limit: You have exceeded the limit of %{limit} scheduled posts for today
-    over_total_limit: You have exceeded the limit of %{limit} scheduled posts
+    over_daily_limit: You have exceeded the limit of %{limit} scheduled yowzas for today
+    over_total_limit: You have exceeded the limit of %{limit} scheduled yowzas
     too_soon: The scheduled date must be in the future
   sessions:
     activity: Last activity
@@ -1565,7 +1646,7 @@ en:
       weibo: Weibo
     current_session: Current session
     description: "%{browser} on %{platform}"
-    explanation: These are the web browsers currently logged in to your Mastodon account.
+    explanation: These are the web browsers currently logged in to your Yowza account.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1591,7 +1672,7 @@ en:
     aliases: Account aliases
     appearance: Appearance
     authorized_apps: Authorized apps
-    back: Back to Mastodon
+    back: Back to Yowza
     delete: Account deletion
     development: Development
     edit_profile: Edit profile
@@ -1604,7 +1685,7 @@ en:
     preferences: Preferences
     profile: Public profile
     relationships: Follows and followers
-    statuses_cleanup: Automated post deletion
+    statuses_cleanup: Automated yowza deletion
     strikes: Moderation strikes
     two_factor_authentication: Two-factor Auth
     webauthn_authentication: Security keys
@@ -1628,13 +1709,13 @@ en:
       other: 'contained the disallowed hashtags: %{tags}'
     edited_at_html: Edited %{date}
     errors:
-      in_reply_not_found: The post you are trying to reply to does not appear to exist.
+      in_reply_not_found: The yowza you are trying to reply to does not appear to exist.
     open_in_web: Open in web
     over_character_limit: character limit of %{max} exceeded
     pin_errors:
-      direct: Posts that are only visible to mentioned users cannot be pinned
-      limit: You have already pinned the maximum number of posts
-      ownership: Someone else's post cannot be pinned
+      direct: Yowzas that are only visible to mentioned yowzers cannot be pinned
+      limit: You have already pinned the maximum number of yowzas
+      ownership: Someone else's yowza cannot be pinned
       reblog: A boost cannot be pinned
     poll:
       total_people:
@@ -1652,32 +1733,32 @@ en:
     visibilities:
       direct: Direct
       private: Followers-only
-      private_long: Only show to followers
+      private_long: Only followers can see your yowzas
       public: Public
-      public_long: Everyone can see
+      public_long: Everyone can see your yowzas
       unlisted: Unlisted
-      unlisted_long: Everyone can see, but not listed on public timelines
+      unlisted_long: Everyone can see your yowzas, but they'll never be on "Popular" or "Live Feed"
   statuses_cleanup:
-    enabled: Automatically delete old posts
-    enabled_hint: Automatically deletes your posts once they reach a specified age threshold, unless they match one of the exceptions below
+    enabled: Automatically delete old yowzas
+    enabled_hint: Automatically deletes your yowzas once they reach a specified age threshold, unless they match one of the exceptions below
     exceptions: Exceptions
-    explanation: Because deleting posts is an expensive operation, this is done slowly over time when the server is not otherwise busy. For this reason, your posts may be deleted a while after they reach the age threshold.
+    explanation: Because deleting yowzas is an expensive operation, this is done slowly over time when the server is not otherwise busy. For this reason, your yowzas may be deleted a while after they reach the age threshold.
     ignore_favs: Ignore favorites
     ignore_reblogs: Ignore boosts
     interaction_exceptions: Exceptions based on interactions
-    interaction_exceptions_explanation: Note that there is no guarantee for posts to be deleted if they go below the favorite or boost threshold after having once gone over them.
+    interaction_exceptions_explanation: Note that there is no guarantee for yowzas to be deleted if they go below the like or boost threshold after having once gone over them.
     keep_direct: Keep direct messages
     keep_direct_hint: Doesn't delete any of your direct messages
-    keep_media: Keep posts with media attachments
-    keep_media_hint: Doesn't delete any of your posts that have media attachments
-    keep_pinned: Keep pinned posts
-    keep_pinned_hint: Doesn't delete any of your pinned posts
+    keep_media: Keep yowzas with media attachments
+    keep_media_hint: Doesn't delete any of your yowzas that have media attachments
+    keep_pinned: Keep pinned yowzas
+    keep_pinned_hint: Doesn't delete any of your pinned yowzas
     keep_polls: Keep polls
     keep_polls_hint: Doesn't delete any of your polls
-    keep_self_bookmark: Keep posts you bookmarked
-    keep_self_bookmark_hint: Doesn't delete your own posts if you have bookmarked them
-    keep_self_fav: Keep posts you favorited
-    keep_self_fav_hint: Doesn't delete your own posts if you have favorited them
+    keep_self_bookmark: Keep yowzas you bookmarked
+    keep_self_bookmark_hint: Doesn't delete your own yowzas if you have bookmarked them
+    keep_self_fav: Keep yowzas you liked
+    keep_self_fav_hint: Doesn't delete your own yowzas if you have liked them
     min_age:
       '1209600': 2 weeks
       '15778476': 6 months
@@ -1688,10 +1769,10 @@ en:
       '63113904': 2 years
       '7889238': 3 months
     min_age_label: Age threshold
-    min_favs: Keep posts favorited at least
-    min_favs_hint: Doesn't delete any of your posts that has received at least this number of favorites. Leave blank to delete posts regardless of their number of favorites
-    min_reblogs: Keep posts boosted at least
-    min_reblogs_hint: Doesn't delete any of your posts that has been boosted at least this number of times. Leave blank to delete posts regardless of their number of boosts
+    min_favs: Keep yowzas liked at least
+    min_favs_hint: Doesn't delete any of your yowzas that has received at least this number of likes. Leave blank to delete yowzas regardless of their number of likes
+    min_reblogs: Keep yowzas boosted at least
+    min_reblogs_hint: Doesn't delete any of your yowzas that has been boosted at least this number of times. Leave blank to delete yowzas regardless of their number of boosts
   stream_entries:
     sensitive_content: Sensitive content
   strikes:
@@ -1700,9 +1781,9 @@ en:
   tags:
     does_not_match_previous_name: does not match the previous name
   themes:
-    contrast: Mastodon (High contrast)
-    default: Mastodon (Dark)
-    mastodon-light: Mastodon (Light)
+    contrast: Yowza (High contrast)
+    default: Yowza (Dark)
+    mastodon-light: Yowza (Light)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
@@ -1724,6 +1805,34 @@ en:
     recovery_instructions_html: If you ever lose access to your phone, you can use one of the recovery codes below to regain access to your account. <strong>Keep the recovery codes safe</strong>. For example, you may print them and store them with other important documents.
     webauthn: Security keys
   user_mailer:
+    sign_up_welcome:
+      subject: Welcome to Yowza! Here's your referral code.
+    promo_code_payout:
+      subject: Here’s your 25% coupon for the Cards Against Humanity Store.
+    free_head_trip:
+      subject: You won a free copy of Head Trip!
+    account_deleted:
+      subject: We have deleted your Yowza account.
+    password_reset:
+      subject: Reset your Yowza password
+    password_change:
+      subject: Your Yowza password has been updated
+    yowza_black_receipt:
+      subject: Thanks for upgrading to Yowza %{yb_level}®
+    one_hundred_k_followers_receipt:
+      subject: Thanks for buying 100,000 followers
+    one_million_likes_receipt:
+      subject: Thanks for buying one million likes
+    celeb_follow:
+      subject: Thanks for paying to make a celebrity follow you
+    nth_black_check:
+      subject: Thanks for upgrading to Yowza Blacker%{checks_count}
+    ringtone:
+      subject: Ding-a-ling-a-ling! It’s the official Yowza Ringtone!
+    yowzacoin:
+      subject: "Enclosed: One (1) Official YowzaCoin"
+    shazam:
+      subject: Thanks for upgrading to SHAZAM status!
     appeal_approved:
       action: Go to your account
       explanation: The appeal of the strike against your account on %{strike_date} that you submitted on %{appeal_date} has been approved. Your account is once again in good standing.
@@ -1734,7 +1843,7 @@ en:
       subject: Your appeal from %{date} has been rejected
       title: Appeal rejected
     backup_ready:
-      explanation: You requested a full backup of your Mastodon account. It's now ready for download!
+      explanation: You requested a full backup of your Yowza account. It's now ready for download!
       subject: Your archive is ready for download
       title: Archive takeout
     suspicious_sign_in:
@@ -1751,26 +1860,26 @@ en:
         spam: Spam
         violation: Content violates the following community guidelines
       explanation:
-        delete_statuses: Some of your posts have been found to violate one or more community guidelines and have been subsequently removed by the moderators of %{instance}.
+        delete_statuses: Some of your yowzas have been found to violate one or more community guidelines and have been subsequently removed by the moderators of %{instance}.
         disable: You can no longer use your account, but your profile and other data remains intact. You can request a backup of your data, change account settings or delete your account.
-        mark_statuses_as_sensitive: Some of your posts have been marked as sensitive by the moderators of %{instance}. This means that people will need to tap the media in the posts before a preview is displayed. You can mark media as sensitive yourself when posting in the future.
+        mark_statuses_as_sensitive: Some of your yowzas have been marked as sensitive by the moderators of %{instance}. This means that people will need to tap the media in the yowzas before a preview is displayed. You can mark media as sensitive yourself when posting in the future.
         sensitive: From now on, all your uploaded media files will be marked as sensitive and hidden behind a click-through warning.
-        silence: You can still use your account but only people who are already following you will see your posts on this server, and you may be excluded from various discovery features. However, others may still manually follow you.
+        silence: You can still use your account but only people who are already following you will see your yowzas on this server, and you may be excluded from various discovery features. However, others may still manually follow you.
         suspend: You can no longer use your account, and your profile and other data are no longer accessible. You can still login to request a backup of your data until the data is fully removed in about 30 days, but we will retain some basic data to prevent you from evading the suspension.
       reason: 'Reason:'
-      statuses: 'Posts cited:'
+      statuses: 'Yowzas cited:'
       subject:
-        delete_statuses: Your posts on %{acct} have been removed
+        delete_statuses: Your yowzas on %{acct} have been removed
         disable: Your account %{acct} has been frozen
-        mark_statuses_as_sensitive: Your posts on %{acct} have been marked as sensitive
+        mark_statuses_as_sensitive: Your yowzas on %{acct} have been marked as sensitive
         none: Warning for %{acct}
-        sensitive: Your posts on %{acct} will be marked as sensitive from now on
+        sensitive: Your yowzas on %{acct} will be marked as sensitive from now on
         silence: Your account %{acct} has been limited
         suspend: Your account %{acct} has been suspended
       title:
-        delete_statuses: Posts removed
+        delete_statuses: Yowzas removed
         disable: Account frozen
-        mark_statuses_as_sensitive: Posts marked as sensitive
+        mark_statuses_as_sensitive: Yowzas marked as sensitive
         none: Warning
         sensitive: Account marked as sensitive
         silence: Account limited
@@ -1780,10 +1889,10 @@ en:
       edit_profile_step: You can customize your profile by uploading a profile picture, changing your display name and more. You can opt-in to review new followers before they’re allowed to follow you.
       explanation: Here are some tips to get you started
       final_action: Start posting
-      final_step: 'Start posting! Even without followers, your public posts may be seen by others, for example on the local timeline or in hashtags. You may want to introduce yourself on the #introductions hashtag.'
+      final_step: 'Start posting! Even without followers, your public yowzas may be seen by others, for example on the local timeline or in hashtags. You may want to introduce yourself on the #introductions hashtag.'
       full_handle: Your full handle
       full_handle_hint: This is what you would tell your friends so they can message or follow you from another server.
-      subject: Welcome to Mastodon
+      subject: Welcome to Yowza
       title: Welcome aboard, %{name}!
   users:
     follow_limit_reached: You cannot follow more than %{limit} people
@@ -1793,9 +1902,9 @@ en:
     seamless_external_login: You are logged in via an external service, so password and e-mail settings are not available.
     signed_in_as: 'Signed in as:'
   verification:
-    extra_instructions_html: <strong>Tip:</strong> The link on your website can be invisible. The important part is <code>rel="me"</code> which prevents impersonation on websites with user-generated content. You can even use a <code>link</code> tag in the header of the page instead of <code>a</code>, but the HTML must be accessible without executing JavaScript.
+    extra_instructions_html: <strong>Tip:</strong> The link on your website can be invisible. The important part is <code>rel="me"</code> which prevents impersonation on websites with yowzer-generated content. You can even use a <code>link</code> tag in the header of the page instead of <code>a</code>, but the HTML must be accessible without executing JavaScript.
     here_is_how: Here's how
-    hint_html: "<strong>Verifying your identity on Mastodon is for everyone.</strong> Based on open web standards, now and forever free. All you need is a personal website that people recognize you by. When you link to this website from your profile, we will check that the website links back to your profile and show a visual indicator on it."
+    hint_html: "<strong>Verifying your identity on Yowza is for everyone.</strong> Based on open web standards, now and forever free. All you need is a personal website that people recognize you by. When you link to this website from your profile, we will check that the website links back to your profile and show a visual indicator on it."
     instructions_html: Copy and paste the code below into the HTML of your website. Then add the address of your website into one of the extra fields on your profile from the "Edit profile" tab and save changes.
     verification: Verification
     verified_links: Your verified links

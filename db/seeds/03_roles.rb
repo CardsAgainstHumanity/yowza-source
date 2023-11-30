@@ -2,6 +2,7 @@
 
 # Pre-create base role
 UserRole.everyone
+UserRole.fauxbot
 
 # Create default roles defined in config file
 default_roles = YAML.load_file(Rails.root.join('config', 'roles.yml'))

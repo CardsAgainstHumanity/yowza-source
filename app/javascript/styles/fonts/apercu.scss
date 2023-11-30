@@ -1,0 +1,54 @@
+@font-face {
+  font-family: mastodon-font-sans-serif;
+  src:
+    url('../fonts/apercu/apercu-black-pro.woff2') format('woff2'),
+    url('../fonts/apercu/apercu-black-pro.woff') format('woff'),
+    url('../fonts/apercu/apercu-black-pro.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: mastodon-font-sans-serif;
+  src:
+    url('../fonts/apercu/apercu-extrabold-pro.woff2') format('woff2'),
+    url('../fonts/apercu/apercu-extrabold-pro.woff') format('woff'),
+    url('../fonts/apercu/apercu-extrabold-pro.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: mastodon-font-sans-serif;
+  src:
+    url('../fonts/apercu/apercu-bold-pro.woff2') format('woff2'),
+    url('../fonts/apercu/apercu-bold-pro.woff') format('woff'),
+    url('../fonts/apercu/apercu-bold-pro.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: mastodon-font-sans-serif;
+  src:
+    url('../fonts/apercu/apercu-medium-pro.woff2') format('woff2'),
+    url('../fonts/apercu/apercu-medium-pro.woff') format('woff'),
+    url('../fonts/apercu/apercu-medium-pro.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: mastodon-font-sans-serif;
+  src:
+    url('../fonts/apercu/apercu-regular-pro.woff2') format('woff2'),
+    url('../fonts/apercu/apercu-regular-pro.woff') format('woff'),
+    url('../fonts/apercu/apercu-regular-pro.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}

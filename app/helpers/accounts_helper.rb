@@ -13,7 +13,7 @@ module AccountsHelper
 
   def acct(account)
     if account.local?
-      "@#{account.acct}@#{site_hostname}"
+      "@#{account.acct}"
     else
       "@#{account.pretty_acct}"
     end

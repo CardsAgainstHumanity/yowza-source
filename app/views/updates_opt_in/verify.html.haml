@@ -1,0 +1,23 @@
+- content_for :page_title do
+  = 'Opt in'
+
+- content_for :header_tags do
+  = render partial: 'shared/og'
+
+  .container-alt
+    .logo-container
+      %h1
+        = link_to root_path do
+          = logo_as_symbol(:wordmark)
+
+    .form-container
+      .simple_form
+        %h1.title='Hey, just following up about those text messages.'
+        %p.lead
+          Just text
+          %strong YOWZA 
+          to
+          %strong 1-866-376-3341. 
+          You really don’t want to miss them. It’ll be three messages at most, and we won’t share your number or bother you after that.
+        .actions
+          = link_to 'Take me to Yowza!', root_path, class: 'btn'

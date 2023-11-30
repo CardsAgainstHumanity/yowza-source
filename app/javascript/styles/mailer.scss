@@ -1,5 +1,5 @@
 @import 'mastodon/variables';
-@import 'fonts/roboto';
+@import 'fonts/apercu';
 
 table,
 td,
@@ -30,8 +30,8 @@ a {
   &,
   &:visited,
   span {
-    text-decoration: none;
-    color: $ui-highlight-color;
+    text-decoration: underline;
+    color: inherit;
   }
 
   #outlook & {
@@ -46,6 +46,8 @@ img {
   -ms-interpolation-mode: bicubic;
   clear: both;
   line-height: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 table {
@@ -92,10 +94,23 @@ td {
   padding-bottom: 32px;
 }
 
-.email-body,
-html,
-body {
-  background-color: lighten($ui-base-color, 4%);
+@media only screen {
+  html {
+    min-height: 100%;
+  }
+
+  body {
+    background: linear-gradient(
+      341deg,
+      #ffb443 -37.83%,
+      #ff5e5e -7.68%,
+      #dd7dff 22.47%,
+      #39dbff 51.19%,
+      #00ff75 78.47%,
+      #fff500 96.9%
+    );
+    min-height: 100%;
+  }
 }
 
 .email-container,
@@ -175,25 +190,28 @@ body {
 
 .column-cell,
 .column-cell td,
-p {
-  font-family: Helvetica, Arial, sans-serif;
+p,
+li {
+  font-family: Futura, Helvetica, Arial, sans-serif;
 
   @media only screen {
-    font-family: $font-sans-serif, sans-serif !important;
+    font-family: Futura, $font-sans-serif, sans-serif !important;
   }
 }
 
 .email-body .column-cell,
 .column-cell,
-p {
+p,
+li {
   font-size: 15px;
   line-height: 23px;
-  color: $ui-primary-color;
+  color: black;
   mso-line-height-rule: exactly;
   text-rendering: optimizelegibility;
 }
 
-p {
+p,
+li {
   display: block;
   margin-top: 0;
   margin-bottom: 16px;
@@ -214,7 +232,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: $ui-secondary-color;
+  color: black;
   margin-left: 0;
   margin-right: 0;
   margin-top: 20px;
@@ -242,7 +260,6 @@ h5 {
   font-size: 16px;
   line-height: 21px;
   font-weight: 700;
-  color: lighten($ui-base-color, 34%);
 }
 
 .input-cell {
@@ -253,8 +270,8 @@ h5 {
 
 .input {
   td {
-    background: darken($ui-base-color, 8%);
-    border-radius: 4px;
+    background: white;
+    border: 1px solid black;
     padding: 16px;
     line-height: 20px;
     mso-line-height-rule: exactly;
@@ -275,16 +292,22 @@ h5 {
 }
 
 .content-cell {
-  background-color: darken($ui-base-color, 4%);
+  background-color: white;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  box-shadow: 4px 4px 0 0 black;
 
   &.darker {
-    background-color: darken($ui-base-color, 8%);
+    // background-color: darken($ui-base-color, 8%);
   }
 }
 
 .hero {
-  background-color: $ui-base-color;
   padding-top: 20px;
+}
+
+.logo {
+  padding-top: 30px;
 }
 
 .hero-with-button {
@@ -300,8 +323,7 @@ h5 {
 }
 
 .header {
-  border-radius: 5px 5px 0 0;
-  background-color: darken($ui-base-color, 8%);
+  border-top: 2px solid black;
 
   .column-cell {
     text-align: center;
@@ -315,14 +337,13 @@ h5 {
 }
 
 .content-end {
-  border-radius: 0 0 5px 5px;
-  padding-top: 16px;
+  border-bottom: 2px solid black;
 }
 
 .footer {
   .column-cell,
   p {
-    color: lighten($ui-base-color, 34%);
+    color: white;
   }
 
   p {
@@ -335,7 +356,7 @@ h5 {
   }
 
   a {
-    color: lighten($ui-base-color, 34%);
+    color: white;
     text-decoration: underline;
   }
 
@@ -353,35 +374,41 @@ h5 {
   display: table;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: 4px 4px 0 0 black;
+  text-decoration: none;
+  background-color: #fff500;
+  border: 2px solid black;
+  border-radius: 1000px;
 
   td {
     line-height: 20px;
     mso-line-height-rule: exactly;
-    border-radius: 4px;
+    border-radius: 1000px;
     text-align: center;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 17px;
     padding: 0 !important;
 
     a,
     a span {
-      color: $primary-text-color;
+      color: black;
       display: block !important;
       text-align: center !important;
       vertical-align: top !important;
       line-height: inherit !important;
+      text-decoration: none;
     }
 
     a {
       padding: 10px 22px !important;
       line-height: 26px !important;
-      font-weight: 500 !important;
+      font-weight: 700 !important;
     }
   }
 
   &.button-small {
     td {
-      border-radius: 4px;
+      border-radius: 1000px;
       font-size: 14px;
       padding: 8px 16px;
 
@@ -393,20 +420,16 @@ h5 {
   }
 }
 
-.button-default {
-  background-color: darken($ui-base-color, 8%);
-}
-
-.button-primary {
-  background-color: darken($ui-highlight-color, 3%);
-}
-
 .text-center {
   text-align: center;
 }
 
 .text-right {
   text-align: right;
+}
+
+.text-left {
+  text-align: left !important;
 }
 
 .padded {
@@ -431,16 +454,18 @@ h5 {
     line-height: 100%;
     mso-line-height-rule: exactly;
     padding: 16px;
+    border: 2px solid black;
+    box-shadow: 4px 4px 0 0 black;
     border-radius: 80px;
-    background: $success-green;
+    background: #39dbff;
   }
 
   &.warning-icon td {
-    background: $gold-star;
+    background: #fff500;
   }
 
   &.alert-icon td {
-    background: $error-red;
+    background: #ff5e5e;
   }
 
   img {
@@ -450,6 +475,16 @@ h5 {
     display: block;
     line-height: 100%;
   }
+}
+
+.pad-30 {
+  padding: 30px;
+}
+
+hr {
+  margin: 20px 0;
+  border-bottom: 0;
+  border-top: 2px solid black;
 }
 
 .hr {
@@ -463,7 +498,7 @@ h5 {
     overflow: hidden;
     height: 2px;
     background-color: transparent !important;
-    border-top: 1px solid lighten($ui-base-color, 8%);
+    border-top: 1px solid black;
   }
 }
 
@@ -471,7 +506,7 @@ h5 {
   padding-bottom: 32px;
 
   &--highlighted {
-    border: 1px solid lighten($ui-base-color, 8%);
+    border: 1px solid black;
     border-radius: 4px;
     padding-bottom: 16px;
     margin-bottom: 16px;
@@ -484,7 +519,7 @@ h5 {
     }
 
     bdi {
-      color: $white;
+      color: black;
       font-size: 16px;
       display: block;
       font-weight: 500;
@@ -506,35 +541,44 @@ h5 {
     margin-bottom: 20px;
 
     &.status-footer {
-      color: lighten($ui-base-color, 26%);
+      color: black;
       font-size: 14px;
       margin-bottom: 0;
 
       a {
-        color: lighten($ui-base-color, 26%);
+        color: black;
       }
     }
   }
 }
 
 .border-top {
-  border-top: 1px solid lighten($ui-base-color, 8%);
+  border-top: 1px solid black;
 }
 
 ul {
   padding-left: 15px;
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 16px;
 
   li {
     margin-bottom: 16px;
-    color: lighten($ui-base-color, 26%);
+    color: black;
+    display: list-item;
 
     span {
-      color: $ui-primary-color;
+      color: black;
     }
   }
+}
+
+.link-color-inherit a,
+.link-color-inherit a:visited {
+  color: inherit;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 ul.rules-list {
@@ -547,28 +591,28 @@ ul.rules-list {
   }
 }
 
-@media (width <= 697px) {
-  .email-container,
-  .col-1,
-  .col-2,
-  .col-3,
-  .col-4,
-  .col-5,
-  .col-6 {
-    width: 100% !important;
-    max-width: none !important;
-  }
+// @media (width <= 697px) {
+//   .email-container,
+//   .col-1,
+//   .col-2,
+//   .col-3,
+//   .col-4,
+//   .col-5,
+//   .col-6 {
+//     width: 100% !important;
+//     max-width: none !important;
+//   }
 
-  .email-start {
-    padding-top: 16px !important;
-  }
+//   .email-start {
+//     padding-top: 16px !important;
+//   }
 
-  .email-end {
-    padding-bottom: 16px !important;
-  }
+//   .email-end {
+//     padding-bottom: 16px !important;
+//   }
 
-  .padded {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-}
+//   .padded {
+//     padding-left: 0 !important;
+//     padding-right: 0 !important;
+//   }
+// }

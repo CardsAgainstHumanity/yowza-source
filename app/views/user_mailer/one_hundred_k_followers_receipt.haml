@@ -1,0 +1,18 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear yowzer,
+                            %br
+                            %p Thanks for buying 100,000 followers for the Yowza account @#{@resource.account.username}! These cool new followers will show up within the next 10 minutes. This email serves as a receipt for your $0.99 payment.
+                            = render 'shared/yowza_signature'

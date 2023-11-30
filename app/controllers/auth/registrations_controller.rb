@@ -2,6 +2,7 @@
 
 class Auth::RegistrationsController < Devise::RegistrationsController
   include RegistrationSpamConcern
+  include PhoneNormalizationHelper
 
   layout :determine_layout
 
@@ -11,17 +12,37 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   before_action :set_sessions, only: [:edit, :update]
   before_action :set_strikes, only: [:edit, :update]
   before_action :set_instance_presenter, only: [:new, :create, :update]
-  before_action :set_body_classes, only: [:new, :create, :edit, :update]
+  before_action :set_body_classes, only: [:new, :create, :edit, :update, :confirm_phone, :verify_otp, :phone_form, :resend_code]
   before_action :require_not_suspended!, only: [:update]
   before_action :set_cache_headers, only: [:edit, :update]
   before_action :set_rules, only: :new
   before_action :require_rules_acceptance!, only: :new
   before_action :set_registration_form_time, only: :new
 
-  skip_before_action :require_functional!, only: [:edit, :update]
+  skip_before_action :require_functional!, only: [:edit, :update, :confirm_phone, :verify_otp, :phone_form, :resend_code]
 
   def new
     super(&:build_invite_request)
+  end
+
+  def confirm_phone; end
+
+  def resend_code
+    if current_user.update(phone: normalize_phone(params[:user][:phone]))
+      current_user.send_otp
+      redirect_to auth_confirm_phone_path
+    else
+      render :resend_code
+    end
+  end
+
+  def verify_otp
+    if current_user.verify_otp(otp_code)
+      current_user.update(phone_confirmed_at: Time.now.utc)
+      redirect_to updates_opt_in_path
+    else
+      render :confirm_phone
+    end
   end
 
   def update
@@ -55,7 +76,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
 
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit({ account_attributes: [:username, :display_name], invite_request_attributes: [:text] }, :email, :password, :password_confirmation, :invite_code, :agreement, :website, :confirm_password)
+      user_params.permit({ account_attributes: [:username, :display_name], invite_request_attributes: [:text] }, :email, :password, :password_confirmation, :invite_code, :agreement, :website, :confirm_password, :phone)
     end
   end
 
@@ -99,10 +120,16 @@ class Auth::RegistrationsController < Devise::RegistrationsController
 
   def invite_code
     if params[:user]
-      params[:user][:invite_code]
+      params[:user][:invite_code]&.downcase
+    elsif params[:r]
+      params[:r]&.downcase
     else
-      params[:invite_code]
+      params[:invite_code]&.downcase
     end
+  end
+
+  def otp_code
+    params[:user][:otp]
   end
 
   private
@@ -112,7 +139,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   end
 
   def set_body_classes
-    @body_classes = %w(edit update).include?(action_name) ? 'admin' : 'lighter'
+    @body_classes = %w(edit update).include?(action_name) ? 'admin' : 'signup'
   end
 
   def set_invite

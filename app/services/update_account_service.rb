@@ -5,6 +5,9 @@ class UpdateAccountService < BaseService
     was_locked    = account.locked
     update_method = raise_error ? :update! : :update
 
+    params = params.except(:display_name) if account.display_name.include?('NaughtyYowzer')
+    params = params.except(:avatar) if account.avatar? || (account.avatar_moderation_attempts.present? && account.avatar_moderation_attempts >= 3)
+    params = params.except(:header) if account.header? || (account.header_moderation_attempts.present? && account.header_moderation_attempts >= 3)
     account.send(update_method, params).tap do |ret|
       next unless ret
 

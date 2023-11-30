@@ -7,7 +7,6 @@ import {
   fetchComposeSuggestions,
   selectComposeSuggestion,
   changeComposeSpoilerText,
-  insertEmojiCompose,
   uploadCompose,
 } from '../../../actions/compose';
 import ComposeForm from '../components/compose_form';
@@ -25,7 +24,7 @@ const mapStateToProps = state => ({
   isEditing: state.getIn(['compose', 'id']) !== null,
   isChangingUpload: state.getIn(['compose', 'is_changing_upload']),
   isUploading: state.getIn(['compose', 'is_uploading']),
-  anyMedia: state.getIn(['compose', 'media_attachments']).size > 0,
+  anyMedia: !!state.getIn(['compose', 'file_upload']),
   isInReply: state.getIn(['compose', 'in_reply_to']) !== null,
   lang: state.getIn(['compose', 'language']),
 });
@@ -58,10 +57,6 @@ const mapDispatchToProps = (dispatch) => ({
 
   onPaste (files) {
     dispatch(uploadCompose(files));
-  },
-
-  onPickEmoji (position, data, needsSpace) {
-    dispatch(insertEmojiCompose(position, data, needsSpace));
   },
 
 });

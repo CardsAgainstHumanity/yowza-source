@@ -50,12 +50,24 @@ export function GettingStarted () {
   return import(/* webpackChunkName: "features/getting_started" */'../../getting_started');
 }
 
+export function YowzaStore () {
+  return import(/* webpackChunkName: "features/yowza_store" */'../../yowza_store');
+}
+
+export function YowzaAppStore () {
+  return import(/* webpackChunkName: "features/yowza_app_store" */'../../yowza_app_store');
+}
+
 export function KeyboardShortcuts () {
   return import(/* webpackChunkName: "features/keyboard_shortcuts" */'../../keyboard_shortcuts');
 }
 
 export function PinnedStatuses () {
   return import(/* webpackChunkName: "features/pinned_statuses" */'../../pinned_statuses');
+}
+
+export function Leaderboard () {
+  return import(/* webpackChunkName: "features/leaderboard" */'../../leaderboard');
 }
 
 export function AccountTimeline () {
@@ -100,10 +112,6 @@ export function BookmarkedStatuses () {
 
 export function Blocks () {
   return import(/* webpackChunkName: "features/blocks" */'../../blocks');
-}
-
-export function DomainBlocks () {
-  return import(/* webpackChunkName: "features/domain_blocks" */'../../domain_blocks');
 }
 
 export function Mutes () {
@@ -184,6 +192,10 @@ export function ClosedRegistrationsModal () {
 
 export function About () {
   return import(/*webpackChunkName: "features/about" */'../../about');
+}
+
+export function Faq () {
+  return import(/*webpackChunkName: "features/faq" */'../../faq');
 }
 
 export function PrivacyPolicy () {

@@ -16,7 +16,7 @@ import AccountContainer from '../../containers/account_container';
 import Column from '../ui/components/column';
 
 const messages = defineMessages({
-  heading: { id: 'column.blocks', defaultMessage: 'Blocked users' },
+  heading: { id: 'column.blocks', defaultMessage: 'Blocked yowzers' },
 });
 
 const mapStateToProps = state => ({
@@ -56,7 +56,7 @@ class Blocks extends ImmutablePureComponent {
       );
     }
 
-    const emptyMessage = <FormattedMessage id='empty_column.blocks' defaultMessage="You haven't blocked any users yet." />;
+    const emptyMessage = <FormattedMessage id='empty_column.blocks' defaultMessage="You haven't blocked any yowzers yet." />;
 
     return (
       <Column bindToDocument={!multiColumn} icon='ban' heading={intl.formatMessage(messages.heading)}>

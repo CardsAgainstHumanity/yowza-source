@@ -3,7 +3,7 @@
 module AccountAvatar
   extend ActiveSupport::Concern
 
-  IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].freeze
+  IMAGE_MIME_TYPES = ['image/jpeg', 'image/png'].freeze
   LIMIT = 2.megabytes
 
   class_methods do
@@ -22,13 +22,32 @@ module AccountAvatar
     validates_attachment_content_type :avatar, content_type: IMAGE_MIME_TYPES
     validates_attachment_size :avatar, less_than: LIMIT
     remotable_attachment :avatar, LIMIT, suppress_errors: false
+    after_avatar_post_process :moderate_avatar, if: -> { Rails.env.production? }
   end
 
   def avatar_original_url
-    avatar.url(:original)
+    if avatar? && avatar_passed_moderation?
+      avatar.url(:original)
+    elsif avatar_moderation_attempts.present? && avatar_moderation_attempts >= 3
+      '/avatars/naughty/naughty.jpeg'
+    else
+      avatar.default_url
+    end
   end
 
   def avatar_static_url
-    avatar_content_type == 'image/gif' ? avatar.url(:static) : avatar_original_url
+    if avatar? && avatar_passed_moderation?
+      avatar_content_type == 'image/gif' ? avatar.url(:static) : avatar_original_url
+    elsif avatar_moderation_attempts.present? && avatar_moderation_attempts >= 3
+      '/avatars/naughty/naughty.jpeg'
+    else
+      avatar.default_url
+    end
+  end
+
+  def moderate_avatar
+    return true if bot_or_fauxbot?
+
+    ModerateImageWorker.perform_in(rand(30..180).seconds, id, 'avatar')
   end
 end

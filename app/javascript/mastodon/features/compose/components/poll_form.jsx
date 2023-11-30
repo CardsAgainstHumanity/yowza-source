@@ -83,7 +83,7 @@ class OptionIntl extends PureComponent {
         <label className='poll__option editable'>
           <span
             className={classNames('poll__input', { checkbox: isPollMultiple })}
-            onClick={this.handleToggleMultiple}
+            // onClick={this.handleToggleMultiple}
             onKeyPress={this.handleCheckboxKeypress}
             role='button'
             tabIndex={0}
@@ -168,14 +168,15 @@ class PollForm extends ImmutablePureComponent {
 
           {/* eslint-disable-next-line jsx-a11y/no-onchange */}
           <select value={expiresIn} onChange={this.handleSelectDuration}>
-            <option value={300}>{intl.formatMessage(messages.minutes, { number: 5 })}</option>
+            <option value={600}>{intl.formatMessage(messages.minutes, { number: 10 })}</option>
             <option value={1800}>{intl.formatMessage(messages.minutes, { number: 30 })}</option>
             <option value={3600}>{intl.formatMessage(messages.hours, { number: 1 })}</option>
+            <option value={7200}>{intl.formatMessage(messages.hours, { number: 2 })}</option>
+            <option value={10800}>{intl.formatMessage(messages.hours, { number: 3 })}</option>
             <option value={21600}>{intl.formatMessage(messages.hours, { number: 6 })}</option>
-            <option value={43200}>{intl.formatMessage(messages.hours, { number: 12 })}</option>
             <option value={86400}>{intl.formatMessage(messages.days, { number: 1 })}</option>
+            <option value={172800}>{intl.formatMessage(messages.days, { number: 2 })}</option>
             <option value={259200}>{intl.formatMessage(messages.days, { number: 3 })}</option>
-            <option value={604800}>{intl.formatMessage(messages.days, { number: 7 })}</option>
           </select>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Map as ImmutableMap, List as ImmutableList, fromJS } from 'immutable';
+import { Map as ImmutableMap, fromJS } from 'immutable';
 
 import {
   SERVER_FETCH_REQUEST,
@@ -10,9 +10,6 @@ import {
   EXTENDED_DESCRIPTION_REQUEST,
   EXTENDED_DESCRIPTION_SUCCESS,
   EXTENDED_DESCRIPTION_FAIL,
-  SERVER_DOMAIN_BLOCKS_FETCH_REQUEST,
-  SERVER_DOMAIN_BLOCKS_FETCH_SUCCESS,
-  SERVER_DOMAIN_BLOCKS_FETCH_FAIL,
 } from 'mastodon/actions/server';
 
 const initialState = ImmutableMap({
@@ -22,12 +19,6 @@ const initialState = ImmutableMap({
 
   extendedDescription: ImmutableMap({
     isLoading: false,
-  }),
-
-  domainBlocks: ImmutableMap({
-    isLoading: false,
-    isAvailable: true,
-    items: ImmutableList(),
   }),
 });
 
@@ -51,12 +42,6 @@ export default function server(state = initialState, action) {
     return state.set('extendedDescription', fromJS(action.description)).setIn(['extendedDescription', 'isLoading'], false);
   case EXTENDED_DESCRIPTION_FAIL:
     return state.setIn(['extendedDescription', 'isLoading'], false);
-  case SERVER_DOMAIN_BLOCKS_FETCH_REQUEST:
-    return state.setIn(['domainBlocks', 'isLoading'], true);
-  case SERVER_DOMAIN_BLOCKS_FETCH_SUCCESS:
-    return state.setIn(['domainBlocks', 'items'], fromJS(action.blocks)).setIn(['domainBlocks', 'isLoading'], false).setIn(['domainBlocks', 'isAvailable'], action.isAvailable);
-  case SERVER_DOMAIN_BLOCKS_FETCH_FAIL:
-    return state.setIn(['domainBlocks', 'isLoading'], false);
   default:
     return state;
   }

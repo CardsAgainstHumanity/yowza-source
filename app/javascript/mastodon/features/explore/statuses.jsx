@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
 import { fetchTrendingStatuses, expandTrendingStatuses } from 'mastodon/actions/trends';
-import { DismissableBanner } from 'mastodon/components/dismissable_banner';
 import StatusList from 'mastodon/components/status_list';
 import { getStatusList } from 'mastodon/selectors';
 
@@ -45,12 +44,7 @@ class Statuses extends PureComponent {
     const emptyMessage = <FormattedMessage id='empty_column.explore_statuses' defaultMessage='Nothing is trending right now. Check back later!' />;
 
     return (
-      <>
-        <DismissableBanner id='explore/statuses'>
-          <FormattedMessage id='dismissable_banner.explore_statuses' defaultMessage='These are posts from across the social web that are gaining traction today. Newer posts with more boosts and favorites are ranked higher.' />
-        </DismissableBanner>
-
-        <StatusList
+      <StatusList
           trackScroll
           timelineId='explore'
           statusIds={statusIds}
@@ -62,7 +56,6 @@ class Statuses extends PureComponent {
           bindToDocument={!multiColumn}
           withCounters
         />
-      </>
     );
   }
 

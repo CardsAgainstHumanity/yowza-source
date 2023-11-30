@@ -1,6 +1,5 @@
 import { fromJS, Map as ImmutableMap, List as ImmutableList } from 'immutable';
 
-import { DOMAIN_BLOCK_SUCCESS } from 'mastodon/actions/domain_blocks';
 
 import {
   ACCOUNT_BLOCK_SUCCESS,
@@ -282,8 +281,6 @@ export default function notifications(state = initialState, action) {
     return filterNotifications(state, [action.relationship.id]);
   case ACCOUNT_MUTE_SUCCESS:
     return action.relationship.muting_notifications ? filterNotifications(state, [action.relationship.id]) : state;
-  case DOMAIN_BLOCK_SUCCESS:
-    return filterNotifications(state, action.accounts);
   case FOLLOW_REQUEST_AUTHORIZE_SUCCESS:
   case FOLLOW_REQUEST_REJECT_SUCCESS:
     return filterNotifications(state, [action.id], 'follow_request');

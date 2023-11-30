@@ -1,0 +1,23 @@
+%table.email-table{ cellspacing: 0, cellpadding: 0 }
+  %tbody
+    %tr
+      %td.email-body
+        .email-container
+          %table.content-section{ cellspacing: 0, cellpadding: 0 }
+            %tbody
+              %tr
+                %td.content-cell.hero.pad-30.link-color-inherit
+                  .email-row.text-left
+                    .col-6
+                      %table.column{ cellspacing: 0, cellpadding: 0 }
+                        %tbody
+                          %tr
+                            %p Dear yowzer,
+                            %br
+                            %p Here is your Official YowzaCoin! Wow! We’re not really sure how to spend this JPEG on the blockchain, but let us know if you figure it out.
+                            %br
+                            %p
+                              = image_tag full_pack_url('media/images/mailer/yowzacoin.png'), alt: 'Yowzacoin', height: 350
+                            %br
+                            %p This email serves as the official receipt for your $0.99 payment (or as we like to call it, your “investment”). There’s nowhere to go but up! 🚀🚀🚀
+                            = render 'shared/yowza_signature'

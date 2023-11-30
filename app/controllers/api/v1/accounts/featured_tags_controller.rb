@@ -4,6 +4,8 @@ class Api::V1::Accounts::FeaturedTagsController < Api::BaseController
   before_action :set_account
   before_action :set_featured_tags
 
+  skip_before_action :require_authenticated_user!, only: :index
+
   respond_to :json
 
   def index
